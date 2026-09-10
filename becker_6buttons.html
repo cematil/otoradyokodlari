@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Becker 6 Tuşlu Radyo Kodu Çözücü</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-color: #3B5998;
+            --brand-hover: #4c70ba;
+            --bg-dark: #0B0E11;
+            --card-bg: #161B22;
+            --input-bg: #0D1117;
+            --text-main: #FFFFFF;
+            --text-muted: #8B949E;
+            --accent-glow: rgba(59, 89, 152, 0.5);
+            --border-color: #30363D;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        input {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 15px 100px 15px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 60%),
+                radial-gradient(circle at 80% 100%, var(--accent-glow) 0%, transparent 40%);
+            overflow-x: hidden;
+        }
+
+        .container { width: 100%; max-width: 520px; }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 25px;
+            perspective: 1000px;
+        }
+
+        .custom-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            border: 2px solid var(--brand-color);
+            box-shadow: 0 0 30px var(--accent-glow);
+            animation: logoPulse 2.5s infinite alternate ease-in-out;
+        }
+
+        @keyframes logoPulse {
+            0% { box-shadow: 0 0 15px var(--accent-glow); transform: scale(1); }
+            100% { box-shadow: 0 0 40px var(--accent-glow), 0 0 20px var(--brand-color); transform: scale(1.08); }
+        }
+
+        .brand-header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+
+        .brand-header h1 span {
+            color: var(--brand-color);
+            display: inline-block;
+            text-shadow: 0 0 12px var(--accent-glow);
+            animation: glowText 2s infinite alternate;
+        }
+
+        @keyframes glowText {
+            from { text-shadow: 0 0 5px var(--accent-glow); }
+            to { text-shadow: 0 0 18px var(--brand-color); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--brand-color), transparent);
+        }
+
+        p.desc {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            background: var(--input-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--brand-color);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: var(--brand-color);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        button:hover {
+            background: var(--brand-hover);
+            transform: translateY(-2px);
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 22px;
+            background: #050709;
+            border: 2px solid var(--brand-color);
+            border-radius: 14px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .result-box.active { display: block; }
+
+        .code-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .code-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--brand-color);
+            letter-spacing: 8px;
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .error {
+            color: #FF4D4D;
+            background: rgba(255, 77, 77, 0.12);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .guide-card, .compatibility-card, .input-instruction-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+
+        .guide-title, .compatibility-card h3, .input-instruction-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--brand-color);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .steps-list { list-style: none; }
+        .steps-list li {
+            position: relative;
+            padding-left: 28px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .steps-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--brand-color);
+            font-weight: bold;
+        }
+
+        .instruction-box {
+            background: #0D1117;
+            border-left: 4px solid var(--brand-color);
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #FFF;
+            border-radius: 50px;
+            padding: 10px 18px 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+            text-decoration: none;
+            z-index: 1000;
+            animation: floatBounce 3s infinite ease-in-out;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.7);
+        }
+
+        .wa-avatar {
+            width: 38px;
+            height: 38px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .wa-avatar svg { width: 22px; height: 22px; fill: #25D366; }
+
+        .wa-online-dot {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            width: 11px;
+            height: 11px;
+            background: #00FF66;
+            border: 2px solid #128C7E;
+            border-radius: 50%;
+            animation: pulseDot 1.5s infinite;
+        }
+
+        .wa-text { display: flex; flex-direction: column; }
+        .wa-text .title { font-size: 9px; text-transform: uppercase; opacity: 0.9; font-weight: 600; letter-spacing: 0.5px; }
+        .wa-text .action { font-size: 12.5px; font-weight: 800; }
+
+        @keyframes floatBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+
+        @keyframes pulseDot {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.8; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer-text { text-align: center; margin-top: 20px; font-size: 11px; color: var(--text-muted); }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<div class="container">
+    <div class="brand-header">
+        <div class="custom-logo"><svg viewBox="0 0 120 60" width="60" height="30"><rect x="5" y="5" width="110" height="50" rx="8" fill="none" stroke="#3B5998" stroke-width="5"/><text x="60" y="38" font-family="Arial" font-weight="bold" font-size="18" fill="#3B5998" text-anchor="middle">BECKER</text></svg></div>
+        <h1>Becker 6-Buttons <span>Radyo Kodu</span></h1>
+    </div>
+
+    <div class="card">
+        <p class="desc">Teyp etiketinde yer alan seri numarasını girerek şifrenizi anında sorgulayın.</p>
+        
+        <div class="form-group">
+            <label for="serialInput">Becker 6 Tuş Seri No</label>
+            <div class="input-wrapper">
+                <input type="text" id="serialInput" placeholder="Örn: 1234" maxlength="4" autocomplete="off">
+            </div>
+        </div>
+
+        <button onclick="findCode()">Kodu Çöz</button>
+
+        <div class="error" id="errorMsg"></div>
+
+        <div class="result-box" id="resultBox">
+            <div class="code-title">Açılış Şifreniz</div>
+            <div class="code-value" id="codeDisplay">----</div>
+        </div>
+    </div>
+
+    <div class="input-instruction-card">
+        <h3>📻 Kod Teybe Nasıl Girilir?</h3>
+        <div class="instruction-box">
+            <strong>1, 2, 3, 4</strong> tuşlarıyla her bir haneyi girin. Onaylamak için <strong>SC / RDS</strong> tuşuna basılı tutun.
+        </div>
+    </div>
+
+    <div class="guide-card">
+        <div class="guide-title">💡 Seri Numarası Nerede Bulunur?</div>
+        <ul class="steps-list">
+            <li><span style="color:#fff; font-weight:600;">Adım 1:</span> Teybinizi sökme aparatlarıyla kasasından çıkarın.</li>
+            <li><span style="color:#fff; font-weight:600;">Adım 2:</span> Üstteki beyaz etiketi bulun.</li>
+            <li><span style="color:#fff; font-weight:600;">Adım 3:</span> Seri numarasını yukarıdaki kutuya tam yazın.</li>
+        </ul>
+    </div>
+
+    <div class="compatibility-card">
+        <h3>🚗 Uyumlu Araç & Sistemler</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:8px;"><strong style="color:#fff;">Modeller:</strong> Mercedes-Benz W210, W208 CLK, W163 ML, Porsche Boxster</p>
+        <p style="font-size:12px; color:var(--text-muted);"><strong style="color:#fff;">Desteklenen Teypler:</strong> 6 Tuşlu Becker Europa 2000, Grand Prix CD</p>
+    </div>
+
+    <div class="footer-text">© Becker 6-Buttons Şifre Çözme Servisi</div>
+</div>
+
+<a href="https://wa.me/905000000000?text=Merhaba,%20Becker 6-Buttons%20teypsifresi%20hakkinda%20destek%20almak%20istiyorum." class="whatsapp-float" target="_blank">
+    <div class="wa-avatar">
+        <div class="wa-online-dot"></div>
+        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+    </div>
+    <div class="wa-text">
+        <span class="title">7/24 Canlı Destek</span>
+        <span class="action">WhatsApp'tan Ulaşın</span>
+    </div>
+</a>
+
+<script>
+    // VERİTABANI DOĞRUDAN koda GÖMÜLDÜ (CORS Hatası Veremez)
+    const database = {};
+    const REQUIRED_LEN = 4;
+
+    function findCode() {
+        const input = document.getElementById('serialInput').value.trim().toUpperCase();
+        const resultBox = document.getElementById('resultBox');
+        const errorMsg = document.getElementById('errorMsg');
+        const codeDisplay = document.getElementById('codeDisplay');
+
+        if (input.length !== REQUIRED_LEN) {
+            resultBox.classList.remove('active');
+            errorMsg.innerHTML = `⚠️ Eksik veya fazla karakter girdiniz!<br>Bu model için seri numarası tam olarak <strong>${REQUIRED_LEN}</strong> karakter olmalıdır. (Siz ${input.length} karakter girdiniz)`;
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        if (database[input]) {
+            errorMsg.style.display = 'none';
+            codeDisplay.innerText = database[input];
+            resultBox.classList.add('active');
+        } else {
+            resultBox.classList.remove('active');
+            errorMsg.innerHTML = '⚠️ Girilen seri numarası veritabanında bulunamadı! Lütfen seri numarasını kontrol edip tekrar deneyin.';
+            errorMsg.style.display = 'block';
+        }
+    }
+
+    document.getElementById('serialInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') findCode();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+</body>
+</html>

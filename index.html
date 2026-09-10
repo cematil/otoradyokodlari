@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- SEO & ARAMA MOTORLARI ENTEGRASYONU -->
+    <title>Oto Radyo Kodları - Orijinal Şifre Çözüm Merkezi & EEPROM Arşivi</title>
+    <meta name="description" content="Tüm marka oto teyp kodları, radyo şifre çözücüleri, seri numarası ile anında teyp kodu alma ve EEPROM MCU dump arşiv merkezi.">
+    <meta name="keywords" content="oto radyo kodu, teyp şifresi çözme, renault teyp kodu, ford radyo kodu, vw radyo kodu, eeprom dump, teyp kodu hesaplama, car radio code calculator">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="author" content="Oto Radyo Kodları">
+    
+    <!-- Open Graph (Sosyal Medya Paylaşım Metaleri) -->
+    <meta property="og:title" content="Oto Radyo Kodları - Orijinal Şifre Çözüm Merkezi">
+    <meta property="og:description" content="Seri numarası veya EEPROM / MCU okuma ile anında 100% garantili teyp şifresi çözümü.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:type" content="website">
+    
+    <!-- Schema.org Structured Data (Google Zengin Arama Sonuçları Entegrasyonu) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "name": "Oto Radyo Kodları & Şifre Çözüm Merkezi",
+      "image": "logo.png",
+      "telephone": "+905074377818",
+      "description": "Tüm marka otomobiller için fabrika çıkışlı oto teyp kodu sorgulama ve EEPROM dökümü çözme hizmeti.",
+      "priceRange": "$$"
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-blue: #00d2ff;
+            --neon-glow: rgba(0, 210, 255, 0.4);
+            --bg-dark: #070a0e;
+            --card-bg: #121820;
+            --border-color: #232d38;
+            --text-main: #FFFFFF;
+            --text-muted: #8c9ba5;
+            --wa-green: #25D366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif !important;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* 4 SANİYELİK LOGO AÇILIŞ EKRANI (SPLASH SCREEN) - BÜYÜTÜLDÜ */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-logo-wrapper {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            padding: 8px;
+            background: linear-gradient(135deg, var(--neon-blue), transparent);
+            box-shadow: 0 0 60px var(--neon-glow);
+            animation: splashPulse 2s infinite alternate ease-in-out;
+        }
+
+        .splash-logo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .splash-loader {
+            margin-top: 25px;
+            width: 220px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .splash-loader-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+            animation: fillBar 4s linear forwards;
+        }
+
+        @keyframes splashPulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 30px var(--neon-glow); }
+            100% { transform: scale(1.05); box-shadow: 0 0 70px var(--neon-blue); }
+        }
+
+        @keyframes fillBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px 15px 100px 15px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, var(--neon-glow) 0%, transparent 65%),
+                radial-gradient(circle at 80% 100%, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+            overflow-x: hidden;
+        }
+
+        .container { width: 100%; max-width: 950px; margin: 0 auto; }
+
+        .main-header { text-align: center; margin-bottom: 30px; }
+
+        /* ANA SAYFA LOGOSU BÜYÜTÜLDÜ */
+        .main-logo {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            padding: 6px;
+            background: linear-gradient(135deg, var(--neon-blue), transparent);
+            box-shadow: 0 0 45px var(--neon-glow);
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        .main-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 25px var(--neon-glow); transform: scale(1); }
+            100% { box-shadow: 0 0 55px var(--neon-blue); transform: scale(1.03); }
+        }
+
+        .badge-counter {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.12);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .badge-counter-sub {
+            display: inline-block;
+            background: rgba(255, 170, 0, 0.12);
+            border: 1px solid #ffaa00;
+            color: #ffaa00;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .special-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .service-card {
+            background: linear-gradient(145deg, #151d26, #0e141c);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            text-decoration: none;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--neon-blue);
+        }
+
+        .service-card.eeprom::before { background: #ffaa00; }
+        .service-card.wa-special::before { background: var(--wa-green); }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 12px 30px var(--neon-glow);
+        }
+
+        .service-icon {
+            width: 45px; height: 45px; margin-bottom: 12px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.05); border-radius: 10px;
+        }
+
+        .service-card h3 { font-size: 16px; font-weight: 800; margin-bottom: 6px; color: #fff; }
+        .service-card p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+        .eeprom-info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 35px;
+        }
+
+        .eeprom-info-card h2 {
+            font-size: 18px; color: var(--neon-blue); margin-bottom: 15px;
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .chip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px; margin: 15px 0; text-align: center;
+        }
+
+        .chip-item {
+            background: #090d12; border: 1px solid #1c2633; padding: 12px;
+            border-radius: 10px; font-size: 11px; font-family: monospace; color: #4deeea;
+        }
+
+        .btn-open-popup {
+            display: block; width: 100%; padding: 14px;
+            background: linear-gradient(90deg, #ffaa00, #e67e00);
+            color: #000; font-weight: 800; border: none; border-radius: 10px;
+            cursor: pointer; text-align: center; margin-top: 12px;
+            font-size: 13px; text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3); transition: all 0.3s ease;
+        }
+        .btn-open-popup:hover { transform: scale(1.01); box-shadow: 0 6px 20px rgba(255, 170, 0, 0.5); }
+
+        .btn-open-popup-blue {
+            background: linear-gradient(90deg, #00d2ff, #0080ff);
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+        }
+        .btn-open-popup-blue:hover { box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5); }
+
+        .section-title {
+            font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 20px;
+            text-transform: uppercase; letter-spacing: 1px;
+            border-left: 4px solid var(--neon-blue); padding-left: 10px;
+        }
+
+        .resolvers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px; margin-bottom: 30px;
+        }
+
+        .resolver-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+
+        .resolver-btn:hover {
+            background: #1a232e;
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.15);
+        }
+
+        .resolver-btn-content { display: flex; align-items: center; gap: 12px; overflow: hidden; }
+        .resolver-btn-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .brand-logos-container { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .brand-logo-svg { width: 30px; height: 30px; filter: drop-shadow(0 0 5px rgba(0,210,255,0.6)); transition: transform 0.2s; }
+        .brand-logo-chrysler { width: 44px; height: 22px; filter: drop-shadow(0 0 5px rgba(0,210,255,0.6)); }
+        .resolver-btn:hover .brand-logo-svg, .resolver-btn:hover .brand-logo-chrysler { transform: scale(1.18); }
+
+        .other-brands-title {
+            font-size: 16px; font-weight: 800; color: #ffaa00; margin: 35px 0 15px 0;
+            text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid #ffaa00; padding-left: 10px;
+        }
+
+        .wa-brand-btn { background: rgba(37, 211, 102, 0.06); border: 1px solid rgba(37, 211, 102, 0.3); }
+        .wa-brand-btn:hover { background: rgba(37, 211, 102, 0.15); border-color: #25D366; color: #25D366 !important; }
+
+        .whatsapp-float {
+            position: fixed; bottom: 20px; right: 20px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #FFF; border-radius: 50px; padding: 10px 20px 10px 12px;
+            display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+            text-decoration: none; z-index: 1000;
+            animation: floatBounce 3s infinite ease-in-out;
+        }
+
+        .wa-avatar {
+            width: 38px; height: 38px; background: #fff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .wa-avatar svg { width: 22px; height: 22px; fill: #25D366; }
+        .wa-online-dot {
+            position: absolute; top: -1px; right: -1px; width: 11px; height: 11px;
+            background: #00FF66; border: 2px solid #128C7E; border-radius: 50%;
+            animation: pulseDot 1.5s infinite;
+        }
+        .wa-text { display: flex; flex-direction: column; }
+        .wa-text .title { font-size: 9px; text-transform: uppercase; opacity: 0.9; font-weight: 600; }
+        .wa-text .action { font-size: 12.5px; font-weight: 800; }
+
+        @keyframes floatBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+        @keyframes pulseDot { 0% { transform: scale(0.9); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.8; } }
+
+        /* MODAL POPUP OKUNAKLI YAZI DÜZENİ */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(8px); z-index: 9999;
+            justify-content: center; align-items: center; padding: 15px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: #0e141d; border: 1px solid var(--neon-blue); border-radius: 16px;
+            width: 100%; max-width: 900px; max-height: 85vh; display: flex; flex-direction: column;
+            box-shadow: 0 0 40px var(--neon-glow); overflow: hidden;
+        }
+        .modal-header {
+            padding: 16px 20px; background: #151e29; border-bottom: 1px solid var(--border-color);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h3 { font-size: 16px; color: var(--neon-blue); font-weight: 800; }
+        .modal-close { font-size: 24px; color: #fff; cursor: pointer; border: none; background: none; }
+        .modal-search { padding: 12px 20px; background: #090d14; border-bottom: 1px solid var(--border-color); }
+        .modal-search input {
+            width: 100%; padding: 12px 16px; background: #121922; border: 1px solid var(--border-color);
+            border-radius: 8px; color: #fff; font-size: 13px; outline: none;
+        }
+        .modal-search input:focus { border-color: var(--neon-blue); }
+        .modal-body {
+            padding: 20px; overflow-y: auto; display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px;
+        }
+        .file-item {
+            background: #16202c; padding: 12px 14px; border-radius: 8px;
+            font-size: 12px !important; font-weight: 600 !important; color: #ffffff !important;
+            border: 1px solid #233342; line-height: 1.6 !important; height: auto !important;
+            white-space: normal !important; word-break: break-all;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        .footer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 30px; }
+
+        /* CEP TELEFONLARI VE TÜM MOBİL CİHAZ UYUMLULUĞU (RESPONSIVE) */
+        @media (max-width: 600px) {
+            body { padding: 15px 10px 90px 10px; }
+            .container { width: 100%; }
+            .resolvers-grid { grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 10px; }
+            .service-card { padding: 16px; }
+            .splash-logo-wrapper { width: 240px; height: 240px; }
+            .main-logo { width: 220px; height: 220px; }
+            .brand-logo-svg { width: 26px; height: 26px; }
+            .brand-logo-chrysler { width: 38px; height: 18px; }
+            .modal-body { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 4 SANİYELİK BÜYÜTÜLMÜŞ AÇILIŞ SPLASH EKRANI -->
+<div id="splash-screen">
+    <div class="splash-logo-wrapper">
+        <img src="logo.png" alt="Oto Radyo Kodları Yükleniyor">
+    </div>
+    <div class="splash-loader">
+        <div class="splash-loader-bar"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="main-header">
+        <div class="main-logo">
+            <img src="logo.png" alt="Oto Radyo Kodları Logo">
+        </div>
+        <div>
+            <div class="badge-counter">⚡ 50+ Veritabanı Arşivi Aktif</div>
+        </div>
+        <div>
+            <div class="badge-counter-sub">🔥 1.300.000 + Hazır Kod Eklendi</div>
+        </div>
+        <p style="color: var(--text-muted); font-size: 13.5px;">Seri Numarası ve EEPROM / MCU Okuma İle Anında Radyo Şifresi Çözümü</p>
+    </div>
+
+    <div class="special-services">
+        <a href="https://wa.me/905074377818?text=Merhaba,%20EEPROM%20/%20Çip%20okuma%20ile%20radyo%20kodu%20çözdürmek%20istiyorum." class="service-card eeprom" target="_blank">
+            <div class="service-icon">🔬</div>
+            <h3>EEPROM & Çip Okuma Servisi</h3>
+            <p>Seri nosu silinmiş teypler için 24C64, 95320, FIS dumps dosya okuma desteği.</p>
+        </a>
+
+        <a href="https://wa.me/905074377818?text=Merhaba,%20Özel%20Seri%20Numarası%20ile%20radyo%20kodu%20sorgulamak%20istiyorum." class="service-card" target="_blank">
+            <div class="service-icon">📲</div>
+            <h3>WhatsApp Canlı Sorgulama</h3>
+            <p>Listede bulamadığınız marka/modeller için seri no resmini gönderin, anında çözelim.</p>
+        </a>
+
+        <a href="https://wa.me/905074377818?text=Merhaba,%20Oto%20Servis%20/%20Teknisyen%20VIP%20destek%20hattı." class="service-card wa-special" target="_blank">
+            <div class="service-icon">👨‍🔧</div>
+            <h3>VIP Teknisyen Destek Hattı</h3>
+            <p>Oto elektrikçiler ve servisler için toplu teyp şifre çözme hizmeti.</p>
+        </a>
+    </div>
+
+    <div class="eeprom-info-card">
+        <h2>💾 OTO TEYP VE EEPROM ARŞİVİ</h2>
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            Seri numarası okunmayan veya veritabanında karşılığı bulunmayan teyplerde, teyp içerisindeki EEPROM/MCU çip dump (BIN/HEX) dosyaları okunarak %100 kesin kod çözümü yapılmaktadır.
+        </p>
+        <div class="chip-grid">
+            <div class="chip-item">ST 24C16 / 24C64</div>
+            <div class="chip-item">EEPROM 95320</div>
+            <div class="chip-item">FIS (S290) DUMP</div>
+            <div class="chip-item">MOTOROLA HC11</div>
+            <div class="chip-item">NEC / RENESAS</div>
+        </div>
+        <button class="btn-open-popup" onclick="openArchiveModal()">📁 Tüm Arşiv Dosyalarını Göster (Listeyi Aç)</button>
+        <button class="btn-open-popup btn-open-popup-blue" onclick="openCalcModal()">🖥️ RADYO KOD ÜRETİCİLERİ (PROGRAM LİSTESİ)</button>
+    </div>
+
+    <div class="section-title">🚗 TÜM MARKA VE TEYP MODELLERİ</div>
+    <div class="resolvers-grid">
+        
+        <!-- Renault -->
+        <a href="renault.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container">
+                    <svg viewBox="0 0 100 100" class="brand-logo-svg"><polygon points="50,5 90,50 50,95 10,50" fill="none" stroke="#ffd700" stroke-width="12"/></svg>
+                </div>
+                <span class="resolver-btn-text">Renault</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Dacia -->
+        <a href="dacia.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container">
+                    <svg viewBox="0 0 100 100" class="brand-logo-svg"><path d="M 10 25 L 45 25 L 55 50 L 45 75 L 10 75 Z M 90 25 L 55 25 L 45 50 L 55 75 L 90 75 Z" fill="none" stroke="#00d2ff" stroke-width="10"/></svg>
+                </div>
+                <span class="resolver-btn-text">Dacia</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Volkswagen (VW, Audi) -->
+        <a href="volkswagen.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container">
+                    <svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="8"/><path d="M 28 32 L 40 68 L 50 45 L 60 68 L 72 32 M 20 32 L 50 82 L 80 32" fill="none" stroke="#00d2ff" stroke-width="6"/></svg>
+                    <svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="28" cy="50" r="20" fill="none" stroke="#fff" stroke-width="6"/><circle cx="43" cy="50" r="20" fill="none" stroke="#fff" stroke-width="6"/><circle cx="58" cy="50" r="20" fill="none" stroke="#fff" stroke-width="6"/><circle cx="73" cy="50" r="20" fill="none" stroke="#fff" stroke-width="6"/></svg>
+                </div>
+                <span class="resolver-btn-text">Volkswagen (VW)</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Ford M Serisi -->
+        <a href="ford_m.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 120 60" class="brand-logo-svg"><ellipse cx="60" cy="30" rx="55" ry="25" fill="none" stroke="#00d2ff" stroke-width="6"/><text x="60" y="38" font-family="Arial" font-weight="bold" font-style="italic" font-size="24" fill="#00d2ff" text-anchor="middle">Ford</text></svg></div>
+                <span class="resolver-btn-text">Ford M Serisi</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Ford V Serisi -->
+        <a href="ford_v.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 120 60" class="brand-logo-svg"><ellipse cx="60" cy="30" rx="55" ry="25" fill="none" stroke="#00d2ff" stroke-width="6"/><text x="60" y="38" font-family="Arial" font-weight="bold" font-style="italic" font-size="24" fill="#00d2ff" text-anchor="middle">Ford</text></svg></div>
+                <span class="resolver-btn-text">Ford V Serisi</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Fiat Daiichi -->
+        <a href="fiat_daiichi.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="#00d2ff" stroke-width="8"/><text x="50" y="60" font-family="Arial" font-weight="900" font-size="28" fill="#00d2ff" text-anchor="middle">FIAT</text></svg></div>
+                <span class="resolver-btn-text">Fiat Daiichi</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Fiat Visteon -->
+        <a href="fiat_visteon.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="#00d2ff" stroke-width="8"/><text x="50" y="60" font-family="Arial" font-weight="900" font-size="28" fill="#00d2ff" text-anchor="middle">FIAT</text></svg></div>
+                <span class="resolver-btn-text">Fiat Visteon</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Alfa Romeo / Fiat -->
+        <a href="fiat_daiichi_alfa_radio.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container">
+                    <svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#ff4d4d" stroke-width="8"/><path d="M 50 15 L 50 85 M 25 50 L 75 50" stroke="#ff4d4d" stroke-width="6"/></svg>
+                    <svg viewBox="0 0 100 100" class="brand-logo-svg"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="#fff" stroke-width="8"/><text x="50" y="60" font-family="Arial" font-weight="900" font-size="28" fill="#fff" text-anchor="middle">FIAT</text></svg>
+                </div>
+                <span class="resolver-btn-text">Alfa Romeo / Fiat</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Fiat Alfa VP1 / VP2 -->
+        <a href="fiat_daiichi_alfa_vp1_vp2.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="#00d2ff" stroke-width="8"/><text x="50" y="60" font-family="Arial" font-weight="900" font-size="22" fill="#00d2ff" text-anchor="middle">VP1/2</text></svg></div>
+                <span class="resolver-btn-text">Fiat Alfa VP1 / VP2</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Mercedes Citan -->
+        <a href="database_mercedes_citan.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div>
+                <span class="resolver-btn-text">Mercedes Citan</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Opel Delco GM -->
+        <a href="database_opel_delco.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#ffaa00" stroke-width="6"/><polygon points="10,50 60,35 40,65 90,50" fill="#ffaa00"/></svg></div>
+                <span class="resolver-btn-text">Opel Delco GM</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Opel Vivaro / Movano -->
+        <a href="database_opel_vivaro_movano.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#ffaa00" stroke-width="6"/><polygon points="10,50 60,35 40,65 90,50" fill="#ffaa00"/></svg></div>
+                <span class="resolver-btn-text">Opel Vivaro / Movano</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Becker 4-Digit -->
+        <a href="becker_4digit.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container">
+                    <svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg>
+                </div>
+                <span class="resolver-btn-text">Becker 4-Digit</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Becker 4-Button -->
+        <a href="becker_4button.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div>
+                <span class="resolver-btn-text">Becker 4-Button</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Becker 6-Buttons -->
+        <a href="becker_6buttons.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div>
+                <span class="resolver-btn-text">Becker 6-Buttons</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Becker 8-Button -->
+        <a href="becker_8button.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div>
+                <span class="resolver-btn-text">Becker 8-Button</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Becker Presets -->
+        <a href="database_becker_4presets.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div><span class="resolver-btn-text">Becker 4 Presets</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_becker_5presets.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div><span class="resolver-btn-text">Becker 5 Presets</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_becker_6presets.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div><span class="resolver-btn-text">Becker 6 Presets</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_becker_7presets.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div><span class="resolver-btn-text">Becker 7 Presets</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_becker_8presets.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div><span class="resolver-btn-text">Becker 8 Presets</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_becker_9presets.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="6"/><path d="M 50 10 L 50 50 L 15 70 M 50 50 L 85 70" stroke="#00d2ff" stroke-width="6"/></svg></div><span class="resolver-btn-text">Becker 9 Presets</span></div><span class="arrow">→</span>
+        </a>
+
+        <!-- Chrysler Grubu -->
+        <a href="chrysler_4digits_aa_alpine.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container">
+                    <svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg>
+                </div>
+                <span class="resolver-btn-text">Chrysler Alpine AA</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+        <a href="chrysler_4digits_t00be_becker.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container">
+                    <svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg>
+                </div>
+                <span class="resolver-btn-text">Chrysler Becker T00BE</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+        <a href="chrysler_5digits_preset5.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg></div><span class="resolver-btn-text">Chrysler Preset 5</span></div><span class="arrow">→</span>
+        </a>
+        <a href="chrysler_5digits_preset6.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg></div><span class="resolver-btn-text">Chrysler Preset 6</span></div><span class="arrow">→</span>
+        </a>
+        <a href="chrysler_last4digit_tm9.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg></div><span class="resolver-btn-text">Chrysler TM9</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_chrysler_5presets.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg></div><span class="resolver-btn-text">Chrysler DB 5-Presets</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_chrysler_6presets.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg></div><span class="resolver-btn-text">Chrysler DB 6-Presets</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_chrysler_alpine.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg></div><span class="resolver-btn-text">Chrysler DB Alpine</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_chrysler_becker.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg></div><span class="resolver-btn-text">Chrysler DB Becker</span></div><span class="arrow">→</span>
+        </a>
+        <a href="database_chrysler_tm9.html" class="resolver-btn">
+            <div class="resolver-btn-content"><div class="brand-logos-container"><svg viewBox="0 0 200 60" class="brand-logo-chrysler"><path d="M 10 30 L 70 20 L 100 28 L 130 20 L 190 30 L 130 40 L 100 32 L 70 40 Z" fill="none" stroke="#00d2ff" stroke-width="4"/><rect x="75" y="24" width="50" height="12" rx="4" fill="#00d2ff"/><text x="100" y="33" font-size="8" font-weight="900" fill="#000" text-anchor="middle">CHRYSLER</text></svg></div><span class="resolver-btn-text">Chrysler DB TM9</span></div><span class="arrow">→</span>
+        </a>
+
+        <!-- Clarion C7 -->
+        <a href="database_clarion_c7.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><path d="M 50 15 L 85 45 L 70 45 L 50 30 L 30 45 L 15 45 Z M 50 50 L 85 80 L 70 80 L 50 65 L 30 80 L 15 80 Z" fill="#00d2ff"/></svg></div>
+                <span class="resolver-btn-text">Clarion C7 Seri</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Delphi / Famar -->
+        <a href="database_delphi_famar.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#00d2ff" stroke-width="8"/><text x="50" y="58" font-size="18" font-weight="bold" fill="#00d2ff" text-anchor="middle">DELPHI</text></svg></div>
+                <span class="resolver-btn-text">Delphi / Famar</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+
+        <!-- Alpine / Jaguar -->
+        <a href="database_alpine_jaguar.html" class="resolver-btn">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><polygon points="10,80 50,15 90,80" fill="none" stroke="#00d2ff" stroke-width="8"/><text x="50" y="70" font-size="12" font-weight="bold" fill="#00d2ff" text-anchor="middle">JAGUAR</text></svg></div>
+                <span class="resolver-btn-text">Alpine / Jaguar</span>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+    </div>
+
+    <div class="other-brands-title">📱 DİĞER ARAÇ MARKALARI İÇİN WHATSAPP SORGULAMA</div>
+    <div class="resolvers-grid">
+        <a href="https://wa.me/905074377818?text=BMW%20/%20Mini%20teypsifresi%20sorgulama" class="resolver-btn wa-brand-btn" target="_blank">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="40" fill="none" stroke="#25D366" stroke-width="8"/><circle cx="50" cy="50" r="20" fill="none" stroke="#25D366" stroke-width="6"/></svg></div>
+                <span class="resolver-btn-text">BMW / Mini</span>
+            </div>
+            <span class="arrow" style="color:#25D366;">💬</span>
+        </a>
+        <a href="https://wa.me/905074377818?text=Honda%20teypsifresi%20sorgulama" class="resolver-btn wa-brand-btn" target="_blank">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><rect x="15" y="15" width="70" height="70" rx="10" fill="none" stroke="#25D366" stroke-width="8"/><path d="M 30 25 L 30 75 M 70 25 L 70 75 M 30 48 L 70 48" stroke="#25D366" stroke-width="8"/></svg></div>
+                <span class="resolver-btn-text">Honda</span>
+            </div>
+            <span class="arrow" style="color:#25D366;">💬</span>
+        </a>
+        <a href="https://wa.me/905074377818?text=Hyundai%20/%20Kia%20teypsifresi%20sorgulama" class="resolver-btn wa-brand-btn" target="_blank">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><ellipse cx="50" cy="50" rx="45" ry="30" fill="none" stroke="#25D366" stroke-width="6"/><text x="50" y="62" font-family="Arial" font-weight="900" font-style="italic" font-size="34" fill="#25D366" text-anchor="middle">H</text></svg></div>
+                <span class="resolver-btn-text">Hyundai / Kia</span>
+            </div>
+            <span class="arrow" style="color:#25D366;">💬</span>
+        </a>
+        <a href="https://wa.me/905074377818?text=Peugeot%20/%20Citroen%20teypsifresi%20sorgulama" class="resolver-btn wa-brand-btn" target="_blank">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><path d="M 50 15 L 85 45 L 70 45 L 50 30 L 30 45 L 15 45 Z M 50 50 L 85 80 L 70 80 L 50 65 L 30 80 L 15 80 Z" fill="#25D366"/></svg></div>
+                <span class="resolver-btn-text">Peugeot / Citroen</span>
+            </div>
+            <span class="arrow" style="color:#25D366;">💬</span>
+        </a>
+        <a href="https://wa.me/905074377818?text=Nissan%20teypsifresi%20sorgulama" class="resolver-btn wa-brand-btn" target="_blank">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><circle cx="50" cy="50" r="35" fill="none" stroke="#25D366" stroke-width="8"/><rect x="10" y="42" width="80" height="16" fill="#25D366"/></svg></div>
+                <span class="resolver-btn-text">Nissan</span>
+            </div>
+            <span class="arrow" style="color:#25D366;">💬</span>
+        </a>
+        <a href="https://wa.me/905074377818?text=Toyota%20teypsifresi%20sorgulama" class="resolver-btn wa-brand-btn" target="_blank">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><ellipse cx="50" cy="50" rx="42" ry="28" fill="none" stroke="#25D366" stroke-width="6"/><ellipse cx="50" cy="50" rx="28" ry="18" fill="none" stroke="#25D366" stroke-width="6"/></svg></div>
+                <span class="resolver-btn-text">Toyota</span>
+            </div>
+            <span class="arrow" style="color:#25D366;">💬</span>
+        </a>
+        <a href="https://wa.me/905074377818?text=Japon%20Grubu%20teypsifresi%20sorgulama" class="resolver-btn wa-brand-btn" target="_blank">
+            <div class="resolver-btn-content">
+                <div class="brand-logos-container"><svg viewBox="0 0 100 100" class="brand-logo-svg"><polygon points="20,20 80,20 20,80 80,80" fill="none" stroke="#25D366" stroke-width="10"/></svg></div>
+                <span class="resolver-btn-text">Suzuki / Subaru / Mazda</span>
+            </div>
+            <span class="arrow" style="color:#25D366;">💬</span>
+        </a>
+    </div>
+
+    <div class="footer">
+        © 2026 Oto Radyo Kodları - Tüm Hakları Saklıdır.
+    </div>
+</div>
+
+<!-- POPUP 1: EEPROM & DUMP ARŞİVİ -->
+<div class="modal-overlay" id="archiveModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>📂 EEPROM & DUMP ARŞİV DOSYALARI</h3>
+            <button class="modal-close" onclick="closeArchiveModal()">&times;</button>
+        </div>
+        <div class="modal-search">
+            <input type="text" id="modalSearchInput" onkeyup="filterArchiveFiles('archiveFileList', 'modalSearchInput')" placeholder="Dosya adı ara... (Örn: Clarion, Audi, Blaupunkt, Volvo)">
+        </div>
+        <div class="modal-body" id="archiveFileList">
+            <div class="file-item">Clarion PU-1559A.zip</div>
+            <div class="file-item">Clarion PU-1560A(1).zip</div>
+            <div class="file-item">Clarion PU-1560A.zip</div>
+            <div class="file-item">Clarion PU-1561A.zip</div>
+            <div class="file-item">Clarion PU-1570A(1).zip</div>
+            <div class="file-item">Clarion PU-1570A.zip</div>
+            <div class="file-item">Clarion PU-9833A.zip</div>
+            <div class="file-item">Clarion PU-9924A(1).zip</div>
+            <div class="file-item">Clarion PU-9924A.zip</div>
+            <div class="file-item">22 (Philips DC379).zip</div>
+            <div class="file-item">22 (Philips DC459)(1).zip</div>
+            <div class="file-item">22 (Philips DC459).zip</div>
+            <div class="file-item">22 (Philips DC577).zip</div>
+            <div class="file-item">22 (Philips DC579)(1).zip</div>
+            <div class="file-item">22 (Philips DC579).zip</div>
+            <div class="file-item">22 (Philips DC593).zip</div>
+            <div class="file-item">22 (Philips DC594)(1).zip</div>
+            <div class="file-item">22 (Philips DC594).zip</div>
+            <div class="file-item">22 (Philips DC665) SAT.zip</div>
+            <div class="file-item">22 (Philips DC677)(1).zip</div>
+            <div class="file-item">22 (Philips DC677).zip</div>
+            <div class="file-item">22 (Philips DC682).zip</div>
+            <div class="file-item">22 DC 685.zip</div>
+            <div class="file-item">22RC280-65 CD without display.zip</div>
+            <div class="file-item">25 Original (Philips)(1).zip</div>
+            <div class="file-item">25 Original (Philips).zip</div>
+            <div class="file-item">2300 CM6902A (Alpine)(1).zip</div>
+            <div class="file-item">2300 CM6902A (Alpine).zip</div>
+            <div class="file-item">2446 RDS BP5019 24v (Blaupunkt).zip</div>
+            <div class="file-item">6200 CE-2771.zip</div>
+            <div class="file-item">7200 RDS(1).zip</div>
+            <div class="file-item">7200 RDS.zip</div>
+            <div class="file-item">51703.ZIP</div>
+            <div class="file-item">A BP6340 (Blaupunkt).zip</div>
+            <div class="file-item">ACD 9430 BP2757.zip</div>
+            <div class="file-item">ACD 9430(1).zip</div>
+            <div class="file-item">ACD 9430.zip</div>
+            <div class="file-item">ACD 9431.zip</div>
+            <div class="file-item">ACM 5451 RDS BP5520(1).zip</div>
+            <div class="file-item">ACM 5451 RDS BP5520.zip</div>
+            <div class="file-item">ACR 3225.zip</div>
+            <div class="file-item">ACR 3250 BP5501(1).zip</div>
+            <div class="file-item">ACR 3250 BP5501.zip</div>
+            <div class="file-item">ACR 3251 RDS.zip</div>
+            <div class="file-item">ACR 4250 BP5511(1).zip</div>
+            <div class="file-item">ACR 4250 BP5511.zip</div>
+            <div class="file-item">AD182 (Fiat Brava SX).zip</div>
+            <div class="file-item">AD-182H (Grundig).zip</div>
+            <div class="file-item">AIWA CT-R2YZ RDS.zip</div>
+            <div class="file-item">AJ 9600R.zip</div>
+            <div class="file-item">AKF-0816EY.zip</div>
+            <div class="file-item">AKF-4306EG.zip</div>
+            <div class="file-item">AKF-9445R.zip</div>
+            <div class="file-item">alha4ph.bin</div>
+            <div class="file-item">Alpine 3DE-7886.zip</div>
+            <div class="file-item">Alpine 7288(1).zip</div>
+            <div class="file-item">Alpine 7288.zip</div>
+            <div class="file-item">Alpine CDM-7983R.zip</div>
+            <div class="file-item">Alpine MF2297(1).zip</div>
+            <div class="file-item">Alpine MF2297.zip</div>
+            <div class="file-item">Alpine MF2910 CD10.zip</div>
+            <div class="file-item">AS0400.ZIP</div>
+            <div class="file-item">AS0420.ZIP</div>
+            <div class="file-item">AS0430.ZIP</div>
+            <div class="file-item">AS0440.ZIP</div>
+            <div class="file-item">AS0480.ZIP</div>
+            <div class="file-item">AS0490.ZIP</div>
+            <div class="file-item">AS0510.ZIP</div>
+            <div class="file-item">AS0560.ZIP</div>
+            <div class="file-item">AS0610.ZIP</div>
+            <div class="file-item">AS0620.ZIP</div>
+            <div class="file-item">AS0700.ZIP</div>
+            <div class="file-item">Astra 300.zip</div>
+            <div class="file-item">AUDI Beta (Blaupunkt)(1).zip</div>
+            <div class="file-item">AUDI Beta (Blaupunkt).zip</div>
+            <div class="file-item">Audi Beta Autoreverse AUZ8Z2(1).rar</div>
+            <div class="file-item">Audi Beta Autoreverse AUZ8Z2.rar</div>
+            <div class="file-item">AUDI Beta CC Autoreverse (Blaupunkt)(1).zip</div>
+            <div class="file-item">AUDI Beta CC Autoreverse (Blaupunkt).zip</div>
+            <div class="file-item">AUDI BETA CC AUTOREVERSE.rar</div>
+            <div class="file-item">AUDI Beta CC AUZIZ2.zip</div>
+            <div class="file-item">AUDI Concert HC105 (Matsushita AUZ5Z3).zip</div>
+            <div class="file-item">AUDI Concert HC206 (Matsushita AUZ5Z3)(1).zip</div>
+            <div class="file-item">AUDI Concert HC206 (Matsushita AUZ5Z3).zip</div>
+            <div class="file-item">AUDI Concert Plus AUZ1Z3 (Blaupunkt).zip</div>
+            <div class="file-item">AUDI Gamma (M327) (Hitachi CSK-706A(R))(1).zip</div>
+            <div class="file-item">AUDI Gamma (M327) (Hitachi CSK-706A(R)).zip</div>
+            <div class="file-item">AUDI Gamma 2a VWZ2Z3.zip</div>
+            <div class="file-item">AUDI Gamma CC (Bose US AUZ1Z4)(1).zip</div>
+            <div class="file-item">AUDI Gamma CC (Bose US AUZ1Z4).zip</div>
+            <div class="file-item">AUDI Gamma CC (Panasonic CQ-LA1020L).zip</div>
+            <div class="file-item">AUDI GAMMA CC RDS(1).rar</div>
+            <div class="file-item">AUDI GAMMA CC RDS.rar</div>
+            <div class="file-item">AUDI Gamma CD (Panasonic CQ-JA1020L)(1).zip</div>
+            <div class="file-item">AUDI Gamma CD (Panasonic CQ-JA1020L).zip</div>
+            <div class="file-item">AUDI GAMMA CD.rar</div>
+            <div class="file-item">AUDI-GAMMA CSK-706A(R).rar</div>
+            <div class="file-item">Avus 2000 BE1145.zip</div>
+            <div class="file-item">Avus 2000 BE2035 RDS(1).zip</div>
+            <div class="file-item">Avus 2000 BE2035 RDS.zip</div>
+            <div class="file-item">Avus Cassette BE0749.zip</div>
+            <div class="file-item">Avus Cassette BE0778(1).zip</div>
+            <div class="file-item">Avus Cassette BE0778.zip</div>
+            <div class="file-item">Avus Cassette BE0779.zip</div>
+            <div class="file-item">AX-835.ZIP</div>
+            <div class="file-item">AX-845.ZIP</div>
+            <div class="file-item">AX-855.ZIP</div>
+            <div class="file-item">AX-1845.ZIP</div>
+            <div class="file-item">b3250cod.bin</div>
+            <div class="file-item">bancon24.bin</div>
+            <div class="file-item">bav1801.bin</div>
+            <div class="file-item">bcc20.bin</div>
+            <div class="file-item">bcdii.bin</div>
+            <div class="file-item">beck794.bin</div>
+            <div class="file-item">Bern (CXK1012).zip</div>
+            <div class="file-item">bl45.bin</div>
+            <div class="file-item">bl331.bin</div>
+            <div class="file-item">bl5451.bin</div>
+            <div class="file-item">bla_531.bin</div>
+            <div class="file-item">blaes43.bin</div>
+            <div class="file-item">blau39co.bin</div>
+            <div class="file-item">blau49or.bin</div>
+            <div class="file-item">blau331.bin</div>
+            <div class="file-item">blau3251.bin</div>
+            <div class="file-item">blau9430.bin</div>
+            <div class="file-item">blau9431.bin</div>
+            <div class="file-item">blaucr31.bin</div>
+            <div class="file-item">blaucr43.bin</div>
+            <div class="file-item">blaup531.bin</div>
+            <div class="file-item">BLAUPUNKT ACD 9430.rar</div>
+            <div class="file-item">BLAUPUNKT ACR 3225(1).rar</div>
+            <div class="file-item">BLAUPUNKT ACR 3225.rar</div>
+            <div class="file-item">BLAUPUNKT ACR 3250.rar</div>
+            <div class="file-item">BLAUPUNKT ALPHA(1).rar</div>
+            <div class="file-item">BLAUPUNKT ALPHA.rar</div>
+            <div class="file-item">BLAUPUNKT ANCONA CR 24.rar</div>
+            <div class="file-item">BLAUPUNKT AUDI BETA(1).rar</div>
+            <div class="file-item">BLAUPUNKT AUDI BETA.rar</div>
+            <div class="file-item">BLAUPUNKT BAVARIA CIII.rar</div>
+            <div class="file-item">BLAUPUNKT BMW BAVARIA C REVERSE II(1).rar</div>
+            <div class="file-item">BLAUPUNKT BMW BAVARIA C REVERSE II.rar</div>
+            <div class="file-item">BLAUPUNKT BMW BAVARIA C REVERSE III.rar</div>
+            <div class="file-item">BLAUPUNKT BMW BAVARIA ELECTRONIC CDII(1).rar</div>
+            <div class="file-item">BLAUPUNKT BMW BAVARIA ELECTRONIC CDII.rar</div>
+            <div class="file-item">BLAUPUNKT BMW REVERSE.rar</div>
+            <div class="file-item">BLAUPUNKT BP 8480 (1).rar</div>
+            <div class="file-item">BLAUPUNKT BP 8480 .rar</div>
+            <div class="file-item">BLAUPUNKT CAMBRIDGE CC 31(1).rar</div>
+            <div class="file-item">BLAUPUNKT CAMBRIDGE CC 31.rar</div>
+            <div class="file-item">BLAUPUNKT DUSSELDORF SQM 39.rar</div>
+            <div class="file-item">BLAUPUNKT DUSSELDORF SQR 39(1).rar</div>
+            <div class="file-item">BLAUPUNKT DUSSELDORF SQR 39.rar</div>
+            <div class="file-item">BLAUPUNKT DUSSELDORF SQR 49.rar</div>
+            <div class="file-item">BLAUPUNKT ESSEN CR 31(1).rar</div>
+            <div class="file-item">BLAUPUNKT ESSEN CR 31.rar</div>
+            <div class="file-item">BLAUPUNKT FINISH LINE 320.rar</div>
+            <div class="file-item">BLAUPUNKT FREIBURG SQR 39(1).rar</div>
+            <div class="file-item">BLAUPUNKT FREIBURG SQR 39.rar</div>
+            <div class="file-item">BLAUPUNKT GAMMA.rar</div>
+            <div class="file-item">BLAUPUNKT LUBECK BOSTON CC 20(1).rar</div>
+            <div class="file-item">BLAUPUNKT LUBECK BOSTON CC 20.rar</div>
+            <div class="file-item">BLAUPUNKT LUBECK BOSTON CC 22.rar</div>
+            <div class="file-item">BLAUPUNKT LUBECK RCC 45(1).rar</div>
+            <div class="file-item">BLAUPUNKT LUBECK RCC 45.rar</div>
+            <div class="file-item">BLAUPUNKT MONTREUX RCR 44.rar</div>
+            <div class="file-item">BLAUPUNKT SC202(1).rar</div>
+            <div class="file-item">BLAUPUNKT SC202.rar</div>
+            <div class="file-item">BLAUPUNKT STOCKHOLM RCR 42.rar</div>
+            <div class="file-item">BLAUPUNKT TRIER CC 31(1).rar</div>
+            <div class="file-item">BLAUPUNKT TRIER CC 31.rar</div>
+            <div class="file-item">BLAUPUNKT VERONA CR 43.rar</div>
+            <div class="file-item">blfin621.bin</div>
+            <div class="file-item">blfini1.bin</div>
+            <div class="file-item">blfinish.bin</div>
+            <div class="file-item">blscd09.bin</div>
+            <div class="file-item">blu31.bin</div>
+            <div class="file-item">blubec22.bin</div>
+            <div class="file-item">bm0774_1.bin</div>
+            <div class="file-item">bmv_rev2.bin</div>
+            <div class="file-item">bmw0774.bin</div>
+            <div class="file-item">bmw0776.bin</div>
+            <div class="file-item">bmwc0728.bin</div>
+            <div class="file-item">bmwcdii.bin</div>
+            <div class="file-item">bscd09a.bin</div>
+            <div class="file-item">bul20.bin</div>
+            <div class="file-item">CAR200 (D)(1).zip</div>
+            <div class="file-item">CAR200 (D).zip</div>
+            <div class="file-item">CAR400 (DC396-75).zip</div>
+            <div class="file-item">car400.zip</div>
+            <div class="file-item">CDC 6000.zip</div>
+            <div class="file-item">CDC 6300(1).zip</div>
+            <div class="file-item">CDC 6300.zip</div>
+            <div class="file-item">CDR 2005(1).zip</div>
+            <div class="file-item">CDR 2005.zip</div>
+            <div class="file-item">CDR500(E).zip</div>
+            <div class="file-item">CDR2005(E).zip</div>
+            <div class="file-item">Challenge 400(1).zip</div>
+            <div class="file-item">Challenge 400.zip</div>
+            <div class="file-item">Challenge 500.zip</div>
+            <div class="file-item">Challenge 600 CD(1).zip</div>
+            <div class="file-item">Challenge 600 CD.zip</div>
+            <div class="file-item">CLARION PN-9524.rar</div>
+            <div class="file-item">CLARION PP-9924E Nissan(1).rar</div>
+            <div class="file-item">CLARION PP-9924E Nissan.rar</div>
+            <div class="file-item">CLARION PU-9527A.rar</div>
+            <div class="file-item">CLARION PU-9880A(1).rar</div>
+            <div class="file-item">CLARION PU-9880A.rar</div>
+            <div class="file-item">CRH 81R PE-9439A.zip</div>
+            <div class="file-item">CRX 83R.zip</div>
+            <div class="file-item">CRX 85R(1).zip</div>
+            <div class="file-item">CRX 85R.zip</div>
+            <div class="file-item">CRX 115R(1).zip</div>
+            <div class="file-item">CRX 115R.zip</div>
+            <div class="file-item">CTR 560 (AutoSound).zip</div>
+            <div class="file-item">CTR 620 (AutoSound)(1).zip</div>
+            <div class="file-item">CTR 620 (AutoSound).zip</div>
+            <div class="file-item">CXR-252 RP.zip</div>
+            <div class="file-item">DC449 64L PHF011W(1).zip</div>
+            <div class="file-item">DC449 64L PHF011W.zip</div>
+            <div class="file-item">DC670 (Philips)(1).zip</div>
+            <div class="file-item">DC670 (Philips).zip</div>
+            <div class="file-item">DC681 (Philips).zip</div>
+            <div class="file-item">DC684 (Philips)(1).zip</div>
+            <div class="file-item">DC684 (Philips).zip</div>
+            <div class="file-item">DC685 (Philips).zip</div>
+            <div class="file-item">EC 4000 RDS.zip</div>
+            <div class="file-item">EC 4200 RDS(1).zip</div>
+            <div class="file-item">EC 4200 RDS.zip</div>
+            <div class="file-item">EC 4290 CD.zip</div>
+            <div class="file-item">EC 4600 RDS(1).zip</div>
+            <div class="file-item">EC 4600 RDS.zip</div>
+            <div class="file-item">EC 4790 CD.zip</div>
+            <div class="file-item">Escort 22 DPS 770 (Interconti).zip</div>
+            <div class="file-item">Europa 2000 (24v) BE1241(1).zip</div>
+            <div class="file-item">Europa 2000 (24v) BE1241.zip</div>
+            <div class="file-item">Europa 2000 BE1100.zip</div>
+            <div class="file-item">Europa 2000 BE1120(1).zip</div>
+            <div class="file-item">Europa 2000 BE1120.zip</div>
+            <div class="file-item">Europa 2000 BE1240.zip</div>
+            <div class="file-item">Europa Cassette BE0749(1).zip</div>
+            <div class="file-item">Europa Cassette BE0749.zip</div>
+            <div class="file-item">exsl.bin</div>
+            <div class="file-item">fi855a.bin</div>
+            <div class="file-item">Finish Line 441.zip</div>
+            <div class="file-item">Finish Line 540(1).zip</div>
+            <div class="file-item">Finish Line 540.zip</div>
+            <div class="file-item">fis1845.bin</div>
+            <div class="file-item">fis1845a.bin</div>
+            <div class="file-item">fish835.bin</div>
+            <div class="file-item">fish835a.bin</div>
+            <div class="file-item">fish855.bin</div>
+            <div class="file-item">FMS150.ZIP</div>
+            <div class="file-item">fo_2008a.bin</div>
+            <div class="file-item">fo2004-1.bin</div>
+            <div class="file-item">FORD 2000.rar</div>
+            <div class="file-item">FORD 2001(1).rar</div>
+            <div class="file-item">FORD 2001.rar</div>
+            <div class="file-item">FORD 2002.rar</div>
+            <div class="file-item">FORD 2004(1).rar</div>
+            <div class="file-item">FORD 2004.rar</div>
+            <div class="file-item">FORD 2006.rar</div>
+            <div class="file-item">FORD 2007(1).rar</div>
+            <div class="file-item">FORD 2007.rar</div>
+            <div class="file-item">FORD 2014 91FB.rar</div>
+            <div class="file-item">FORD 2014(1).rar</div>
+            <div class="file-item">FORD 2014.rar</div>
+            <div class="file-item">FORD 2015.rar</div>
+            <div class="file-item">FORD EP12DS(1).rar</div>
+            <div class="file-item">FORD EP12DS.rar</div>
+            <div class="file-item">ford2004.bin</div>
+            <div class="file-item">ford2008.bin</div>
+            <div class="file-item">G4 (A) (Blaupunkt).zip</div>
+            <div class="file-item">G4 (D) (Blaupunkt)(1).zip</div>
+            <div class="file-item">G4 (D) (Blaupunkt).zip</div>
+            <div class="file-item">Grand Prix 2000 BE1302.zip</div>
+            <div class="file-item">Grand Prix 2000 BE1310.zip</div>
+            <div class="file-item">GRUNDIG 2804 VD REVERSE.rar</div>
+            <div class="file-item">KEH-5080 SDK.zip</div>
+            <div class="file-item">Mexico 2000 BE1430.zip</div>
+            <div class="file-item">PHILIPS 22 DC 575.rar</div>
+            <div class="file-item">PHILIPS 22 DC 680.rar</div>
+            <div class="file-item">PHILIPS 22 DC 701.rar</div>
+            <div class="file-item">PHILIPS GAMMA-3 RDS.rar</div>
+            <div class="file-item">VOLVO CR-802.rar</div>
+            <div class="file-item">VOLVO CR-902.rar</div>
+            <div class="file-item">VOLVO SC-810.rar</div>
+            <div class="file-item">WKC 1630 VD Reverse.zip</div>
+            <div class="file-item">WKC 3200 RDS.zip</div>
+            <div class="file-item">WKC 5100 RDS.zip</div>
+            <div class="file-item">WKC 5500 RDS.zip</div>
+            <div class="file-item">zbm92ok.bin</div>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP 2: RADYO KOD ÜRETİCİLERİ PROGRAM ARŞİVİ -->
+<div class="modal-overlay" id="calcModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>🖥️ RADYO KOD ÜRETİCİLERİ VE HESAPLAMA PROGRAMLARI</h3>
+            <button class="modal-close" onclick="closeCalcModal()">&times;</button>
+        </div>
+        <div class="modal-search">
+            <input type="text" id="calcSearchInput" onkeyup="filterArchiveFiles('calcFileList', 'calcSearchInput')" placeholder="Program / Hesaplayıcı ara... (Örn: Becker, Ford, Grundig, Volvo)">
+        </div>
+        <div class="modal-body" id="calcFileList">
+            <div class="file-item">Becker Standart</div>
+            <div class="file-item">Becker-bz_calcb4</div>
+            <div class="file-item">Blaupunkt code</div>
+            <div class="file-item">calarion-pu 9317-9318-9654</div>
+            <div class="file-item">Fiat-BP code</div>
+            <div class="file-item">Ford code</div>
+            <div class="file-item">Ford Standart code</div>
+            <div class="file-item">Grundig Serial</div>
+            <div class="file-item">Hyundai code</div>
+            <div class="file-item">Kenwood code</div>
+            <div class="file-item">MERCDE-CODE-RAUDIO-10</div>
+            <div class="file-item">Mercedes code</div>
+            <div class="file-item">Philips code</div>
+            <div class="file-item">Pioneer code</div>
+            <div class="file-item">UnivCalc</div>
+            <div class="file-item">RadioCodeDatabase</div>
+            <div class="file-item">ArmAccess.dll</div>
+            <div class="file-item">Becker calc B9 4 digits.exe</div>
+            <div class="file-item">Becker calc B9 5 digits.exe</div>
+            <div class="file-item">becker3.exe</div>
+            <div class="file-item">bgcalc.exe</div>
+            <div class="file-item">blaupunkt CAR300.exe</div>
+            <div class="file-item">Blaupunkt Standart.EXE</div>
+            <div class="file-item">BLAUPUNKT.EXE</div>
+            <div class="file-item">blaupunkt lancia 843 II MY C1 V2 P3.exe</div>
+            <div class="file-item">BP Fiat_Alfa_Peug Calc.exe</div>
+            <div class="file-item">BP calc.exe</div>
+            <div class="file-item">bp_calc.exe</div>
+            <div class="file-item">bpdemo.exe</div>
+            <div class="file-item">CalcGEN Instructions.rtf</div>
+            <div class="file-item">CalcGen.exe</div>
+            <div class="file-item">CalcGen.ini</div>
+            <div class="file-item">CalcGEN_2009_crk.exe</div>
+            <div class="file-item">clarion oto tesyb code.exe</div>
+            <div class="file-item">Daewoo clarion oto tesyb code.exe</div>
+            <div class="file-item">file_id.diz</div>
+            <div class="file-item">FORD L C .exe</div>
+            <div class="file-item">ford_L+C code.exe</div>
+            <div class="file-item">FordM.EXE</div>
+            <div class="file-item">FordM.VEXE</div>
+            <div class="file-item">GRUNDIG Code Calculator.exe</div>
+            <div class="file-item">Grundig Calculator.exe</div>
+            <div class="file-item">Grundig SC303D Calc.exe</div>
+            <div class="file-item">GRUNDIG WKC Series Code Calculator 3.10.exe</div>
+            <div class="file-item">GRUNDIG WKC Series Code Calculator 4.00 by stef_no1.exe</div>
+            <div class="file-item">HONDA.exe</div>
+            <div class="file-item">JVC kameleon.exe</div>
+            <div class="file-item">KRC777R.EXE</div>
+            <div class="file-item">OKUU.txt</div>
+            <div class="file-item">opel-303D.EXE</div>
+            <div class="file-item">Radio code calc help.jpg</div>
+            <div class="file-item">renault yeni.exe</div>
+            <div class="file-item">RENAULT PRE-CODE CALCULATOR.rar</div>
+            <div class="file-item">Renault Teyp.rar</div>
+            <div class="file-item">Volvo CR-705 Code Calculator 1.01.exe</div>
+            <div class="file-item">Volvo CR-905 Code Calculator 1.00.exe</div>
+            <div class="file-item">Volvo CR-905Code Calculator1.00.exe</div>
+        </div>
+    </div>
+</div>
+
+<a href="https://wa.me/905074377818?text=Merhaba,%20Radyo%20kodu%20hakkında%20bilgi%20almak%20istiyorum." class="whatsapp-float" target="_blank">
+    <div class="wa-avatar">
+        <div class="wa-online-dot"></div>
+        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+    </div>
+    <div class="wa-text">
+        <span class="title">7/24 Canlı Destek</span>
+        <span class="action">WhatsApp'tan Ulaşın</span>
+    </div>
+</a>
+
+<script>
+    // 4 Saniye Dolduğunda Açılış Ekranını Kapatma Fonksiyonu
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const splash = document.getElementById('splash-screen');
+            if(splash) {
+                splash.classList.add('hidden');
+            }
+        }, 4000);
+    });
+
+    function openArchiveModal() {
+        document.getElementById('archiveModal').classList.add('active');
+    }
+
+    function closeArchiveModal() {
+        document.getElementById('archiveModal').classList.remove('active');
+    }
+
+    function openCalcModal() {
+        document.getElementById('calcModal').classList.add('active');
+    }
+
+    function closeCalcModal() {
+        document.getElementById('calcModal').classList.remove('active');
+    }
+
+    function filterArchiveFiles(listId, inputId) {
+        const input = document.getElementById(inputId).value.toLowerCase();
+        const fileItems = document.querySelectorAll('#' + listId + ' .file-item');
+
+        fileItems.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(input)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    // KOD VE KOPYALAMA GÜVENLİK KORUMALARI
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    document.addEventListener('selectstart', function(e) {
+        if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape") {
+            closeArchiveModal();
+            closeCalcModal();
+        }
+        if (
+            e.keyCode === 123 || // F12
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
+            (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 80)) // Ctrl+U / Ctrl+S / Ctrl+P
+        ) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+</body>
+</html>

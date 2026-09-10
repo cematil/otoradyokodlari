@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dacia Teyp Kodu Çözücü</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dacia-orange: #E05A47;
+            --dacia-orange-hover: #F06B58;
+            --bg-dark: #0B0E11;
+            --card-bg: #161B22;
+            --input-bg: #0D1117;
+            --text-main: #FFFFFF;
+            --text-muted: #8B949E;
+            --accent-glow: rgba(224, 90, 71, 0.4);
+            --border-color: #30363D;
+        }
+
+        /* Güvenlik: Metin Seçimini Engelleme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Input alanı metin seçimine ve yazmaya izin verir */
+        input {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 15px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(224, 90, 71, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 80% 100%, rgba(224, 90, 71, 0.05) 0%, transparent 40%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        /* Hareketli ve Vurgulu Logo Bölümü */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 25px;
+            perspective: 1000px;
+        }
+
+        .rhombus-logo {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--dacia-orange);
+            transform: rotate(45deg);
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 25px var(--accent-glow);
+            position: relative;
+            animation: logoPulse 2.5s infinite alternate ease-in-out;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .rhombus-logo::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 2px solid var(--dacia-orange);
+        }
+
+        .rhombus-logo::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 1px solid rgba(224, 90, 71, 0.3);
+            animation: rotateGlow 6s linear infinite;
+        }
+
+        @keyframes logoPulse {
+            0% {
+                box-shadow: 0 0 15px rgba(224, 90, 71, 0.3);
+                transform: rotate(45deg) scale(1);
+            }
+            100% {
+                box-shadow: 0 0 35px rgba(224, 90, 71, 0.8), 0 0 15px #E05A47;
+                transform: rotate(45deg) scale(1.08);
+            }
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Dikkat Çekici Başlık ve Harfler */
+        .brand-header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .brand-header h1 span {
+            color: var(--dacia-orange);
+            display: inline-block;
+            text-shadow: 0 0 12px var(--accent-glow);
+            animation: glowText 2s infinite alternate;
+        }
+
+        @keyframes glowText {
+            from { text-shadow: 0 0 5px var(--accent-glow); }
+            to { text-shadow: 0 0 18px var(--dacia-orange), 0 0 30px var(--dacia-orange); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--dacia-orange), transparent);
+        }
+
+        p.desc {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            background: var(--input-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--dacia-orange);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* En İyi Şekilde Düzenlenmiş Dinamik Buton */
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #F06B58 0%, #E05A47 50%, #C44534 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px var(--accent-glow);
+            touch-action: manipulation;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: rotate(30deg);
+            transition: 0.5s;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            20% { transform: translateX(100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #F06B58 0%, #E05A47 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(224, 90, 71, 0.6);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(224, 90, 71, 0.4);
+        }
+
+        /* Sonuç Kutusu - Vurgulu Kod Görünümü */
+        .result-box {
+            margin-top: 25px;
+            padding: 22px;
+            background: #050709;
+            border: 2px solid rgba(224, 90, 71, 0.4);
+            border-radius: 14px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+            box-shadow: inset 0 0 15px rgba(224, 90, 71, 0.1);
+        }
+
+        .result-box.active {
+            display: block;
+        }
+
+        .code-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .code-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 46px;
+            font-weight: 900;
+            color: var(--dacia-orange);
+            letter-spacing: 10px;
+            text-shadow: 0 0 15px var(--accent-glow), 0 0 30px rgba(224, 90, 71, 0.3);
+        }
+
+        .error {
+            color: #FF4D4D;
+            background: rgba(255, 77, 77, 0.12);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Rehber Kartı ve Tıklanabilir Resim */
+        .guide-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+
+        .guide-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dacia-orange);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .img-container {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .img-container:hover {
+            border-color: var(--dacia-orange);
+            transform: scale(1.01);
+        }
+
+        .guide-img {
+            width: 100%;
+            display: block;
+            pointer-events: none; /* Sürüklemeyi engeller */
+        }
+
+        .img-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.75);
+            color: var(--dacia-orange);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(224, 90, 71, 0.3);
+            pointer-events: none;
+        }
+
+        .steps-list {
+            list-style: none;
+        }
+
+        .steps-list li {
+            position: relative;
+            padding-left: 28px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .steps-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .steps-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--dacia-orange);
+            font-weight: bold;
+        }
+
+        .highlight-text {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .badge {
+            background: rgba(224, 90, 71, 0.15);
+            color: var(--dacia-orange);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        /* Uyumlu Modeller Kartı Stilleri */
+        .compatibility-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+
+        .compatibility-card h3 {
+            font-size: 15px;
+            color: var(--dacia-orange);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .compatibility-card h4 {
+            font-size: 13px;
+            color: var(--text-main);
+            margin: 14px 0 6px 0;
+            border-bottom: 1px solid rgba(224, 90, 71, 0.2);
+            padding-bottom: 4px;
+        }
+
+        .compatibility-card p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Uyum Tablosu */
+        .compat-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        .compat-table th, .compat-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        .compat-table th {
+            background: #0D1117;
+            color: var(--dacia-orange);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .compat-table td {
+            color: var(--text-muted);
+        }
+
+        .compat-status {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Resim Popup (Modal) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 12px;
+            border: 2px solid var(--dacia-orange);
+            box-shadow: 0 0 30px rgba(224, 90, 71, 0.4);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #fff;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--dacia-orange);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Mobil Cihazlara Özel Uyum (iOS / Android) */
+        @media (max-width: 480px) {
+            body { padding: 15px 10px; }
+            .card { padding: 24px 18px; }
+            .brand-header h1 { font-size: 22px; }
+            input { font-size: 20px; padding: 14px; }
+            button { padding: 16px; font-size: 15px; }
+            .code-value { font-size: 38px; }
+            .compat-table th, .compat-table td { padding: 6px 8px; font-size: 11px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;"> <!-- Sağ Tıklama Engeli -->
+
+<div class="container">
+    <div class="brand-header">
+        <div class="rhombus-logo"></div>
+        <h1>Dacia <span>Radyo Kodu</span></h1>
+    </div>
+
+    <!-- Hesaplayıcı Kartı -->
+    <div class="card">
+        <p class="desc">Teyp arkasındaki etikette yer alan Precode şifresini girerek 4 haneli açılış kodunu öğrenin.</p>
+        
+        <div class="form-group">
+            <label for="precode">Precode Giriniz</label>
+            <div class="input-wrapper">
+                <input type="text" id="precode" placeholder="Örn: A123" maxlength="4" autocomplete="off">
+            </div>
+        </div>
+
+        <button onclick="calculateCode()">Kodu Oluştur</button>
+
+        <div class="error" id="errorMsg">
+            ⚠️ Geçersiz Precode! Lütfen 1 harf ve 3 rakam girin (Örn: A123, K326).
+        </div>
+
+        <div class="result-box" id="resultBox">
+            <div class="code-title">Radyo Açılış Kodu</div>
+            <div class="code-value" id="codeDisplay">0000</div>
+        </div>
+    </div>
+
+    <!-- Precode Bulma Rehberi -->
+    <div class="guide-card">
+        <div class="guide-title">
+            💡 Precode (Ön Kod) Nerede Bulunur?
+        </div>
+
+        <!-- Tıklandığında Popup Açan Resim Kapsayıcısı -->
+        <div class="img-container" onclick="openModal()">
+            <img src="dacia-precode-rehber.jpg" alt="Dacia Teyp Precode Etiketi Bulma Rehberi" class="guide-img" id="guideImg">
+            <div class="img-hint">🔍 Büyütmek için tıklayın</div>
+        </div>
+
+        <ul class="steps-list">
+            <li>
+                <span class="highlight-text">Adım 1 - Teybi Çıkarın:</span> Sökme aparatları ile teybi hafifçe yuvasından dışarı çekin.
+            </li>
+            <li>
+                <span class="highlight-text">Adım 2 - Etiketi Bulun:</span> Teybin üstünde veya yanındaki beyaz seri numarası etiketine bakın.
+            </li>
+            <li>
+                <span class="highlight-text">Adım 3 - Precode'u Alın:</span> Etiketteki <span class="badge">SECURITY</span> alanındaki 1 harf 3 rakamlı kodu alın (Örn: <span class="badge">A123</span>).
+            </li>
+        </ul>
+    </div>
+
+    <!-- Uyumlu Araçlar ve Teyp Modelleri Kartı -->
+    <div class="compatibility-card">
+        <h3>🚗 Uyumlu Araç ve Teyp Modelleri</h3>
+        <p>Bu sistem, üretilen tüm fabrikasyon Dacia radyo/teyp modellerinin Pre-Code çözümlerini kapsar.</p>
+
+        <h4>Dacia Araçlar:</h4>
+        <p>Logan 1-2, Logan MCV, Sandero 1-2, Sandero Stepway 1-2, Duster 1-2, Lodgy, Dokker.</p>
+
+        <h4>Desteklenen Markalar:</h4>
+        <p>LG, Daichi, Continental, VDO, Blaupunkt, Renault-Dacia Orijinal Üniteler.</p>
+
+        <h4>Teyp Türüne Göre Uyum Tablosu:</h4>
+        <table class="compat-table">
+            <thead>
+                <tr>
+                    <th>Teyp Modeli</th>
+                    <th>Durum</th>
+                    <th>Açıklama</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Dacia Plug & Radio</strong></td>
+                    <td class="compat-status">🟢</td>
+                    <td>Bluetooth & USB destekli standart 1DIN/2DIN teypler.</td>
+                </tr>
+                <tr>
+                    <td><strong>Klasik CD / Kaset Çalar</strong></td>
+                    <td class="compat-status">🟢</td>
+                    <td>Eski kasa Logan ve Sandero orijinal radyo üniteleri.</td>
+                </tr>
+                <tr>
+                    <td><strong>MediaNav & R-Link</strong></td>
+                    <td class="compat-status">🔴</td>
+                    <td>Dokunmatik ekranlı yeni nesil navigasyon sistemleri.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-text">
+        © Dacia Araç Radyo Şifre Çözücü
+    </div>
+</div>
+
+<!-- Resim Popup (Modal) Alanı -->
+<div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" src="dacia-precode-rehber.jpg" alt="Büyütülmüş Rehber Görseli" onclick="event.stopPropagation();">
+</div>
+
+<script>
+    // Algoritma Mantığı (Renault / Dacia Pre-Code Ortak Matematiksel Algoritması)
+    function getDaciaCode(precode) {
+        precode = precode.toUpperCase();
+        
+        if (!/^[A-Z]\d{3}$/.test(precode) || precode.startsWith("A0")) {
+            return null;
+        }
+
+        let x = precode.charCodeAt(1) + precode.charCodeAt(0) * 10 - 698;
+        let y = precode.charCodeAt(3) + precode.charCodeAt(2) * 10 + x - 528;
+        let z = (y * 7) % 100;
+        
+        let codeInt = Math.floor(z / 10) + (z % 10) * 10 + ((259 % x) % 100) * 100;
+        
+        return codeInt.toString().padStart(4, '0');
+    }
+
+    function calculateCode() {
+        const input = document.getElementById('precode').value.trim();
+        const resultBox = document.getElementById('resultBox');
+        const errorMsg = document.getElementById('errorMsg');
+        const codeDisplay = document.getElementById('codeDisplay');
+
+        const calculatedCode = getDaciaCode(input);
+
+        if (calculatedCode !== null) {
+            errorMsg.style.display = 'none';
+            codeDisplay.innerText = calculatedCode;
+            resultBox.classList.add('active');
+        } else {
+            resultBox.classList.remove('active');
+            errorMsg.style.display = 'block';
+        }
+    }
+
+    const inputField = document.getElementById('precode');
+    
+    inputField.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+    });
+
+    inputField.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            calculateCode();
+        }
+    });
+
+    // Popup (Modal) Fonksiyonları
+    function openModal() {
+        const modal = document.getElementById("imageModal");
+        modal.classList.add("show");
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("imageModal");
+        modal.classList.remove("show");
+    }
+
+    // ESC Tuşu ile Modal Kapatma
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape") {
+            closeModal();
+        }
+    });
+
+    // --- Güvenlik Korumaları ---
+    // 1. Resim Sürüklemeyi Engelleme
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+
+    // 2. Kısayol Tuşlarını Engelleme (F12, Ctrl+U, Ctrl+Shift+I vb.)
+    document.addEventListener('keydown', function(e) {
+        if (
+            e.keyCode === 123 || // F12
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
+            (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83)) // Ctrl+U / Ctrl+S
+        ) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+
+</body>
+</html>
