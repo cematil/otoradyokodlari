@@ -1,0 +1,8 @@
+{
+  "appId": "com.otoradyokodlari.app",
+  "appName": "Oto Radyo Kodları",
+  "webDir": "app",
+  "android": {
+    "backgroundColor": "#0b1020"
+  }
+}
