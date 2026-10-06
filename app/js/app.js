@@ -225,21 +225,64 @@
         return String(code).padStart(4, "0");
     }
 
+    // Maske: 9 = rakam, A = harf, * = harf/rakam, diğer karakterler sabit (ör. Ford "M999999")
+    function isSlot(c) {
+        return c === "9" || c === "A" || c === "*";
+    }
+
+    function fits(ch, slot) {
+        if (slot === "9") return /[0-9]/.test(ch);
+        if (slot === "A") return /[A-Z]/.test(ch);
+        return /[A-Z0-9]/.test(ch);
+    }
+
+    function applyMask(raw, mask) {
+        var src = raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
+        if (!mask) return src;
+        var out = "";
+        var i = 0;
+        for (var p = 0; p < mask.length && i < src.length; p++) {
+            var slot = mask.charAt(p);
+            if (isSlot(slot)) {
+                while (i < src.length && !fits(src.charAt(i), slot)) i++;
+                if (i >= src.length) break;
+                out += src.charAt(i++);
+            } else {
+                out += slot;
+                if (src.charAt(i) === slot) i++;
+            }
+        }
+        return out;
+    }
+
+    // "A999" -> "1 harf + 3 rakam", "M999999" -> "M + 6 rakam"
+    function describeMask(mask) {
+        if (mask.indexOf("*") !== -1) return t("fmtMixed", { n: mask.length });
+        var parts = [];
+        var re = /(9+|A+|[^9A*]+)/g;
+        var mt;
+        while ((mt = re.exec(mask))) {
+            var run = mt[1];
+            if (run.charAt(0) === "9") parts.push(t(run.length === 1 ? "fmtDigit1" : "fmtDigits", { n: run.length }));
+            else if (run.charAt(0) === "A") parts.push(t(run.length === 1 ? "fmtLetter1" : "fmtLetters", { n: run.length }));
+            else parts.push(run);
+        }
+        return parts.join(" + ");
+    }
+
     function lookup(model, rawInput) {
         var input = rawInput.replace(/[\s-]/g, "").toUpperCase();
 
         if (model.type === "renault") {
+            if (input.length !== 4) return Promise.resolve({ error: t("errPrecode") });
             var c = precodeToCode(input);
             return Promise.resolve(c ? { code: c, serial: input } : { error: t("errPrecode") });
         }
 
         var keyLen = model.keyLen || model.maxLen;
-        var minLen = Math.min(keyLen, model.maxLen);
-        if (input.length < minLen || input.length > model.maxLen) {
-            var expected = minLen === model.maxLen
-                ? t("errLenExact", { n: model.maxLen })
-                : t("errLenRange", { min: minLen, max: model.maxLen });
-            return Promise.resolve({ error: t("errLen", { expected: expected, n: input.length }) });
+        var mask = model.mask || "";
+        if (mask && input.length !== mask.length) {
+            return Promise.resolve({ error: t("errFormat", { fmt: describeMask(mask), n: mask.length }) });
         }
 
         var key = input.slice(-keyLen);
@@ -378,11 +421,74 @@
             '<div class="list">' + b.models.map(modelItem).join("") + "</div>";
     }
 
+    // Her model için özgün, çizimli 3 adımlı rehber (SVG)
+    function guideSteps(m) {
+        var example = m.example || m.placeholder || "";
+        var keyLen = m.type === "renault" ? example.length : (m.keyLen || example.length);
+        var head = example.slice(0, Math.max(0, example.length - keyLen));
+        var tail = example.slice(-keyLen);
+        var isPre = m.type === "renault";
+        var fs = example.length > 11 ? 13 : 16;
+
+        var svg1 =
+            '<svg viewBox="0 0 240 140" class="ill" aria-hidden="true">' +
+            '<rect x="20" y="22" width="200" height="96" rx="14" class="ill-dash"/>' +
+            '<rect x="44" y="40" width="152" height="60" rx="8" class="ill-slot"/>' +
+            '<g class="ill-slide"><rect x="62" y="50" width="152" height="60" rx="8" class="ill-unit"/>' +
+            '<rect x="76" y="60" width="70" height="18" rx="4" class="ill-screen"/>' +
+            '<circle cx="186" cy="70" r="10" class="ill-knob"/>' +
+            '<g class="ill-btn"><rect x="76" y="86" width="14" height="12" rx="3"/><rect x="94" y="86" width="14" height="12" rx="3"/><rect x="112" y="86" width="14" height="12" rx="3"/><rect x="130" y="86" width="14" height="12" rx="3"/></g></g>' +
+            '<path d="M150 36 h56 M198 30 l8 6 l-8 6" class="ill-arrow"/>' +
+            '<path d="M20 128 h34 v-14 M20 134 h34" class="ill-key"/><path d="M186 128 h34 v-14 M186 134 h34" class="ill-key"/>' +
+            "</svg>";
+
+        var svg2 =
+            '<svg viewBox="0 0 240 140" class="ill" aria-hidden="true">' +
+            '<path d="M30 40 L120 18 L210 40 L210 104 L120 126 L30 104 Z" class="ill-unit"/>' +
+            '<path d="M30 40 L120 62 L210 40 M120 62 V126" class="ill-edge"/>' +
+            '<rect x="36" y="50" width="168" height="66" rx="8" class="ill-label"/>' +
+            '<g class="ill-bars">' + [0, 4, 6, 10, 13, 17, 19, 23, 27, 29, 33, 36, 40].map(function (x) {
+                return '<rect x="' + (48 + x) + '" y="58" width="2" height="16"/>';
+            }).join("") + "</g>" +
+            '<text x="102" y="70" class="ill-small">' + (isPre ? "PRE CODE" : "S/N") + "</text>" +
+            '<text x="120" y="100" text-anchor="middle" class="ill-serial" style="font-size:' + fs + 'px">' +
+            '<tspan class="ill-dim">' + esc(head) + '</tspan><tspan class="ill-hl">' + esc(tail) + "</tspan></text>" +
+            '<circle cx="196" cy="108" r="20" class="ill-lens"/><path d="M210 122 l14 14" class="ill-lens-h"/>' +
+            "</svg>";
+
+        var nBtn = 6;
+        var btns = "";
+        for (var i = 0; i < nBtn; i++) {
+            var x = 40 + i * 28;
+            btns += '<g class="' + (i < 4 ? "ill-btn-on" : "ill-btn-off") + '"><rect x="' + x + '" y="88" width="22" height="20" rx="5"/>' +
+                '<text x="' + (x + 11) + '" y="102" text-anchor="middle">' + (i + 1) + "</text></g>";
+        }
+        var svg3 =
+            '<svg viewBox="0 0 240 140" class="ill" aria-hidden="true">' +
+            '<rect x="20" y="26" width="200" height="96" rx="14" class="ill-unit"/>' +
+            '<rect x="40" y="40" width="120" height="36" rx="6" class="ill-screen"/>' +
+            '<text x="100" y="65" text-anchor="middle" class="ill-lcd">CODE - - - -</text>' +
+            '<circle cx="190" cy="58" r="16" class="ill-knob"/>' + btns +
+            "</svg>";
+
+        var step2Text = isPre
+            ? t("stepLabelPre", { ex: example })
+            : (head ? t("stepLabelTail", { n: keyLen, ex: tail }) : t("stepLabelFull", { ex: example }));
+
+        function step(n, svg, title, text) {
+            return '<div class="step"><div class="step-art">' + svg + '<span class="step-n">' + n + '</span></div><div class="step-body"><div class="step-title">' +
+                esc(title) + '</div><div class="step-text">' + esc(text) + "</div></div></div>";
+        }
+
+        return '<div class="card info-card steps-card"><h3>' + ICONS.info + esc(t("guideTitle")) + '</h3><div class="steps">' +
+            step(1, svg1, t("stepRemove"), t("stepRemoveText")) +
+            step(2, svg2, t("stepLabel"), step2Text) +
+            step(3, svg3, t("stepEnter"), loc(m.guide) || t("stepEnterText")) +
+            "</div></div>";
+    }
+
     function infoCards(m) {
         var html = "";
-        if (m.guide) {
-            html += '<div class="card info-card"><h3>' + ICONS.key + esc(t("howToEnter")) + "</h3><p>" + esc(loc(m.guide)) + "</p></div>";
-        }
         var img = GUIDE_IMAGES[m.id];
         html += '<div class="card info-card"><h3>' + ICONS.tag + esc(t("whereSerial")) + "</h3><p>" + esc(loc(m.where) || t("whereSerialText")) + "</p>" +
             (img ? '<img class="guide-img" src="' + img + '" alt="" loading="lazy">' : "") + "</div>";
@@ -408,20 +514,20 @@
             return;
         }
 
-        var keyLen = m.keyLen || m.maxLen;
-        var minLen = Math.min(keyLen, m.maxLen);
-        var hint = minLen === m.maxLen ? t("lenHintExact", { n: m.maxLen }) : t("lenHint", { min: minLen, max: m.maxLen });
+        var mask = m.mask || "";
+        var numeric = !!mask && !/[A*]/.test(mask);
 
         view.innerHTML = head +
             '<div class="layout-2"><div>' +
             '<div class="card"><form id="lookupForm" class="field" autocomplete="off" novalidate>' +
             '<label for="serial">' + esc(loc(m.label) || t("serialLabel")) + "</label>" +
-            '<input id="serial" name="serial" inputmode="text" autocapitalize="characters" spellcheck="false" maxlength="' + (m.maxLen + 4) +
-            '" placeholder="' + esc(m.placeholder || "") + '">' +
-            '<div class="hint"><span>' + esc(hint) + '</span><span id="count">0</span></div>' +
+            '<input id="serial" name="serial" inputmode="' + (numeric ? "numeric" : "text") + '" autocapitalize="characters" spellcheck="false" maxlength="' +
+            mask.length + '" placeholder="' + esc(m.placeholder || "") + '">' +
+            '<div class="hint"><span>' + esc(t("format")) + ": <strong>" + esc(describeMask(mask)) + '</strong></span><span id="count">0 / ' + mask.length + "</span></div>" +
             '<button class="btn" id="findBtn" type="submit">' + ICONS.key + "<span>" + esc(t("find")) + "</span></button>" +
             '</form><div id="out"></div></div>' +
             '<div class="alert info" style="margin-top:14px">' + esc(t("warnTries")) + "</div>" +
+            guideSteps(m) +
             "</div><div>" + infoCards(m) + "</div></div>";
 
         var form = document.getElementById("lookupForm");
@@ -430,7 +536,21 @@
         var btn = document.getElementById("findBtn");
 
         input.addEventListener("input", function () {
-            document.getElementById("count").textContent = input.value.replace(/[\s-]/g, "").length;
+            var v = applyMask(input.value, mask);
+            if (v !== input.value) input.value = v;
+            document.getElementById("count").textContent = v.length + " / " + mask.length;
+        });
+
+        // Tam seri no yapıştırılırsa ve model yalnızca son haneleri istiyorsa son haneleri al
+        input.addEventListener("paste", function (e) {
+            var text = (e.clipboardData || window.clipboardData).getData("text") || "";
+            var clean = text.toUpperCase().replace(/[^A-Z0-9]/g, "");
+            var tailOnly = (m.example || "").length > mask.length;
+            if (tailOnly && clean.length > mask.length) {
+                e.preventDefault();
+                input.value = applyMask(clean.slice(-mask.length), mask);
+                input.dispatchEvent(new Event("input"));
+            }
         });
 
         form.addEventListener("submit", function (e) {
@@ -496,13 +616,13 @@
     }
 
     function serviceCard(icon, title, text, wa) {
-        return '<div class="card info-card"><h3>' + icon + esc(title) + "</h3><p>" + esc(text) + '</p><a class="btn wa" target="_blank" rel="noopener" href="' +
-            esc(waLink(wa)) + '">' + ICONS.wa + esc(t("whatsapp")) + "</a></div>";
+        return '<div class="card service"><div class="service-icon">' + icon + '</div><div class="service-body"><h3>' + esc(title) + "</h3><p>" + esc(text) +
+            '</p></div><a class="btn wa" target="_blank" rel="noopener" href="' + esc(waLink(wa)) + '">' + ICONS.wa + esc(t("whatsapp")) + "</a></div>";
     }
 
     function renderServices() {
         view.innerHTML = '<div class="page-head"><div><h1>' + esc(t("servicesTitle")) + "</h1><p>" + esc(t("servicesText")) + "</p></div></div>" +
-            '<div class="list">' +
+            '<div class="stack">' +
             serviceCard(ICONS.chip, t("svcEeprom"), t("svcEepromText"), t("waEeprom")) +
             serviceCard(ICONS.search, t("svcSerial"), t("svcSerialText"), t("waSerial")) +
             serviceCard(ICONS.tool, t("svcPro"), t("svcProText"), t("waPro")) +
@@ -510,11 +630,9 @@
     }
 
     function renderAbout() {
-        var repoUrl = "https://github.com/" + CONFIG.repo;
         view.innerHTML = '<div class="page-head"><div><h1>' + esc(t("aboutTitle")) + "</h1></div></div>" +
             '<div class="card prose"><p>' + esc(t("aboutText")) + "</p>" +
             "<h2>" + esc(t("legalTitle")) + "</h2><p>" + esc(t("legalText")) + "</p><p>" + esc(t("legalUse")) + "</p>" +
-            "<h2>" + esc(t("dataSource")) + '</h2><p><a href="' + repoUrl + '" target="_blank" rel="noopener">' + esc(repoUrl) + "</a></p>" +
             "<h2>" + esc(t("version")) + "</h2><p>" + esc(state.catalog.version) + "</p>" +
             '<a class="btn secondary" href="privacy.html' + (state.lang === "en" ? "#en" : "") + '">' + esc(t("privacy")) + "</a></div>";
     }

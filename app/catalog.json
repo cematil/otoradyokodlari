@@ -1,5 +1,5 @@
 {
- "version": "202610062033",
+ "version": "202610062100",
  "shardLen": 2,
  "totalCodes": 1213386,
  "brands": [
@@ -147,7 +147,9 @@
    },
    "type": "db",
    "keyLen": 14,
-   "count": 467747
+   "count": 467747,
+   "mask": "AAZ**9A*999999",
+   "example": "VWZ2Z2V4000004"
   },
   {
    "id": "ford_m",
@@ -172,7 +174,9 @@
    },
    "type": "db",
    "keyLen": 7,
-   "count": 10000
+   "count": 10000,
+   "mask": "M999999",
+   "example": "M123456"
   },
   {
    "id": "ford_v",
@@ -197,7 +201,9 @@
    },
    "type": "db",
    "keyLen": 7,
-   "count": 10000
+   "count": 10000,
+   "mask": "V999999",
+   "example": "V123456"
   },
   {
    "id": "renault",
@@ -211,6 +217,7 @@
    },
    "placeholder": "B564",
    "maxLen": 4,
+   "mask": "A999",
    "units": "Tuner List, Update List, Plug & Radio, CD Player",
    "cars": "Clio, Megane, Scenic, Kangoo, Laguna, Master, Trafic",
    "label": {
@@ -224,7 +231,8 @@
    "where": {
     "tr": "Precode, teybin üst veya yan etiketinde 'PRE CODE' yazısının yanında bulunur. Teyp kapalıyken 1 ve 6 tuşlarına birlikte basılı tutarak ekranda da görebilirsiniz.",
     "en": "The precode is printed next to 'PRE CODE' on the radio label. On many units you can also hold buttons 1 and 6 while the radio is off to show it on screen."
-   }
+   },
+   "example": "B564"
   },
   {
    "id": "dacia",
@@ -238,6 +246,7 @@
    },
    "placeholder": "A123",
    "maxLen": 4,
+   "mask": "A999",
    "units": "Plug & Radio, CD Player, Tuner List",
    "cars": "Duster, Logan, Sandero, Dokker, Lodgy",
    "label": {
@@ -251,7 +260,8 @@
    "where": {
     "tr": "Precode, teybin üst veya yan etiketinde 'PRE CODE' yazısının yanında bulunur. Teyp kapalıyken 1 ve 6 tuşlarına birlikte basılı tutarak ekranda da görebilirsiniz.",
     "en": "The precode is printed next to 'PRE CODE' on the radio label. On many units you can also hold buttons 1 and 6 while the radio is off to show it on screen."
-   }
+   },
+   "example": "A123"
   },
   {
    "id": "fiat_daiichi",
@@ -262,13 +272,13 @@
     "tr": "Fiat Daiichi",
     "en": "Fiat Daiichi"
    },
-   "placeholder": "M123456",
-   "maxLen": 7,
+   "placeholder": "3456",
+   "maxLen": 4,
    "units": "Daiichi",
    "cars": "Egea, Fiorino, Doblo, Linea, Punto",
    "label": {
-    "tr": "Seri no veya son 4 hanesi",
-    "en": "Serial or its last 4 digits"
+    "tr": "Seri numarasının son 4 rakamı",
+    "en": "Last 4 digits of the serial number"
    },
    "guide": {
     "tr": "Ekranda çıkan sanal klavyeden 4 haneli şifreyi tuşlayın.",
@@ -276,7 +286,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "M123456"
   },
   {
    "id": "fiat_visteon",
@@ -289,6 +301,7 @@
    },
    "placeholder": "M012345",
    "maxLen": 7,
+   "mask": "M999999",
    "units": "Visteon CD / MP3",
    "cars": "Stilo, Punto, Bravo, Doblo",
    "label": {
@@ -301,7 +314,8 @@
    },
    "type": "db",
    "keyLen": 6,
-   "count": 10000
+   "count": 10000,
+   "example": "M012345"
   },
   {
    "id": "delphi_famar",
@@ -314,13 +328,13 @@
     "tr": "Delphi / Famar",
     "en": "Delphi / Famar"
    },
-   "placeholder": "12345678901234",
-   "maxLen": 14,
+   "placeholder": "1234",
+   "maxLen": 4,
    "units": "Delphi Grundig, Famar Fueguina",
    "cars": "Fiat, Opel, Chevrolet, Peugeot, Citroën",
    "label": {
-    "tr": "Seri no veya son 4 hanesi",
-    "en": "Serial or its last 4 digits"
+    "tr": "Seri numarasının son 4 rakamı",
+    "en": "Last 4 digits of the serial number"
    },
    "guide": {
     "tr": "Ayar tuşları ile kodu ekrana tuşlayıp OK tuşuna basarak onaylayın.",
@@ -328,7 +342,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 9999
+   "count": 9999,
+   "mask": "9999",
+   "example": "12345678901234"
   },
   {
    "id": "alfa_radio",
@@ -340,13 +356,13 @@
     "tr": "Alfa Romeo / Fiat Radio",
     "en": "Alfa Romeo / Fiat Radio"
    },
-   "placeholder": "12345",
-   "maxLen": 5,
+   "placeholder": "2345",
+   "maxLen": 4,
    "units": "Daiichi / Bosch Alfa Radio",
    "cars": "Alfa Romeo 147, 156, 159, MiTo, Giulietta",
    "label": {
-    "tr": "Seri no veya son 4 hanesi",
-    "en": "Serial or its last 4 digits"
+    "tr": "Seri numarasının son 4 rakamı",
+    "en": "Last 4 digits of the serial number"
    },
    "guide": {
     "tr": "Ekrandaki 4 haneli şifre alanına kodu girip onaylayın.",
@@ -354,7 +370,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 9138
+   "count": 9138,
+   "mask": "9999",
+   "example": "12345"
   },
   {
    "id": "alfa_vp",
@@ -366,13 +384,13 @@
     "tr": "VP1 / VP2 (Uconnect)",
     "en": "VP1 / VP2 (Uconnect)"
    },
-   "placeholder": "A1234",
-   "maxLen": 5,
+   "placeholder": "1234",
+   "maxLen": 4,
    "units": "VP1, VP2, Uconnect 5",
    "cars": "Fiat 500L, 500X, Egea, Alfa Romeo Giulietta",
    "label": {
-    "tr": "Seri no veya son 4 hanesi",
-    "en": "Serial or its last 4 digits"
+    "tr": "Seri numarasının son 4 rakamı",
+    "en": "Last 4 digits of the serial number"
    },
    "guide": {
     "tr": "Dokunmatik ekrandaki tuş takımını kullanarak kodu girin.",
@@ -380,7 +398,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 9999
+   "count": 9999,
+   "mask": "9999",
+   "example": "A1234"
   },
   {
    "id": "opel_vivaro_movano",
@@ -405,7 +425,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 23400
+   "count": 23400,
+   "mask": "A999",
+   "example": "A123"
   },
   {
    "id": "opel_delco",
@@ -443,7 +465,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 23400
+   "count": 23400,
+   "mask": "A999",
+   "example": "A123"
   },
   {
    "id": "becker_4digit",
@@ -469,7 +493,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_db_4digit",
@@ -495,7 +521,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_4button",
@@ -521,7 +549,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 9963
+   "count": 9963,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_6buttons",
@@ -547,7 +577,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 9998
+   "count": 9998,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_8button",
@@ -573,7 +605,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 9742
+   "count": 9742,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_4presets",
@@ -599,7 +633,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_5presets",
@@ -611,13 +647,13 @@
     "tr": "Becker 5 Preset",
     "en": "Becker 5 Presets"
    },
-   "placeholder": "12345",
-   "maxLen": 5,
+   "placeholder": "2345",
+   "maxLen": 4,
    "units": "Becker Europa, Grand Prix, Mexico, Traffic Pro",
    "cars": "Mercedes W126, R129 SL",
    "label": {
-    "tr": "Becker seri no (son 4 hane)",
-    "en": "Becker serial (last 4 digits)"
+    "tr": "Seri numarasının son 4 rakamı",
+    "en": "Last 4 digits of the serial number"
    },
    "guide": {
     "tr": "Preset tuşlarıyla her haneyi seçin ve onay tuşuna basılı tutarak teybi açın.",
@@ -625,7 +661,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "12345"
   },
   {
    "id": "becker_6presets",
@@ -651,7 +689,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_7presets",
@@ -677,7 +717,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_8presets",
@@ -703,7 +745,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "becker_9presets",
@@ -729,7 +773,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "chrysler_alpine_aa",
@@ -754,7 +800,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "chrysler_t00be",
@@ -765,13 +813,13 @@
     "tr": "Chrysler Becker T00BE",
     "en": "Chrysler Becker T00BE"
    },
-   "placeholder": "T00BE123456789",
-   "maxLen": 14,
+   "placeholder": "6789",
+   "maxLen": 4,
    "units": "Chrysler / Jeep / Dodge",
    "cars": "300C, Voyager, PT Cruiser, Grand Cherokee, Wrangler, Caravan",
    "label": {
-    "tr": "T00BE ile başlayan seri no",
-    "en": "Serial starting with T00BE"
+    "tr": "Seri numarasının son 4 rakamı",
+    "en": "Last 4 digits of the serial number"
    },
    "guide": {
     "tr": "Radyo tuşlarıyla kodu sırayla girin; kod doğruysa teyp hemen açılır.",
@@ -779,7 +827,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "T00BE123456789"
   },
   {
    "id": "chrysler_preset5",
@@ -804,7 +854,9 @@
    },
    "type": "db",
    "keyLen": 5,
-   "count": 90000
+   "count": 90000,
+   "mask": "99999",
+   "example": "12345"
   },
   {
    "id": "chrysler_preset6",
@@ -829,7 +881,9 @@
    },
    "type": "db",
    "keyLen": 5,
-   "count": 90000
+   "count": 90000,
+   "mask": "99999",
+   "example": "12345"
   },
   {
    "id": "chrysler_tm9",
@@ -854,7 +908,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "chrysler_db_5presets",
@@ -879,7 +935,9 @@
    },
    "type": "db",
    "keyLen": 5,
-   "count": 90000
+   "count": 90000,
+   "mask": "99999",
+   "example": "12345"
   },
   {
    "id": "chrysler_db_6presets",
@@ -904,7 +962,9 @@
    },
    "type": "db",
    "keyLen": 5,
-   "count": 90000
+   "count": 90000,
+   "mask": "99999",
+   "example": "12345"
   },
   {
    "id": "chrysler_db_alpine",
@@ -929,7 +989,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "chrysler_db_becker",
@@ -940,13 +1002,13 @@
     "tr": "Chrysler Becker (Veritabanı 2)",
     "en": "Chrysler Becker (Database 2)"
    },
-   "placeholder": "T00BE123456789",
-   "maxLen": 14,
+   "placeholder": "6789",
+   "maxLen": 4,
    "units": "Chrysler / Jeep / Dodge",
    "cars": "300C, Voyager, PT Cruiser, Grand Cherokee, Wrangler, Caravan",
    "label": {
-    "tr": "T00BE ile başlayan seri no",
-    "en": "Serial starting with T00BE"
+    "tr": "Seri numarasının son 4 rakamı",
+    "en": "Last 4 digits of the serial number"
    },
    "guide": {
     "tr": "Radyo tuşlarıyla kodu sırayla girin; kod doğruysa teyp hemen açılır.",
@@ -954,7 +1016,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "T00BE123456789"
   },
   {
    "id": "chrysler_db_tm9",
@@ -979,7 +1043,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "1234"
   },
   {
    "id": "alpine_jaguar",
@@ -992,13 +1058,13 @@
     "tr": "Alpine (Jaguar / Land Rover)",
     "en": "Alpine (Jaguar / Land Rover)"
    },
-   "placeholder": "JA12345678",
-   "maxLen": 10,
+   "placeholder": "45678",
+   "maxLen": 5,
    "units": "Alpine",
    "cars": "Jaguar XJ, X-Type, S-Type, Land Rover",
    "label": {
-    "tr": "Seri no veya son 5 hanesi",
-    "en": "Serial or its last 5 digits"
+    "tr": "Seri numarasının son 5 rakamı",
+    "en": "Last 5 digits of the serial number"
    },
    "guide": {
     "tr": "Numara tuşları ile 4 haneli kodu girip MODE / P.SCAN tuşu ile onaylayın.",
@@ -1006,7 +1072,9 @@
    },
    "type": "db",
    "keyLen": 5,
-   "count": 90000
+   "count": 90000,
+   "mask": "99999",
+   "example": "JA12345678"
   },
   {
    "id": "clarion_c7",
@@ -1019,13 +1087,13 @@
     "tr": "Clarion C7",
     "en": "Clarion C7"
    },
-   "placeholder": "C70000001234",
-   "maxLen": 12,
+   "placeholder": "1234",
+   "maxLen": 4,
    "units": "Clarion C7 CD / Kaset",
    "cars": "Peugeot, Citroën, Nissan, Suzuki, Subaru, Honda",
    "label": {
-    "tr": "C7 numarası veya son 4 hanesi",
-    "en": "C7 number or its last 4 digits"
+    "tr": "Seri numarasının son 4 rakamı",
+    "en": "Last 4 digits of the serial number"
    },
    "guide": {
     "tr": "1-4 tuşları ile haneleri yazıp BAND / BND tuşuna basılı tutun.",
@@ -1033,7 +1101,9 @@
    },
    "type": "db",
    "keyLen": 4,
-   "count": 10000
+   "count": 10000,
+   "mask": "9999",
+   "example": "C70000001234"
   },
   {
    "id": "support_nissan",

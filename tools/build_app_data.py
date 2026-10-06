@@ -93,7 +93,7 @@ MODELS = [
     {
         "id": "renault", "type": "renault", "brands": ["renault"],
         "name": {"tr": "Renault Precode", "en": "Renault Precode"},
-        "placeholder": "B564", "maxLen": 4,
+        "placeholder": "B564", "maxLen": 4, "mask": "A999",
         "units": "Tuner List, Update List, Plug & Radio, CD Player",
         "cars": "Clio, Megane, Scenic, Kangoo, Laguna, Master, Trafic",
         "label": {"tr": "Precode (1 harf + 3 rakam)", "en": "Precode (1 letter + 3 digits)"},
@@ -109,7 +109,7 @@ MODELS = [
     {
         "id": "dacia", "type": "renault", "brands": ["dacia"],
         "name": {"tr": "Dacia Precode", "en": "Dacia Precode"},
-        "placeholder": "A123", "maxLen": 4,
+        "placeholder": "A123", "maxLen": 4, "mask": "A999",
         "units": "Plug & Radio, CD Player, Tuner List",
         "cars": "Duster, Logan, Sandero, Dokker, Lodgy",
         "label": {"tr": "Precode (1 harf + 3 rakam)", "en": "Precode (1 letter + 3 digits)"},
@@ -137,7 +137,7 @@ MODELS = [
     {
         "id": "fiat_visteon", "src": "database_fiat_visteon.json", "brands": ["fiat"],
         "name": {"tr": "Fiat Visteon", "en": "Fiat Visteon"},
-        "placeholder": "M012345", "maxLen": 7,
+        "placeholder": "M012345", "maxLen": 7, "mask": "M999999",
         "units": "Visteon CD / MP3",
         "cars": "Stilo, Punto, Bravo, Doblo",
         "label": {"tr": "M ile başlayan seri no", "en": "Serial starting with M"},
@@ -296,6 +296,44 @@ for brand in ("nissan", "honda", "toyota", "hyundai", "bmw", "peugeot"):
                    "name": {"tr": "Diğer modeller (uzman desteği)", "en": "Other models (expert support)"}})
 
 
+def derive_mask(keys):
+    """Anahtarlardan karakter maskesi üretir.
+
+    9 = rakam, A = harf, * = harf veya rakam; tüm anahtarlarda aynı olan
+    harfler sabit karakter olarak bırakılır (ör. Ford "M999999").
+    """
+    length = len(keys[0])
+    mask = []
+    for i in range(length):
+        chars = {k[i] for k in keys}
+        if len(chars) == 1 and next(iter(chars)).isalpha():
+            mask.append(next(iter(chars)))
+        elif all(c.isdigit() for c in chars):
+            mask.append("9")
+        elif all(c.isalpha() for c in chars):
+            mask.append("A")
+        else:
+            mask.append("*")
+    return "".join(mask)
+
+
+def example_for_mask(mask, example):
+    """Örnek seri numarasından maskeye uyan giriş örneği üretir."""
+    tail = example[-len(mask):] if len(example) >= len(mask) else ""
+    out = []
+    for i, c in enumerate(mask):
+        e = tail[i] if i < len(tail) else ""
+        if c == "9":
+            out.append(e if e.isdigit() else str((i + 1) % 10))
+        elif c == "A":
+            out.append(e if e.isalpha() else "A")
+        elif c == "*":
+            out.append(e if e.isalnum() else "A")
+        else:
+            out.append(c)
+    return "".join(out)
+
+
 def load_codes(path):
     with open(path, encoding="utf-8") as f:
         raw = json.load(f)
@@ -335,8 +373,22 @@ def build():
                         json.dump(items, f, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
                 m["keyLen"] = key_len
                 m["count"] = len(codes)
+                if "mask" not in m:
+                    m["mask"] = derive_mask(list(codes))
+                    if key_len < m["maxLen"]:
+                        # Veritabanı seri numarasının yalnızca son hanelerini tutuyor:
+                        # kullanıcıdan tam olarak bu haneler istenir.
+                        m["label"] = {
+                            "tr": f"Seri numarasının son {key_len} rakamı",
+                            "en": f"Last {key_len} digits of the serial number",
+                        }
+                m["example"] = m.get("placeholder", "")
+                m["placeholder"] = example_for_mask(m["mask"], m["example"])
+                m["maxLen"] = len(m["mask"])
                 total += len(codes)
                 print(f"[OK] {m['id']:<22} {len(codes):>7} kod, {len(shards):>4} parça")
+        if m["type"] == "renault":
+            m["example"] = m["placeholder"]
         models_out.append(m)
 
     used = {b for m in models_out for b in m["brands"]}
