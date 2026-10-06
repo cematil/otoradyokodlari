@@ -1,5 +1,11 @@
 import json
 import os
+from urllib.parse import quote
+
+WHATSAPP_NUMBER = "905074377818"
+
+# Veritabanlarında "kod yok" anlamına gelen yer tutucu değerler
+PLACEHOLDER_CODES = {"", "NO DATA", "NONE", "XXXX", "NULL"}
 
 # Tüm JSON Veritabanları Yapılandırması
 json_files_data = {
@@ -864,11 +870,34 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }}
 
         .footer-text {{ text-align: center; margin-top: 20px; font-size: 11px; color: var(--text-muted); }}
+
+        .back-link {{
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 18px;
+            padding: 8px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            background: var(--card-bg);
+            color: var(--text-muted);
+            font-size: 12.5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }}
+
+        .back-link:hover {{
+            color: var(--text-main);
+            border-color: var(--brand-color);
+        }}
     </style>
 </head>
 <body oncontextmenu="return false;">
 
 <div class="container">
+    <a href="index.html" class="back-link">← Ana Sayfa</a>
+
     <div class="brand-header">
         <div class="custom-logo">{svg_logo}</div>
         <h1>{brand_name} <span>Radyo Kodu</span></h1>
@@ -906,7 +935,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <ul class="steps-list">
             <li><span style="color:#fff; font-weight:600;">Adım 1:</span> Teybinizi sökme aparatlarıyla kasasından çıkarın.</li>
             <li><span style="color:#fff; font-weight:600;">Adım 2:</span> Üstteki beyaz etiketi bulun.</li>
-            <li><span style="color:#fff; font-weight:600;">Adım 3:</span> Seri numarasını yukarıdaki kutuya tam yazın.</li>
+            <li><span style="color:#fff; font-weight:600;">Adım 3:</span> Seri numarasını yukarıdaki kutuya yazın (tam seri numarası veya son hanelerini girebilirsiniz).</li>
         </ul>
     </div>
 
@@ -919,7 +948,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="footer-text">© {brand_name} Şifre Çözme Servisi</div>
 </div>
 
-<a href="https://wa.me/905000000000?text=Merhaba,%20{brand_name}%20teypsifresi%20hakkinda%20destek%20almak%20istiyorum." class="whatsapp-float" target="_blank">
+<a href="https://wa.me/{whatsapp_number}?text={whatsapp_text}" class="whatsapp-float" target="_blank">
     <div class="wa-avatar">
         <div class="wa-online-dot"></div>
         <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
@@ -935,27 +964,45 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     const database = {inlined_json};
     const REQUIRED_LEN = {required_len};
 
+    // Veritabanı anahtarları seri numarasının son haneleridir (ör. son 4 hane).
+    let KEY_LEN = REQUIRED_LEN;
+    let HAS_DATA = false;
+    for (const k in database) {{ KEY_LEN = k.length; HAS_DATA = true; break; }}
+    const MIN_LEN = Math.min(KEY_LEN, REQUIRED_LEN);
+
+    function showError(errorMsg, resultBox, html) {{
+        resultBox.classList.remove('active');
+        errorMsg.innerHTML = html;
+        errorMsg.style.display = 'block';
+    }}
+
     function findCode() {{
-        const input = document.getElementById('serialInput').value.trim().toUpperCase();
+        const input = document.getElementById('serialInput').value.replace(/[\\s-]/g, '').toUpperCase();
         const resultBox = document.getElementById('resultBox');
         const errorMsg = document.getElementById('errorMsg');
         const codeDisplay = document.getElementById('codeDisplay');
 
-        if (input.length !== REQUIRED_LEN) {{
-            resultBox.classList.remove('active');
-            errorMsg.innerHTML = `⚠️ Eksik veya fazla karakter girdiniz!<br>Bu model için seri numarası tam olarak <strong>${{REQUIRED_LEN}}</strong> karakter olmalıdır. (Siz ${{input.length}} karakter girdiniz)`;
-            errorMsg.style.display = 'block';
+        if (!HAS_DATA) {{
+            showError(errorMsg, resultBox, '⚠️ Bu model için çevrimiçi kod veritabanı henüz mevcut değil.<br>Kodunuzu öğrenmek için lütfen WhatsApp üzerinden seri numaranızı gönderin.');
             return;
         }}
 
-        if (database[input]) {{
+        if (input.length < MIN_LEN || input.length > REQUIRED_LEN) {{
+            const expected = MIN_LEN === REQUIRED_LEN
+                ? `tam olarak <strong>${{REQUIRED_LEN}}</strong> karakter`
+                : `<strong>${{MIN_LEN}}</strong> ile <strong>${{REQUIRED_LEN}}</strong> karakter arasında (tam seri no veya son ${{MIN_LEN}} hanesi)`;
+            showError(errorMsg, resultBox, `⚠️ Eksik veya fazla karakter girdiniz!<br>Bu model için seri numarası ${{expected}} olmalıdır. (Siz ${{input.length}} karakter girdiniz)`);
+            return;
+        }}
+
+        const code = database[input.slice(-KEY_LEN)];
+
+        if (code) {{
             errorMsg.style.display = 'none';
-            codeDisplay.innerText = database[input];
+            codeDisplay.innerText = code;
             resultBox.classList.add('active');
         }} else {{
-            resultBox.classList.remove('active');
-            errorMsg.innerHTML = '⚠️ Girilen seri numarası veritabanında bulunamadı! Lütfen seri numarasını kontrol edip tekrar deneyin.';
-            errorMsg.style.display = 'block';
+            showError(errorMsg, resultBox, '⚠️ Girilen seri numarası veritabanında bulunamadı! Lütfen seri numarasını kontrol edip tekrar deneyin veya WhatsApp üzerinden bize ulaşın.');
         }}
     }}
 
@@ -994,6 +1041,12 @@ def generate_all():
             except Exception as e:
                 print(f"Hata ({json_file}): {e}")
 
+        # Kodu olmayan (yer tutucu) kayıtları ayıkla
+        db_data = {
+            k: v for k, v in db_data.items()
+            if v is not None and str(v).strip().upper() not in PLACEHOLDER_CODES
+        }
+
         # JSON verisini JS objesi olarak koda göm
         inlined_json_str = json.dumps(db_data, ensure_ascii=False)
 
@@ -1011,6 +1064,10 @@ def generate_all():
             input_guide=cfg["input_guide"],
             svg_logo=cfg["svg_logo"],
             inlined_json=inlined_json_str,
+            whatsapp_number=WHATSAPP_NUMBER,
+            whatsapp_text=quote(
+                f"Merhaba, {cfg['brand_name']} teyp şifresi hakkında destek almak istiyorum."
+            ),
         )
 
         with open(cfg["html_name"], "w", encoding="utf-8") as f:

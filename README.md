@@ -7,9 +7,8 @@
 
   **Ücretsiz • Hızlı • Güvenilir**
 
-  [![GitHub Stars](https://img.shields.io/github/stars/kullanici-adiniz/repo-adiniz?style=for-the-badge&color=00d2ff)](https://github.com/kullanici-adiniz/repo-adiniz)
-  [![GitHub License](https://img.shields.io/github/license/kullanici-adiniz/repo-adiniz?style=for-the-badge&color=25D366)](LICENSE)
-  [![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)](https://github.com)
+  [![GitHub Stars](https://img.shields.io/github/stars/cematil/otoradyokodlari?style=for-the-badge&color=00d2ff)](https://github.com/cematil/otoradyokodlari)
+  [![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)](https://github.com/cematil/otoradyokodlari)
 
   Tüm otomobil markalarının fabrika çıkışlı oto teyp ve radyo açılış kodlarını seri numarası veya EEPROM / MCU döküm (dump) dosyaları üzerinden anında sorgulama ve çözme platformu.
 
@@ -50,7 +49,8 @@
 ```text
 ├── index.html              # Tüm platformu bağlayan ana sayfa
 ├── logo.png                # Platform logosu ve açılış görseli
-├── d.py                    # HTML ve JSON veritabanlarını oluşturan betik
+├── e.py                    # JSON veritabanlarını gömerek HTML sayfalarını üreten betik
+├── d.py                    # Eski (fetch tabanlı) üretici, artık kullanılmıyor
 ├── volkswagen.html         # VW grubu radyo kod çözücü
 ├── ford_m.html             # Ford M serisi kod çözücü
 ├── ford_v.html             # Ford V serisi kod çözücü
@@ -59,3 +59,16 @@
 ├── fiat_daiichi.html       # Fiat Daiichi kod çözücü
 ├── becker_4digit.html      # Becker 4-digit kod çözücü
 └── ... (34+ Marka HTML Sayfası ve JSON Veritabanı Dosyaları)
+```
+
+---
+
+## 🛠️ Sayfaları Yeniden Oluşturma
+
+Veritabanı (`.json`) dosyalarında bir değişiklik yaptıktan sonra kod çözücü sayfalarını yeniden üretmek için:
+
+```bash
+python3 e.py
+```
+
+> ⚠️ `d.py` sayfaları veritabanını `fetch()` ile yükleyen eski şablonla üretir; mevcut sayfaların üzerine yazacağı için kullanmayın.
