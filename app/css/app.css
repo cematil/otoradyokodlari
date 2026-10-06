@@ -294,6 +294,7 @@ main {
 
 .field input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
 .field input::placeholder { color: color-mix(in srgb, var(--muted) 55%, transparent); letter-spacing: 2px; }
+.field .hint strong { color: var(--text); font-weight: 650; }
 .field .hint { font-size: 12.5px; color: var(--muted); margin-top: 8px; display: flex; justify-content: space-between; gap: 8px; }
 
 .btn {
@@ -358,6 +359,69 @@ main {
 .guide-img { width: 100%; border-radius: 12px; margin-top: 12px; border: 1px solid var(--line); }
 
 .spinner { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255, 255, 255, 0.4); border-top-color: #fff; animation: spin 0.8s linear infinite; }
+
+/* ---------- Resimli rehber ---------- */
+.steps-card { margin-top: 14px; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 4px; }
+.step { display: flex; flex-direction: column; gap: 8px; }
+.step-art { position: relative; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
+.step-n {
+    position: absolute; top: 8px; left: 8px; width: 22px; height: 22px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 12px; font-weight: 800; color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+.step-title { font-weight: 700; font-size: 13.5px; }
+.step-text { color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+
+.ill { width: 100%; height: auto; display: block; stroke-width: 2.5; }
+.ill-dash { fill: none; stroke: var(--line); stroke-dasharray: 5 5; }
+.ill-slot { fill: var(--bg); stroke: var(--line); }
+.ill-unit { fill: var(--surface); stroke: var(--muted); }
+.ill-edge { fill: none; stroke: var(--line); }
+.ill-screen { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+.ill-knob { fill: none; stroke: var(--muted); }
+.ill-btn rect { fill: var(--surface-2); stroke: var(--muted); stroke-width: 1.5; }
+.ill-arrow { fill: none; stroke: var(--accent); stroke-width: 3; }
+.ill-key { fill: none; stroke: var(--accent-2); stroke-width: 3; }
+.ill-label { fill: #fff; stroke: var(--line); }
+.ill-bars rect { fill: #0e1526; stroke: none; }
+.ill-small { font: 700 10px system-ui, sans-serif; fill: #5b6680; stroke: none; }
+.ill-serial { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-weight: 700; stroke: none; letter-spacing: 1px; }
+.ill-dim { fill: #8a94ad; }
+.ill-hl { fill: #4f6bff; text-decoration: underline; }
+.ill-lens { fill: rgba(79, 107, 255, 0.12); stroke: var(--accent); stroke-width: 3; }
+.ill-lens-h { stroke: var(--accent); stroke-width: 5; }
+.ill-lcd { font: 700 12px ui-monospace, Menlo, Consolas, monospace; fill: var(--accent); stroke: none; letter-spacing: 1px; }
+.ill-btn-on rect { fill: var(--accent); stroke: none; }
+.ill-btn-on text { fill: #fff; stroke: none; font: 700 11px system-ui, sans-serif; }
+.ill-btn-off rect { fill: var(--surface-2); stroke: var(--muted); stroke-width: 1.5; }
+.ill-btn-off text { fill: var(--muted); stroke: none; font: 700 11px system-ui, sans-serif; }
+
+@media (max-width: 560px) {
+    .steps { grid-template-columns: 1fr; }
+    .step { flex-direction: row; align-items: center; gap: 12px; }
+    .step-art { flex: 0 0 132px; }
+}
+
+/* ---------- Hizmetler ---------- */
+.stack { display: grid; gap: 12px; max-width: 760px; }
+.stack > .card { margin-top: 0; }
+.service { display: flex; align-items: center; gap: 16px; }
+.service-icon {
+    flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+    background: var(--accent-soft); color: var(--accent);
+}
+.service-body { flex: 1; min-width: 0; }
+.service-body h3 { margin: 0 0 2px; font-size: 15.5px; }
+.service-body p { margin: 0; color: var(--muted); font-size: 13.5px; }
+.service .btn { width: auto; flex: none; margin-top: 0; height: 46px; padding: 0 18px; font-size: 14.5px; }
+
+@media (max-width: 600px) {
+    .service { flex-wrap: wrap; }
+    .service .btn { width: 100%; }
+}
+
+.list > .card { margin-top: 0; }
 
 /* ---------- Kodlarım ---------- */
 .saved-item { display: flex; align-items: center; gap: 12px; }
