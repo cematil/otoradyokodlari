@@ -6,7 +6,7 @@
     
     <!-- SEO & ARAMA MOTORLARI ENTEGRASYONU -->
     <title>Oto Radyo Kodları - Orijinal Şifre Çözüm Merkezi & EEPROM Arşivi</title>
-    <meta name="description" content="Tüm marka oto teyp kodları, radyo şifre çözücüleri, seri numarası ile anında teyp kodu alma ve EEPROM MCU dump arşiv merkezi.">
+    <meta name="description" content="Tüm marka oto teyp kodları, radyo şifre çözücüleri, seri numarası ile anında teyp kodu alma ve EEPROM / MCU okuma ile kod çözüm merkezi.">
     <meta name="keywords" content="oto radyo kodu, teyp şifresi çözme, renault teyp kodu, ford radyo kodu, vw radyo kodu, eeprom dump, teyp kodu hesaplama, car radio code calculator">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="author" content="Oto Radyo Kodları">
@@ -380,6 +380,9 @@
             box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
         }
 
+        a.file-item { display: block; text-decoration: none; }
+        a.file-item:hover { border-color: var(--neon-blue); }
+
         .footer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 30px; }
 
         /* CEP TELEFONLARI VE TÜM MOBİL CİHAZ UYUMLULUĞU (RESPONSIVE) */
@@ -454,8 +457,8 @@
             <div class="chip-item">MOTOROLA HC11</div>
             <div class="chip-item">NEC / RENESAS</div>
         </div>
-        <button class="btn-open-popup" onclick="openArchiveModal()">📁 Tüm Arşiv Dosyalarını Göster (Listeyi Aç)</button>
-        <button class="btn-open-popup btn-open-popup-blue" onclick="openCalcModal()">🖥️ RADYO KOD ÜRETİCİLERİ (PROGRAM LİSTESİ)</button>
+        <button class="btn-open-popup" onclick="openArchiveModal()">📁 EEPROM İle Çözülen Teyp Modelleri (Listeyi Aç)</button>
+        <button class="btn-open-popup btn-open-popup-blue" onclick="openCalcModal()">🖥️ ONLINE KOD HESAPLAYICILAR</button>
     </div>
 
     <div class="section-title">🚗 TÜM MARKA VE TEYP MODELLERİ</div>
@@ -782,376 +785,222 @@
 <div class="modal-overlay" id="archiveModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>📂 EEPROM & DUMP ARŞİV DOSYALARI</h3>
+            <h3>📂 EEPROM İLE ÇÖZÜLEN TEYP MODELLERİ</h3>
             <button class="modal-close" onclick="closeArchiveModal()">&times;</button>
         </div>
         <div class="modal-search">
-            <input type="text" id="modalSearchInput" onkeyup="filterArchiveFiles('archiveFileList', 'modalSearchInput')" placeholder="Dosya adı ara... (Örn: Clarion, Audi, Blaupunkt, Volvo)">
+            <input type="text" id="modalSearchInput" onkeyup="filterArchiveFiles('archiveFileList', 'modalSearchInput')" placeholder="Teyp modeli ara... (Örn: Clarion, Audi, Blaupunkt, Volvo)">
         </div>
         <div class="modal-body" id="archiveFileList">
-            <div class="file-item">Clarion PU-1559A.zip</div>
-            <div class="file-item">Clarion PU-1560A(1).zip</div>
-            <div class="file-item">Clarion PU-1560A.zip</div>
-            <div class="file-item">Clarion PU-1561A.zip</div>
-            <div class="file-item">Clarion PU-1570A(1).zip</div>
-            <div class="file-item">Clarion PU-1570A.zip</div>
-            <div class="file-item">Clarion PU-9833A.zip</div>
-            <div class="file-item">Clarion PU-9924A(1).zip</div>
-            <div class="file-item">Clarion PU-9924A.zip</div>
-            <div class="file-item">22 (Philips DC379).zip</div>
-            <div class="file-item">22 (Philips DC459)(1).zip</div>
-            <div class="file-item">22 (Philips DC459).zip</div>
-            <div class="file-item">22 (Philips DC577).zip</div>
-            <div class="file-item">22 (Philips DC579)(1).zip</div>
-            <div class="file-item">22 (Philips DC579).zip</div>
-            <div class="file-item">22 (Philips DC593).zip</div>
-            <div class="file-item">22 (Philips DC594)(1).zip</div>
-            <div class="file-item">22 (Philips DC594).zip</div>
-            <div class="file-item">22 (Philips DC665) SAT.zip</div>
-            <div class="file-item">22 (Philips DC677)(1).zip</div>
-            <div class="file-item">22 (Philips DC677).zip</div>
-            <div class="file-item">22 (Philips DC682).zip</div>
-            <div class="file-item">22 DC 685.zip</div>
-            <div class="file-item">22RC280-65 CD without display.zip</div>
-            <div class="file-item">25 Original (Philips)(1).zip</div>
-            <div class="file-item">25 Original (Philips).zip</div>
-            <div class="file-item">2300 CM6902A (Alpine)(1).zip</div>
-            <div class="file-item">2300 CM6902A (Alpine).zip</div>
-            <div class="file-item">2446 RDS BP5019 24v (Blaupunkt).zip</div>
-            <div class="file-item">6200 CE-2771.zip</div>
-            <div class="file-item">7200 RDS(1).zip</div>
-            <div class="file-item">7200 RDS.zip</div>
-            <div class="file-item">51703.ZIP</div>
-            <div class="file-item">A BP6340 (Blaupunkt).zip</div>
-            <div class="file-item">ACD 9430 BP2757.zip</div>
-            <div class="file-item">ACD 9430(1).zip</div>
-            <div class="file-item">ACD 9430.zip</div>
-            <div class="file-item">ACD 9431.zip</div>
-            <div class="file-item">ACM 5451 RDS BP5520(1).zip</div>
-            <div class="file-item">ACM 5451 RDS BP5520.zip</div>
-            <div class="file-item">ACR 3225.zip</div>
-            <div class="file-item">ACR 3250 BP5501(1).zip</div>
-            <div class="file-item">ACR 3250 BP5501.zip</div>
-            <div class="file-item">ACR 3251 RDS.zip</div>
-            <div class="file-item">ACR 4250 BP5511(1).zip</div>
-            <div class="file-item">ACR 4250 BP5511.zip</div>
-            <div class="file-item">AD182 (Fiat Brava SX).zip</div>
-            <div class="file-item">AD-182H (Grundig).zip</div>
-            <div class="file-item">AIWA CT-R2YZ RDS.zip</div>
-            <div class="file-item">AJ 9600R.zip</div>
-            <div class="file-item">AKF-0816EY.zip</div>
-            <div class="file-item">AKF-4306EG.zip</div>
-            <div class="file-item">AKF-9445R.zip</div>
-            <div class="file-item">alha4ph.bin</div>
-            <div class="file-item">Alpine 3DE-7886.zip</div>
-            <div class="file-item">Alpine 7288(1).zip</div>
-            <div class="file-item">Alpine 7288.zip</div>
-            <div class="file-item">Alpine CDM-7983R.zip</div>
-            <div class="file-item">Alpine MF2297(1).zip</div>
-            <div class="file-item">Alpine MF2297.zip</div>
-            <div class="file-item">Alpine MF2910 CD10.zip</div>
-            <div class="file-item">AS0400.ZIP</div>
-            <div class="file-item">AS0420.ZIP</div>
-            <div class="file-item">AS0430.ZIP</div>
-            <div class="file-item">AS0440.ZIP</div>
-            <div class="file-item">AS0480.ZIP</div>
-            <div class="file-item">AS0490.ZIP</div>
-            <div class="file-item">AS0510.ZIP</div>
-            <div class="file-item">AS0560.ZIP</div>
-            <div class="file-item">AS0610.ZIP</div>
-            <div class="file-item">AS0620.ZIP</div>
-            <div class="file-item">AS0700.ZIP</div>
-            <div class="file-item">Astra 300.zip</div>
-            <div class="file-item">AUDI Beta (Blaupunkt)(1).zip</div>
-            <div class="file-item">AUDI Beta (Blaupunkt).zip</div>
-            <div class="file-item">Audi Beta Autoreverse AUZ8Z2(1).rar</div>
-            <div class="file-item">Audi Beta Autoreverse AUZ8Z2.rar</div>
-            <div class="file-item">AUDI Beta CC Autoreverse (Blaupunkt)(1).zip</div>
-            <div class="file-item">AUDI Beta CC Autoreverse (Blaupunkt).zip</div>
-            <div class="file-item">AUDI BETA CC AUTOREVERSE.rar</div>
-            <div class="file-item">AUDI Beta CC AUZIZ2.zip</div>
-            <div class="file-item">AUDI Concert HC105 (Matsushita AUZ5Z3).zip</div>
-            <div class="file-item">AUDI Concert HC206 (Matsushita AUZ5Z3)(1).zip</div>
-            <div class="file-item">AUDI Concert HC206 (Matsushita AUZ5Z3).zip</div>
-            <div class="file-item">AUDI Concert Plus AUZ1Z3 (Blaupunkt).zip</div>
-            <div class="file-item">AUDI Gamma (M327) (Hitachi CSK-706A(R))(1).zip</div>
-            <div class="file-item">AUDI Gamma (M327) (Hitachi CSK-706A(R)).zip</div>
-            <div class="file-item">AUDI Gamma 2a VWZ2Z3.zip</div>
-            <div class="file-item">AUDI Gamma CC (Bose US AUZ1Z4)(1).zip</div>
-            <div class="file-item">AUDI Gamma CC (Bose US AUZ1Z4).zip</div>
-            <div class="file-item">AUDI Gamma CC (Panasonic CQ-LA1020L).zip</div>
-            <div class="file-item">AUDI GAMMA CC RDS(1).rar</div>
-            <div class="file-item">AUDI GAMMA CC RDS.rar</div>
-            <div class="file-item">AUDI Gamma CD (Panasonic CQ-JA1020L)(1).zip</div>
-            <div class="file-item">AUDI Gamma CD (Panasonic CQ-JA1020L).zip</div>
-            <div class="file-item">AUDI GAMMA CD.rar</div>
-            <div class="file-item">AUDI-GAMMA CSK-706A(R).rar</div>
-            <div class="file-item">Avus 2000 BE1145.zip</div>
-            <div class="file-item">Avus 2000 BE2035 RDS(1).zip</div>
-            <div class="file-item">Avus 2000 BE2035 RDS.zip</div>
-            <div class="file-item">Avus Cassette BE0749.zip</div>
-            <div class="file-item">Avus Cassette BE0778(1).zip</div>
-            <div class="file-item">Avus Cassette BE0778.zip</div>
-            <div class="file-item">Avus Cassette BE0779.zip</div>
-            <div class="file-item">AX-835.ZIP</div>
-            <div class="file-item">AX-845.ZIP</div>
-            <div class="file-item">AX-855.ZIP</div>
-            <div class="file-item">AX-1845.ZIP</div>
-            <div class="file-item">b3250cod.bin</div>
-            <div class="file-item">bancon24.bin</div>
-            <div class="file-item">bav1801.bin</div>
-            <div class="file-item">bcc20.bin</div>
-            <div class="file-item">bcdii.bin</div>
-            <div class="file-item">beck794.bin</div>
-            <div class="file-item">Bern (CXK1012).zip</div>
-            <div class="file-item">bl45.bin</div>
-            <div class="file-item">bl331.bin</div>
-            <div class="file-item">bl5451.bin</div>
-            <div class="file-item">bla_531.bin</div>
-            <div class="file-item">blaes43.bin</div>
-            <div class="file-item">blau39co.bin</div>
-            <div class="file-item">blau49or.bin</div>
-            <div class="file-item">blau331.bin</div>
-            <div class="file-item">blau3251.bin</div>
-            <div class="file-item">blau9430.bin</div>
-            <div class="file-item">blau9431.bin</div>
-            <div class="file-item">blaucr31.bin</div>
-            <div class="file-item">blaucr43.bin</div>
-            <div class="file-item">blaup531.bin</div>
-            <div class="file-item">BLAUPUNKT ACD 9430.rar</div>
-            <div class="file-item">BLAUPUNKT ACR 3225(1).rar</div>
-            <div class="file-item">BLAUPUNKT ACR 3225.rar</div>
-            <div class="file-item">BLAUPUNKT ACR 3250.rar</div>
-            <div class="file-item">BLAUPUNKT ALPHA(1).rar</div>
-            <div class="file-item">BLAUPUNKT ALPHA.rar</div>
-            <div class="file-item">BLAUPUNKT ANCONA CR 24.rar</div>
-            <div class="file-item">BLAUPUNKT AUDI BETA(1).rar</div>
-            <div class="file-item">BLAUPUNKT AUDI BETA.rar</div>
-            <div class="file-item">BLAUPUNKT BAVARIA CIII.rar</div>
-            <div class="file-item">BLAUPUNKT BMW BAVARIA C REVERSE II(1).rar</div>
-            <div class="file-item">BLAUPUNKT BMW BAVARIA C REVERSE II.rar</div>
-            <div class="file-item">BLAUPUNKT BMW BAVARIA C REVERSE III.rar</div>
-            <div class="file-item">BLAUPUNKT BMW BAVARIA ELECTRONIC CDII(1).rar</div>
-            <div class="file-item">BLAUPUNKT BMW BAVARIA ELECTRONIC CDII.rar</div>
-            <div class="file-item">BLAUPUNKT BMW REVERSE.rar</div>
-            <div class="file-item">BLAUPUNKT BP 8480 (1).rar</div>
-            <div class="file-item">BLAUPUNKT BP 8480 .rar</div>
-            <div class="file-item">BLAUPUNKT CAMBRIDGE CC 31(1).rar</div>
-            <div class="file-item">BLAUPUNKT CAMBRIDGE CC 31.rar</div>
-            <div class="file-item">BLAUPUNKT DUSSELDORF SQM 39.rar</div>
-            <div class="file-item">BLAUPUNKT DUSSELDORF SQR 39(1).rar</div>
-            <div class="file-item">BLAUPUNKT DUSSELDORF SQR 39.rar</div>
-            <div class="file-item">BLAUPUNKT DUSSELDORF SQR 49.rar</div>
-            <div class="file-item">BLAUPUNKT ESSEN CR 31(1).rar</div>
-            <div class="file-item">BLAUPUNKT ESSEN CR 31.rar</div>
-            <div class="file-item">BLAUPUNKT FINISH LINE 320.rar</div>
-            <div class="file-item">BLAUPUNKT FREIBURG SQR 39(1).rar</div>
-            <div class="file-item">BLAUPUNKT FREIBURG SQR 39.rar</div>
-            <div class="file-item">BLAUPUNKT GAMMA.rar</div>
-            <div class="file-item">BLAUPUNKT LUBECK BOSTON CC 20(1).rar</div>
-            <div class="file-item">BLAUPUNKT LUBECK BOSTON CC 20.rar</div>
-            <div class="file-item">BLAUPUNKT LUBECK BOSTON CC 22.rar</div>
-            <div class="file-item">BLAUPUNKT LUBECK RCC 45(1).rar</div>
-            <div class="file-item">BLAUPUNKT LUBECK RCC 45.rar</div>
-            <div class="file-item">BLAUPUNKT MONTREUX RCR 44.rar</div>
-            <div class="file-item">BLAUPUNKT SC202(1).rar</div>
-            <div class="file-item">BLAUPUNKT SC202.rar</div>
-            <div class="file-item">BLAUPUNKT STOCKHOLM RCR 42.rar</div>
-            <div class="file-item">BLAUPUNKT TRIER CC 31(1).rar</div>
-            <div class="file-item">BLAUPUNKT TRIER CC 31.rar</div>
-            <div class="file-item">BLAUPUNKT VERONA CR 43.rar</div>
-            <div class="file-item">blfin621.bin</div>
-            <div class="file-item">blfini1.bin</div>
-            <div class="file-item">blfinish.bin</div>
-            <div class="file-item">blscd09.bin</div>
-            <div class="file-item">blu31.bin</div>
-            <div class="file-item">blubec22.bin</div>
-            <div class="file-item">bm0774_1.bin</div>
-            <div class="file-item">bmv_rev2.bin</div>
-            <div class="file-item">bmw0774.bin</div>
-            <div class="file-item">bmw0776.bin</div>
-            <div class="file-item">bmwc0728.bin</div>
-            <div class="file-item">bmwcdii.bin</div>
-            <div class="file-item">bscd09a.bin</div>
-            <div class="file-item">bul20.bin</div>
-            <div class="file-item">CAR200 (D)(1).zip</div>
-            <div class="file-item">CAR200 (D).zip</div>
-            <div class="file-item">CAR400 (DC396-75).zip</div>
-            <div class="file-item">car400.zip</div>
-            <div class="file-item">CDC 6000.zip</div>
-            <div class="file-item">CDC 6300(1).zip</div>
-            <div class="file-item">CDC 6300.zip</div>
-            <div class="file-item">CDR 2005(1).zip</div>
-            <div class="file-item">CDR 2005.zip</div>
-            <div class="file-item">CDR500(E).zip</div>
-            <div class="file-item">CDR2005(E).zip</div>
-            <div class="file-item">Challenge 400(1).zip</div>
-            <div class="file-item">Challenge 400.zip</div>
-            <div class="file-item">Challenge 500.zip</div>
-            <div class="file-item">Challenge 600 CD(1).zip</div>
-            <div class="file-item">Challenge 600 CD.zip</div>
-            <div class="file-item">CLARION PN-9524.rar</div>
-            <div class="file-item">CLARION PP-9924E Nissan(1).rar</div>
-            <div class="file-item">CLARION PP-9924E Nissan.rar</div>
-            <div class="file-item">CLARION PU-9527A.rar</div>
-            <div class="file-item">CLARION PU-9880A(1).rar</div>
-            <div class="file-item">CLARION PU-9880A.rar</div>
-            <div class="file-item">CRH 81R PE-9439A.zip</div>
-            <div class="file-item">CRX 83R.zip</div>
-            <div class="file-item">CRX 85R(1).zip</div>
-            <div class="file-item">CRX 85R.zip</div>
-            <div class="file-item">CRX 115R(1).zip</div>
-            <div class="file-item">CRX 115R.zip</div>
-            <div class="file-item">CTR 560 (AutoSound).zip</div>
-            <div class="file-item">CTR 620 (AutoSound)(1).zip</div>
-            <div class="file-item">CTR 620 (AutoSound).zip</div>
-            <div class="file-item">CXR-252 RP.zip</div>
-            <div class="file-item">DC449 64L PHF011W(1).zip</div>
-            <div class="file-item">DC449 64L PHF011W.zip</div>
-            <div class="file-item">DC670 (Philips)(1).zip</div>
-            <div class="file-item">DC670 (Philips).zip</div>
-            <div class="file-item">DC681 (Philips).zip</div>
-            <div class="file-item">DC684 (Philips)(1).zip</div>
-            <div class="file-item">DC684 (Philips).zip</div>
-            <div class="file-item">DC685 (Philips).zip</div>
-            <div class="file-item">EC 4000 RDS.zip</div>
-            <div class="file-item">EC 4200 RDS(1).zip</div>
-            <div class="file-item">EC 4200 RDS.zip</div>
-            <div class="file-item">EC 4290 CD.zip</div>
-            <div class="file-item">EC 4600 RDS(1).zip</div>
-            <div class="file-item">EC 4600 RDS.zip</div>
-            <div class="file-item">EC 4790 CD.zip</div>
-            <div class="file-item">Escort 22 DPS 770 (Interconti).zip</div>
-            <div class="file-item">Europa 2000 (24v) BE1241(1).zip</div>
-            <div class="file-item">Europa 2000 (24v) BE1241.zip</div>
-            <div class="file-item">Europa 2000 BE1100.zip</div>
-            <div class="file-item">Europa 2000 BE1120(1).zip</div>
-            <div class="file-item">Europa 2000 BE1120.zip</div>
-            <div class="file-item">Europa 2000 BE1240.zip</div>
-            <div class="file-item">Europa Cassette BE0749(1).zip</div>
-            <div class="file-item">Europa Cassette BE0749.zip</div>
-            <div class="file-item">exsl.bin</div>
-            <div class="file-item">fi855a.bin</div>
-            <div class="file-item">Finish Line 441.zip</div>
-            <div class="file-item">Finish Line 540(1).zip</div>
-            <div class="file-item">Finish Line 540.zip</div>
-            <div class="file-item">fis1845.bin</div>
-            <div class="file-item">fis1845a.bin</div>
-            <div class="file-item">fish835.bin</div>
-            <div class="file-item">fish835a.bin</div>
-            <div class="file-item">fish855.bin</div>
-            <div class="file-item">FMS150.ZIP</div>
-            <div class="file-item">fo_2008a.bin</div>
-            <div class="file-item">fo2004-1.bin</div>
-            <div class="file-item">FORD 2000.rar</div>
-            <div class="file-item">FORD 2001(1).rar</div>
-            <div class="file-item">FORD 2001.rar</div>
-            <div class="file-item">FORD 2002.rar</div>
-            <div class="file-item">FORD 2004(1).rar</div>
-            <div class="file-item">FORD 2004.rar</div>
-            <div class="file-item">FORD 2006.rar</div>
-            <div class="file-item">FORD 2007(1).rar</div>
-            <div class="file-item">FORD 2007.rar</div>
-            <div class="file-item">FORD 2014 91FB.rar</div>
-            <div class="file-item">FORD 2014(1).rar</div>
-            <div class="file-item">FORD 2014.rar</div>
-            <div class="file-item">FORD 2015.rar</div>
-            <div class="file-item">FORD EP12DS(1).rar</div>
-            <div class="file-item">FORD EP12DS.rar</div>
-            <div class="file-item">ford2004.bin</div>
-            <div class="file-item">ford2008.bin</div>
-            <div class="file-item">G4 (A) (Blaupunkt).zip</div>
-            <div class="file-item">G4 (D) (Blaupunkt)(1).zip</div>
-            <div class="file-item">G4 (D) (Blaupunkt).zip</div>
-            <div class="file-item">Grand Prix 2000 BE1302.zip</div>
-            <div class="file-item">Grand Prix 2000 BE1310.zip</div>
-            <div class="file-item">GRUNDIG 2804 VD REVERSE.rar</div>
-            <div class="file-item">KEH-5080 SDK.zip</div>
-            <div class="file-item">Mexico 2000 BE1430.zip</div>
-            <div class="file-item">PHILIPS 22 DC 575.rar</div>
-            <div class="file-item">PHILIPS 22 DC 680.rar</div>
-            <div class="file-item">PHILIPS 22 DC 701.rar</div>
-            <div class="file-item">PHILIPS GAMMA-3 RDS.rar</div>
-            <div class="file-item">VOLVO CR-802.rar</div>
-            <div class="file-item">VOLVO CR-902.rar</div>
-            <div class="file-item">VOLVO SC-810.rar</div>
-            <div class="file-item">WKC 1630 VD Reverse.zip</div>
-            <div class="file-item">WKC 3200 RDS.zip</div>
-            <div class="file-item">WKC 5100 RDS.zip</div>
-            <div class="file-item">WKC 5500 RDS.zip</div>
-            <div class="file-item">zbm92ok.bin</div>
+            <div class="file-item">Audi Beta (Blaupunkt)</div>
+            <div class="file-item">Audi Beta Autoreverse AUZ8Z2</div>
+            <div class="file-item">Audi Beta CC Autoreverse</div>
+            <div class="file-item">Audi Beta CC Autoreverse (Blaupunkt)</div>
+            <div class="file-item">Audi Beta CC AUZ1Z2</div>
+            <div class="file-item">Audi Concert HC105 (Matsushita AUZ5Z3)</div>
+            <div class="file-item">Audi Concert HC206 (Matsushita AUZ5Z3)</div>
+            <div class="file-item">Audi Concert Plus AUZ1Z3 (Blaupunkt)</div>
+            <div class="file-item">Audi Gamma (M327) (Hitachi CSK-706A(R))</div>
+            <div class="file-item">Audi Gamma 2a VWZ2Z3</div>
+            <div class="file-item">Audi Gamma CC (Bose US AUZ1Z4)</div>
+            <div class="file-item">Audi Gamma CC (Panasonic CQ-LA1020L)</div>
+            <div class="file-item">Audi Gamma CC RDS</div>
+            <div class="file-item">Audi Gamma CD</div>
+            <div class="file-item">Audi Gamma CD (Panasonic CQ-JA1020L)</div>
+            <div class="file-item">Audi Gamma CSK-706A(R)</div>
+            <div class="file-item">Becker Avus 2000 BE1145</div>
+            <div class="file-item">Becker Avus 2000 BE2035 RDS</div>
+            <div class="file-item">Becker Avus Cassette BE0749</div>
+            <div class="file-item">Becker Avus Cassette BE0778</div>
+            <div class="file-item">Becker Avus Cassette BE0779</div>
+            <div class="file-item">Becker Europa 2000 24V BE1241</div>
+            <div class="file-item">Becker Europa 2000 BE1100</div>
+            <div class="file-item">Becker Europa 2000 BE1120</div>
+            <div class="file-item">Becker Europa 2000 BE1240</div>
+            <div class="file-item">Becker Europa Cassette BE0749</div>
+            <div class="file-item">Becker Grand Prix 2000 BE1302</div>
+            <div class="file-item">Becker Grand Prix 2000 BE1310</div>
+            <div class="file-item">Becker Mexico 2000 BE1430</div>
+            <div class="file-item">Blaupunkt 2446 RDS BP5019 24V</div>
+            <div class="file-item">Blaupunkt ACD 9430</div>
+            <div class="file-item">Blaupunkt ACD 9430 BP2757</div>
+            <div class="file-item">Blaupunkt ACD 9431</div>
+            <div class="file-item">Blaupunkt ACM 5451 RDS BP5520</div>
+            <div class="file-item">Blaupunkt ACR 3225</div>
+            <div class="file-item">Blaupunkt ACR 3250</div>
+            <div class="file-item">Blaupunkt ACR 3250 BP5501</div>
+            <div class="file-item">Blaupunkt ACR 3251 RDS</div>
+            <div class="file-item">Blaupunkt ACR 4250 BP5511</div>
+            <div class="file-item">Blaupunkt Alpha</div>
+            <div class="file-item">Blaupunkt Ancona CR 24</div>
+            <div class="file-item">Blaupunkt Bavaria C III</div>
+            <div class="file-item">Blaupunkt Bern</div>
+            <div class="file-item">Blaupunkt BMW Bavaria C Reverse II</div>
+            <div class="file-item">Blaupunkt BMW Bavaria C Reverse III</div>
+            <div class="file-item">Blaupunkt BMW Bavaria Electronic CD II</div>
+            <div class="file-item">Blaupunkt BMW Reverse</div>
+            <div class="file-item">Blaupunkt BP 8480</div>
+            <div class="file-item">Blaupunkt BP6340</div>
+            <div class="file-item">Blaupunkt Cambridge CC 31</div>
+            <div class="file-item">Blaupunkt Dusseldorf SQM 39</div>
+            <div class="file-item">Blaupunkt Dusseldorf SQR 39</div>
+            <div class="file-item">Blaupunkt Dusseldorf SQR 49</div>
+            <div class="file-item">Blaupunkt Essen CR 31</div>
+            <div class="file-item">Blaupunkt Finish Line 320</div>
+            <div class="file-item">Blaupunkt Finish Line 441</div>
+            <div class="file-item">Blaupunkt Finish Line 540</div>
+            <div class="file-item">Blaupunkt Freiburg SQR 39</div>
+            <div class="file-item">Blaupunkt G4 (A)</div>
+            <div class="file-item">Blaupunkt G4 (D)</div>
+            <div class="file-item">Blaupunkt Gamma</div>
+            <div class="file-item">Blaupunkt Lubeck Boston CC 20</div>
+            <div class="file-item">Blaupunkt Lubeck Boston CC 22</div>
+            <div class="file-item">Blaupunkt Lubeck RCC 45</div>
+            <div class="file-item">Blaupunkt Montreux RCR 44</div>
+            <div class="file-item">Blaupunkt SC202</div>
+            <div class="file-item">Blaupunkt Stockholm RCR 42</div>
+            <div class="file-item">Blaupunkt Trier CC 31</div>
+            <div class="file-item">Blaupunkt Verona CR 43</div>
+            <div class="file-item">Philips 22DC379</div>
+            <div class="file-item">Philips 22DC449</div>
+            <div class="file-item">Philips 22DC459</div>
+            <div class="file-item">Philips 22DC575</div>
+            <div class="file-item">Philips 22DC577</div>
+            <div class="file-item">Philips 22DC579</div>
+            <div class="file-item">Philips 22DC593</div>
+            <div class="file-item">Philips 22DC594</div>
+            <div class="file-item">Philips 22DC665 SAT</div>
+            <div class="file-item">Philips 22DC670</div>
+            <div class="file-item">Philips 22DC677</div>
+            <div class="file-item">Philips 22DC680</div>
+            <div class="file-item">Philips 22DC681</div>
+            <div class="file-item">Philips 22DC682</div>
+            <div class="file-item">Philips 22DC684</div>
+            <div class="file-item">Philips 22DC685</div>
+            <div class="file-item">Philips 22DC701</div>
+            <div class="file-item">Philips 22RC280 CD</div>
+            <div class="file-item">Philips Gamma-3 RDS</div>
+            <div class="file-item">Renault CAR200</div>
+            <div class="file-item">Renault CAR400</div>
+            <div class="file-item">Grundig 2804 VD Reverse</div>
+            <div class="file-item">Grundig AD-182 (Fiat Brava)</div>
+            <div class="file-item">Grundig WKC 1630 VD Reverse</div>
+            <div class="file-item">Grundig WKC 3200 RDS</div>
+            <div class="file-item">Grundig WKC 5100 RDS</div>
+            <div class="file-item">Grundig WKC 5500 RDS</div>
+            <div class="file-item">Clarion CRH 81R PE-9439A</div>
+            <div class="file-item">Clarion CRX 115R</div>
+            <div class="file-item">Clarion CRX 83R</div>
+            <div class="file-item">Clarion CRX 85R</div>
+            <div class="file-item">Clarion CXR-252 RP</div>
+            <div class="file-item">Clarion PN-9524</div>
+            <div class="file-item">Clarion PP-9924E Nissan</div>
+            <div class="file-item">Clarion PU-1559A</div>
+            <div class="file-item">Clarion PU-1560A</div>
+            <div class="file-item">Clarion PU-1561A</div>
+            <div class="file-item">Clarion PU-1570A</div>
+            <div class="file-item">Clarion PU-9527A</div>
+            <div class="file-item">Clarion PU-9833A</div>
+            <div class="file-item">Clarion PU-9880A</div>
+            <div class="file-item">Clarion PU-9924A</div>
+            <div class="file-item">Alpine 3DE-7886</div>
+            <div class="file-item">Alpine 7288</div>
+            <div class="file-item">Alpine CDM-7983R</div>
+            <div class="file-item">Alpine CM6902A</div>
+            <div class="file-item">Alpine MF2297</div>
+            <div class="file-item">Alpine MF2910 CD10</div>
+            <div class="file-item">Ford 2000</div>
+            <div class="file-item">Ford 2001</div>
+            <div class="file-item">Ford 2002</div>
+            <div class="file-item">Ford 2004</div>
+            <div class="file-item">Ford 2006</div>
+            <div class="file-item">Ford 2007</div>
+            <div class="file-item">Ford 2014</div>
+            <div class="file-item">Ford 2014 91FB</div>
+            <div class="file-item">Ford 2015</div>
+            <div class="file-item">Ford EP12DS</div>
+            <div class="file-item">Ford Escort DPS 770 (Interconti)</div>
+            <div class="file-item">Opel Astra 300</div>
+            <div class="file-item">Opel CDR 2005</div>
+            <div class="file-item">Opel CDR 500</div>
+            <div class="file-item">Volvo CR-802</div>
+            <div class="file-item">Volvo CR-902</div>
+            <div class="file-item">Volvo SC-810</div>
+            <div class="file-item">6200 CE-2771</div>
+            <div class="file-item">7200 RDS</div>
+            <div class="file-item">Aiwa CT-R2YZ RDS</div>
+            <div class="file-item">AJ 9600R</div>
+            <div class="file-item">AKF-0816EY</div>
+            <div class="file-item">AKF-4306EG</div>
+            <div class="file-item">AKF-9445R</div>
+            <div class="file-item">AutoSound CTR 560</div>
+            <div class="file-item">AutoSound CTR 620</div>
+            <div class="file-item">AX-1845</div>
+            <div class="file-item">AX-835</div>
+            <div class="file-item">AX-845</div>
+            <div class="file-item">AX-855</div>
+            <div class="file-item">CDC 6000</div>
+            <div class="file-item">CDC 6300</div>
+            <div class="file-item">Challenge 400</div>
+            <div class="file-item">Challenge 500</div>
+            <div class="file-item">Challenge 600 CD</div>
+            <div class="file-item">EC 4000 RDS</div>
+            <div class="file-item">EC 4200 RDS</div>
+            <div class="file-item">EC 4290 CD</div>
+            <div class="file-item">EC 4600 RDS</div>
+            <div class="file-item">EC 4790 CD</div>
+            <div class="file-item">Pioneer KEH-5080 SDK</div>
         </div>
     </div>
 </div>
 
-<!-- POPUP 2: RADYO KOD ÜRETİCİLERİ PROGRAM ARŞİVİ -->
+<!-- POPUP 2: ONLINE KOD HESAPLAYICILAR -->
 <div class="modal-overlay" id="calcModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>🖥️ RADYO KOD ÜRETİCİLERİ VE HESAPLAMA PROGRAMLARI</h3>
+            <h3>🖥️ ONLINE KOD HESAPLAYICILAR</h3>
             <button class="modal-close" onclick="closeCalcModal()">&times;</button>
         </div>
         <div class="modal-search">
-            <input type="text" id="calcSearchInput" onkeyup="filterArchiveFiles('calcFileList', 'calcSearchInput')" placeholder="Program / Hesaplayıcı ara... (Örn: Becker, Ford, Grundig, Volvo)">
+            <input type="text" id="calcSearchInput" onkeyup="filterArchiveFiles('calcFileList', 'calcSearchInput')" placeholder="Hesaplayıcı ara... (Örn: Becker, Ford, Fiat, Renault)">
         </div>
         <div class="modal-body" id="calcFileList">
-            <div class="file-item">Becker Standart</div>
-            <div class="file-item">Becker-bz_calcb4</div>
-            <div class="file-item">Blaupunkt code</div>
-            <div class="file-item">calarion-pu 9317-9318-9654</div>
-            <div class="file-item">Fiat-BP code</div>
-            <div class="file-item">Ford code</div>
-            <div class="file-item">Ford Standart code</div>
-            <div class="file-item">Grundig Serial</div>
-            <div class="file-item">Hyundai code</div>
-            <div class="file-item">Kenwood code</div>
-            <div class="file-item">MERCDE-CODE-RAUDIO-10</div>
-            <div class="file-item">Mercedes code</div>
-            <div class="file-item">Philips code</div>
-            <div class="file-item">Pioneer code</div>
-            <div class="file-item">UnivCalc</div>
-            <div class="file-item">RadioCodeDatabase</div>
-            <div class="file-item">ArmAccess.dll</div>
-            <div class="file-item">Becker calc B9 4 digits.exe</div>
-            <div class="file-item">Becker calc B9 5 digits.exe</div>
-            <div class="file-item">becker3.exe</div>
-            <div class="file-item">bgcalc.exe</div>
-            <div class="file-item">blaupunkt CAR300.exe</div>
-            <div class="file-item">Blaupunkt Standart.EXE</div>
-            <div class="file-item">BLAUPUNKT.EXE</div>
-            <div class="file-item">blaupunkt lancia 843 II MY C1 V2 P3.exe</div>
-            <div class="file-item">BP Fiat_Alfa_Peug Calc.exe</div>
-            <div class="file-item">BP calc.exe</div>
-            <div class="file-item">bp_calc.exe</div>
-            <div class="file-item">bpdemo.exe</div>
-            <div class="file-item">CalcGEN Instructions.rtf</div>
-            <div class="file-item">CalcGen.exe</div>
-            <div class="file-item">CalcGen.ini</div>
-            <div class="file-item">CalcGEN_2009_crk.exe</div>
-            <div class="file-item">clarion oto tesyb code.exe</div>
-            <div class="file-item">Daewoo clarion oto tesyb code.exe</div>
-            <div class="file-item">file_id.diz</div>
-            <div class="file-item">FORD L C .exe</div>
-            <div class="file-item">ford_L+C code.exe</div>
-            <div class="file-item">FordM.EXE</div>
-            <div class="file-item">FordM.VEXE</div>
-            <div class="file-item">GRUNDIG Code Calculator.exe</div>
-            <div class="file-item">Grundig Calculator.exe</div>
-            <div class="file-item">Grundig SC303D Calc.exe</div>
-            <div class="file-item">GRUNDIG WKC Series Code Calculator 3.10.exe</div>
-            <div class="file-item">GRUNDIG WKC Series Code Calculator 4.00 by stef_no1.exe</div>
-            <div class="file-item">HONDA.exe</div>
-            <div class="file-item">JVC kameleon.exe</div>
-            <div class="file-item">KRC777R.EXE</div>
-            <div class="file-item">OKUU.txt</div>
-            <div class="file-item">opel-303D.EXE</div>
-            <div class="file-item">Radio code calc help.jpg</div>
-            <div class="file-item">renault yeni.exe</div>
-            <div class="file-item">RENAULT PRE-CODE CALCULATOR.rar</div>
-            <div class="file-item">Renault Teyp.rar</div>
-            <div class="file-item">Volvo CR-705 Code Calculator 1.01.exe</div>
-            <div class="file-item">Volvo CR-905 Code Calculator 1.00.exe</div>
-            <div class="file-item">Volvo CR-905Code Calculator1.00.exe</div>
+            <a class="file-item" href="renault.html">Renault</a>
+            <a class="file-item" href="dacia.html">Dacia</a>
+            <a class="file-item" href="volkswagen.html">Volkswagen (VW)</a>
+            <a class="file-item" href="ford_m.html">Ford M Serisi</a>
+            <a class="file-item" href="ford_v.html">Ford V Serisi</a>
+            <a class="file-item" href="fiat_daiichi.html">Fiat Daiichi</a>
+            <a class="file-item" href="fiat_visteon.html">Fiat Visteon</a>
+            <a class="file-item" href="fiat_daiichi_alfa_radio.html">Alfa Romeo / Fiat</a>
+            <a class="file-item" href="fiat_daiichi_alfa_vp1_vp2.html">Fiat Alfa VP1 / VP2</a>
+            <a class="file-item" href="database_mercedes_citan.html">Mercedes Citan</a>
+            <a class="file-item" href="database_opel_delco.html">Opel Delco GM</a>
+            <a class="file-item" href="database_opel_vivaro_movano.html">Opel Vivaro / Movano</a>
+            <a class="file-item" href="becker_4digit.html">Becker 4-Digit</a>
+            <a class="file-item" href="database_becker_4digit.html">Becker DB 4-Digit</a>
+            <a class="file-item" href="becker_4button.html">Becker 4-Button</a>
+            <a class="file-item" href="becker_6buttons.html">Becker 6-Buttons</a>
+            <a class="file-item" href="becker_8button.html">Becker 8-Button</a>
+            <a class="file-item" href="database_becker_4presets.html">Becker 4 Presets</a>
+            <a class="file-item" href="database_becker_5presets.html">Becker 5 Presets</a>
+            <a class="file-item" href="database_becker_6presets.html">Becker 6 Presets</a>
+            <a class="file-item" href="database_becker_7presets.html">Becker 7 Presets</a>
+            <a class="file-item" href="database_becker_8presets.html">Becker 8 Presets</a>
+            <a class="file-item" href="database_becker_9presets.html">Becker 9 Presets</a>
+            <a class="file-item" href="chrysler_4digits_aa_alpine.html">Chrysler Alpine AA</a>
+            <a class="file-item" href="chrysler_4digits_t00be_becker.html">Chrysler Becker T00BE</a>
+            <a class="file-item" href="chrysler_5digits_preset5.html">Chrysler Preset 5</a>
+            <a class="file-item" href="chrysler_5digits_preset6.html">Chrysler Preset 6</a>
+            <a class="file-item" href="chrysler_last4digit_tm9.html">Chrysler TM9</a>
+            <a class="file-item" href="database_chrysler_5presets.html">Chrysler DB 5-Presets</a>
+            <a class="file-item" href="database_chrysler_6presets.html">Chrysler DB 6-Presets</a>
+            <a class="file-item" href="database_chrysler_alpine.html">Chrysler DB Alpine</a>
+            <a class="file-item" href="database_chrysler_becker.html">Chrysler DB Becker</a>
+            <a class="file-item" href="database_chrysler_tm9.html">Chrysler DB TM9</a>
+            <a class="file-item" href="database_clarion_c7.html">Clarion C7 Seri</a>
+            <a class="file-item" href="database_delphi_famar.html">Delphi / Famar</a>
+            <a class="file-item" href="database_alpine_jaguar.html">Alpine / Jaguar</a>
         </div>
     </div>
 </div>

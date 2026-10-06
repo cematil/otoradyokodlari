@@ -20,7 +20,7 @@
 
 - **🔥 1.300.000+ Hazır Veritabanı Kodu:** Volkswagen, Ford, Fiat, Renault, Dacia, Opel, Becker, Chrysler, Clarion ve daha fazla marka için devasa kod arşivi.
 - **🔬 EEPROM & MCU Çip Döküm Servisi:** Seri numarası silinmiş veya veritabanında bulunmayan teypler için `24C64`, `95320`, `FIS dumps`, `HC11` vb. çip okuma desteği.
-- **🖥️ Kod Hesaplama Programları Arşivi:** Teyp markalarına özel `.exe` ve hesaplama yazılımlarının tam listesi.
+- **🖥️ Online Kod Hesaplayıcılar:** Program kurmadan tarayıcıda ve uygulamada çalışan, markaya özel kod hesaplama ve sorgulama sayfaları.
 - **🎯 Akıllı Karakter ve Hata Denetimi:** Girilen seri numarası uzunluğunu modele göre otomatik doğrulayan akıllı uyarı sistemi.
 - **📻 Teybe Kod Girme Rehberleri:** Her modelin tuş yapısına ve ekranına uygun adım adım kod girme talimatları.
 - **📱 Canlı Destek Entegrasyonu:** Özel durumlar ve teknisyenler için doğrudan WhatsApp canlı sorgulama altyapısı.

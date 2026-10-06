@@ -423,6 +423,28 @@ main {
 
 .list > .card { margin-top: 0; }
 
+.seg {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px; margin: 0 0 16px;
+    width: 100%; max-width: 560px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+}
+.seg a {
+    display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.25;
+    text-decoration: none; padding: 8px 6px; border-radius: 10px; font-size: 13.5px; font-weight: 650; color: var(--muted);
+}
+@media (max-width: 480px) { .seg a { font-size: 12px; } }
+.seg a.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; }
+
+.search-plain { background: var(--surface); color: var(--text); border: 1px solid var(--line); max-width: none; }
+.search-plain svg { color: var(--muted); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+    text-decoration: none; padding: 8px 12px; border-radius: 11px; font-size: 13px; font-weight: 600;
+    background: var(--surface); border: 1px solid var(--line);
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+
 /* ---------- Kodlarım ---------- */
 .saved-item { display: flex; align-items: center; gap: 12px; }
 .saved-item .code { font-weight: 800; font-size: 20px; letter-spacing: 3px; font-variant-numeric: tabular-nums; }
