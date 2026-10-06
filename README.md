@@ -44,10 +44,25 @@
 
 ---
 
+## 📱 Mobil Uygulama (Android / Google Play)
+
+`app/` klasöründe Türkçe ve İngilizce, telefon ve tablet uyumlu bir mobil uygulama bulunur.
+Kod veritabanını doğrudan bu GitHub deposundan (`data/` klasörü) okur; yeni kodlar için mağaza güncellemesi gerekmez.
+
+- Tarayıcıda dene: `https://raw.githack.com/cematil/otoradyokodlari/main/app/index.html`
+- Veriyi güncelle: `python3 tools/build_app_data.py`
+- Android'e dönüştürme, imzalama ve Google Play adımları: [docs/GOOGLE_PLAY.md](docs/GOOGLE_PLAY.md)
+
+---
+
 ## 📂 Proje Dosya Yapısı
 
 ```text
 ├── index.html              # Tüm platformu bağlayan ana sayfa
+├── app/                    # Mobil uygulama (TR/EN, PWA + Capacitor)
+├── data/                   # Uygulamanın GitHub'dan okuduğu parça parça kod verisi
+├── android/                # Google Play için Android projesi
+├── tools/build_app_data.py # data/ klasörünü üreten betik
 ├── logo.png                # Platform logosu ve açılış görseli
 ├── e.py                    # JSON veritabanlarını gömerek HTML sayfalarını üreten betik
 ├── d.py                    # Eski (fetch tabanlı) üretici, artık kullanılmıyor

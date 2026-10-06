@@ -1,0 +1,19 @@
+{
+  "name": "oto-radyo-kodlari",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Oto Radyo Kodları / Car Radio Codes - Android uygulaması (Capacitor)",
+  "scripts": {
+    "data": "python3 tools/build_app_data.py",
+    "serve": "python3 -m http.server 8080",
+    "sync": "cap sync android",
+    "open": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/core": "^8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.2"
+  }
+}

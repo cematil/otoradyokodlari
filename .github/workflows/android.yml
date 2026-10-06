@@ -1,0 +1,74 @@
+name: Android
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "android/**"
+      - "package.json"
+      - "package-lock.json"
+      - "capacitor.config.json"
+      - ".github/workflows/android.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Bağımlılıkları kur
+        run: npm ci
+
+      - name: Web dosyalarını Android projesine kopyala
+        run: npx cap sync android
+
+      - name: Test APK (debug) oluştur
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Test APK'yı yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+
+      # Google Play için imzalı AAB, yalnızca imza secret'ları tanımlıysa üretilir.
+      - name: İmza anahtarını hazırla
+        id: keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+            echo "file=$RUNNER_TEMP/release.keystore" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Google Play paketi (AAB) oluştur
+        if: steps.keystore.outputs.file != ''
+        working-directory: android
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ steps.keystore.outputs.file }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          VERSION_CODE: ${{ github.run_number }}
+        run: ./gradlew bundleRelease --no-daemon
+
+      - name: AAB'yi yükle
+        if: steps.keystore.outputs.file != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-play-aab
+          path: android/app/build/outputs/bundle/release/*.aab

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gizlilik Politikası / Privacy Policy</title>
+    <link rel="stylesheet" href="css/app.css">
+    <style>
+        main { max-width: 760px; padding-bottom: 40px; }
+        .prose h1 { font-size: 22px; margin: 0 0 4px; }
+        .prose h2 { color: var(--text); }
+        .muted { color: var(--muted); font-size: 13px; }
+    </style>
+    <script>
+        try {
+            var th = JSON.parse(localStorage.getItem("rc.theme"));
+            document.documentElement.setAttribute("data-theme", th || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+        } catch (e) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        }
+    </script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="icon-btn" href="index.html#/about" aria-label="Geri / Back">
+            <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </a>
+        <a class="brand-mark" href="index.html"><img src="img/icon.svg" alt="" width="32" height="32"><span>Oto Radyo Kodları</span></a>
+    </header>
+    <main>
+        <article class="card prose" id="tr">
+            <h1>Gizlilik Politikası</h1>
+            <p class="muted">Son güncelleme: 6 Ekim 2026</p>
+
+            <h2>Topladığımız veriler</h2>
+            <p>Oto Radyo Kodları uygulaması kişisel veri toplamaz, hesap oluşturmanızı istemez ve reklam ya da analiz (tracking) aracı içermez.</p>
+
+            <h2>Cihazınızda saklanan veriler</h2>
+            <p>Dil ve tema tercihiniz ile "Kodlarım" bölümüne kaydettiğiniz seri numarası / kod bilgileri yalnızca kendi cihazınızda saklanır, hiçbir sunucuya gönderilmez. Uygulamayı kaldırdığınızda veya uygulama verilerini sildiğinizde bu bilgiler silinir.</p>
+
+            <h2>Ağ istekleri</h2>
+            <p>Kod veritabanı GitHub (raw.githubusercontent.com) ve jsDelivr (cdn.jsdelivr.net) üzerinden indirilir. Girdiğiniz seri numarası sunucuya gönderilmez; yalnızca numaranın son iki karakterine karşılık gelen küçük veri dosyası indirilir ve arama cihazınızda yapılır. Bu hizmetler, her web isteğinde olduğu gibi IP adresiniz gibi teknik bilgileri kendi politikaları çerçevesinde işleyebilir.</p>
+
+            <h2>WhatsApp desteği</h2>
+            <p>WhatsApp butonuna dokunduğunuzda WhatsApp uygulaması açılır ve mesajı göndermek sizin kararınızdır. Gönderdiğiniz mesajlar WhatsApp'ın gizlilik politikasına tabidir ve yalnızca talebinize yanıt vermek için kullanılır.</p>
+
+            <h2>Çocuklar</h2>
+            <p>Uygulama 13 yaşından küçük çocuklara yönelik değildir.</p>
+
+            <h2>İletişim</h2>
+            <p>Sorularınız için uygulamadaki WhatsApp destek hattından bize ulaşabilirsiniz.</p>
+        </article>
+
+        <article class="card prose" id="en" style="margin-top:14px">
+            <h1>Privacy Policy</h1>
+            <p class="muted">Last updated: 6 October 2026</p>
+
+            <h2>Data we collect</h2>
+            <p>The Car Radio Codes app does not collect personal data, does not require an account and contains no advertising or analytics (tracking) tools.</p>
+
+            <h2>Data stored on your device</h2>
+            <p>Your language and theme preference and the serial numbers / codes you save in "My Codes" are stored only on your own device and are never sent to a server. They are removed when you uninstall the app or clear its data.</p>
+
+            <h2>Network requests</h2>
+            <p>The code database is downloaded from GitHub (raw.githubusercontent.com) and jsDelivr (cdn.jsdelivr.net). The serial number you type is not sent to any server; only the small data file matching its last two characters is downloaded and the lookup happens on your device. Like any web request, these services may process technical information such as your IP address under their own policies.</p>
+
+            <h2>WhatsApp support</h2>
+            <p>Tapping a WhatsApp button opens the WhatsApp app and sending the message is your choice. Messages you send are subject to WhatsApp's privacy policy and are used only to answer your request.</p>
+
+            <h2>Children</h2>
+            <p>The app is not directed at children under 13.</p>
+
+            <h2>Contact</h2>
+            <p>For questions, contact us through the WhatsApp support line in the app.</p>
+        </article>
+    </main>
+</body>
+</html>
