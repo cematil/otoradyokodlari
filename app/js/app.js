@@ -620,13 +620,76 @@
             '</p></div><a class="btn wa" target="_blank" rel="noopener" href="' + esc(waLink(wa)) + '">' + ICONS.wa + esc(t("whatsapp")) + "</a></div>";
     }
 
-    function renderServices() {
-        view.innerHTML = '<div class="page-head"><div><h1>' + esc(t("servicesTitle")) + "</h1><p>" + esc(t("servicesText")) + "</p></div></div>" +
+    // Program dosyası listelenmez; yalnızca uzman desteğiyle çözülebilen teyp türleri
+    var EXPERT_RADIOS = [
+        "Blaupunkt", "Grundig", "Philips", "Clarion PU-9317 / 9318 / 9654", "Volvo CR / SC", "Honda",
+        "Hyundai / Kia", "Kenwood", "Pioneer", "JVC", "Mercedes Audio 10", "Fiat / Alfa / Peugeot (Blaupunkt)",
+        "Ford L / C", "Opel SC303D",
+    ];
+
+    function servicesTabs(active) {
+        var tabs = [["", t("tabSvcMain")], ["radios", t("tabSvcRadios")], ["calcs", t("tabSvcCalcs")]];
+        return '<div class="seg" role="tablist">' + tabs.map(function (tb) {
+            return '<a role="tab" href="#/services' + (tb[0] ? "/" + tb[0] : "") + '" class="' + (tb[0] === active ? "active" : "") + '">' + esc(tb[1]) + "</a>";
+        }).join("") + "</div>";
+    }
+
+    function renderServices(sub) {
+        var head = '<div class="page-head"><div><h1>' + esc(t("servicesTitle")) + "</h1><p>" + esc(t("servicesText")) + "</p></div></div>";
+        sub = sub === "radios" || sub === "calcs" ? sub : "";
+
+        if (sub === "radios") return renderRadios(head);
+        if (sub === "calcs") return renderCalcs(head);
+
+        view.innerHTML = head + servicesTabs("") +
             '<div class="stack">' +
             serviceCard(ICONS.chip, t("svcEeprom"), t("svcEepromText"), t("waEeprom")) +
             serviceCard(ICONS.search, t("svcSerial"), t("svcSerialText"), t("waSerial")) +
             serviceCard(ICONS.tool, t("svcPro"), t("svcProText"), t("waPro")) +
             "</div>";
+    }
+
+    function renderRadios(head) {
+        var groups = state.catalog.radios || [];
+        var total = groups.reduce(function (n, g) { return n + g.items.length; }, 0);
+        view.innerHTML = head + servicesTabs("radios") +
+            '<div class="alert info" style="margin:0 0 14px">' + esc(t("radiosText", { n: total })) + "</div>" +
+            '<label class="search search-plain">' + ICONS.search + '<input id="rq" type="search" autocomplete="off" placeholder="' + esc(t("radiosSearch")) + '"></label>' +
+            '<div id="radioList"></div>';
+
+        var q = document.getElementById("rq");
+        function draw() {
+            var term = q.value.trim().toLocaleLowerCase(state.lang);
+            var html = "";
+            groups.forEach(function (g) {
+                var items = g.items.filter(function (it) {
+                    return !term || (g.name + " " + it).toLocaleLowerCase(state.lang).indexOf(term) !== -1;
+                });
+                if (!items.length) return;
+                var gname = g.name === "Diğer" ? t("otherGroup") : g.name;
+                html += '<div class="section-title">' + esc(gname) + "<small>" + items.length + "</small></div>" +
+                    '<div class="chips">' + items.map(function (it) {
+                        return '<a class="chip" target="_blank" rel="noopener" href="' + esc(waLink(t("waRadio", { radio: it }))) + '">' + esc(it) + "</a>";
+                    }).join("") + "</div>";
+            });
+            document.getElementById("radioList").innerHTML = html ||
+                '<div class="card empty"><p>' + esc(t("radiosNone")) + '</p><a class="btn wa" target="_blank" rel="noopener" href="' +
+                esc(waLink(t("waRadio", { radio: q.value.trim() }))) + '">' + ICONS.wa + esc(t("whatsapp")) + "</a></div>";
+        }
+        q.addEventListener("input", draw);
+        draw();
+    }
+
+    function renderCalcs(head) {
+        var models = state.catalog.models.filter(function (m) { return m.type !== "support"; });
+        view.innerHTML = head + servicesTabs("calcs") +
+            '<div class="alert info" style="margin:0 0 14px">' + esc(t("calcsText", { n: models.length })) + "</div>" +
+            '<div class="section-title">' + esc(t("calcsInApp")) + "<small>" + models.length + "</small></div>" +
+            '<div class="list">' + models.map(modelItem).join("") + "</div>" +
+            '<div class="section-title">' + esc(t("calcsExpert")) + "<small>" + EXPERT_RADIOS.length + "</small></div>" +
+            '<div class="chips">' + EXPERT_RADIOS.map(function (r) {
+                return '<a class="chip" target="_blank" rel="noopener" href="' + esc(waLink(t("waModel", { model: r, serial: "" }))) + '">' + esc(r) + "</a>";
+            }).join("") + "</div>";
     }
 
     function renderAbout() {
@@ -658,7 +721,7 @@
         if (page === "brand") renderBrand(parts[1]);
         else if (page === "model") renderModel(parts[1]);
         else if (page === "codes") renderCodes();
-        else if (page === "services") renderServices();
+        else if (page === "services") renderServices(parts[1]);
         else if (page === "about") renderAbout();
         else renderHome();
     }

@@ -1,5 +1,5 @@
 {
- "version": "202610062100",
+ "version": "202610062122",
  "shardLen": 2,
  "totalCodes": 1213386,
  "brands": [
@@ -121,6 +121,226 @@
    "mono": "BM",
    "hue": 210,
    "tags": "bmw mini alpine"
+  }
+ ],
+ "radios": [
+  {
+   "name": "Audi / VW",
+   "items": [
+    "Audi Beta (Blaupunkt)",
+    "Audi Beta Autoreverse AUZ8Z2",
+    "Audi Beta CC Autoreverse",
+    "Audi Beta CC Autoreverse (Blaupunkt)",
+    "Audi Beta CC AUZ1Z2",
+    "Audi Concert HC105 (Matsushita AUZ5Z3)",
+    "Audi Concert HC206 (Matsushita AUZ5Z3)",
+    "Audi Concert Plus AUZ1Z3 (Blaupunkt)",
+    "Audi Gamma (M327) (Hitachi CSK-706A(R))",
+    "Audi Gamma 2a VWZ2Z3",
+    "Audi Gamma CC (Bose US AUZ1Z4)",
+    "Audi Gamma CC (Panasonic CQ-LA1020L)",
+    "Audi Gamma CC RDS",
+    "Audi Gamma CD",
+    "Audi Gamma CD (Panasonic CQ-JA1020L)",
+    "Audi Gamma CSK-706A(R)"
+   ]
+  },
+  {
+   "name": "Becker",
+   "items": [
+    "Becker Avus 2000 BE1145",
+    "Becker Avus 2000 BE2035 RDS",
+    "Becker Avus Cassette BE0749",
+    "Becker Avus Cassette BE0778",
+    "Becker Avus Cassette BE0779",
+    "Becker Europa 2000 24V BE1241",
+    "Becker Europa 2000 BE1100",
+    "Becker Europa 2000 BE1120",
+    "Becker Europa 2000 BE1240",
+    "Becker Europa Cassette BE0749",
+    "Becker Grand Prix 2000 BE1302",
+    "Becker Grand Prix 2000 BE1310",
+    "Becker Mexico 2000 BE1430"
+   ]
+  },
+  {
+   "name": "Blaupunkt",
+   "items": [
+    "Blaupunkt 2446 RDS BP5019 24V",
+    "Blaupunkt ACD 9430",
+    "Blaupunkt ACD 9430 BP2757",
+    "Blaupunkt ACD 9431",
+    "Blaupunkt ACM 5451 RDS BP5520",
+    "Blaupunkt ACR 3225",
+    "Blaupunkt ACR 3250",
+    "Blaupunkt ACR 3250 BP5501",
+    "Blaupunkt ACR 3251 RDS",
+    "Blaupunkt ACR 4250 BP5511",
+    "Blaupunkt Alpha",
+    "Blaupunkt Ancona CR 24",
+    "Blaupunkt Bavaria C III",
+    "Blaupunkt Bern",
+    "Blaupunkt BMW Bavaria C Reverse II",
+    "Blaupunkt BMW Bavaria C Reverse III",
+    "Blaupunkt BMW Bavaria Electronic CD II",
+    "Blaupunkt BMW Reverse",
+    "Blaupunkt BP 8480",
+    "Blaupunkt BP6340",
+    "Blaupunkt Cambridge CC 31",
+    "Blaupunkt Dusseldorf SQM 39",
+    "Blaupunkt Dusseldorf SQR 39",
+    "Blaupunkt Dusseldorf SQR 49",
+    "Blaupunkt Essen CR 31",
+    "Blaupunkt Finish Line 320",
+    "Blaupunkt Finish Line 441",
+    "Blaupunkt Finish Line 540",
+    "Blaupunkt Freiburg SQR 39",
+    "Blaupunkt G4 (A)",
+    "Blaupunkt G4 (D)",
+    "Blaupunkt Gamma",
+    "Blaupunkt Lubeck Boston CC 20",
+    "Blaupunkt Lubeck Boston CC 22",
+    "Blaupunkt Lubeck RCC 45",
+    "Blaupunkt Montreux RCR 44",
+    "Blaupunkt SC202",
+    "Blaupunkt Stockholm RCR 42",
+    "Blaupunkt Trier CC 31",
+    "Blaupunkt Verona CR 43"
+   ]
+  },
+  {
+   "name": "Philips",
+   "items": [
+    "Philips 22DC379",
+    "Philips 22DC449",
+    "Philips 22DC459",
+    "Philips 22DC575",
+    "Philips 22DC577",
+    "Philips 22DC579",
+    "Philips 22DC593",
+    "Philips 22DC594",
+    "Philips 22DC665 SAT",
+    "Philips 22DC670",
+    "Philips 22DC677",
+    "Philips 22DC680",
+    "Philips 22DC681",
+    "Philips 22DC682",
+    "Philips 22DC684",
+    "Philips 22DC685",
+    "Philips 22DC701",
+    "Philips 22RC280 CD",
+    "Philips Gamma-3 RDS"
+   ]
+  },
+  {
+   "name": "Renault (Philips)",
+   "items": [
+    "Renault CAR200",
+    "Renault CAR400"
+   ]
+  },
+  {
+   "name": "Grundig",
+   "items": [
+    "Grundig 2804 VD Reverse",
+    "Grundig AD-182 (Fiat Brava)",
+    "Grundig WKC 1630 VD Reverse",
+    "Grundig WKC 3200 RDS",
+    "Grundig WKC 5100 RDS",
+    "Grundig WKC 5500 RDS"
+   ]
+  },
+  {
+   "name": "Clarion",
+   "items": [
+    "Clarion CRH 81R PE-9439A",
+    "Clarion CRX 115R",
+    "Clarion CRX 83R",
+    "Clarion CRX 85R",
+    "Clarion CXR-252 RP",
+    "Clarion PN-9524",
+    "Clarion PP-9924E Nissan",
+    "Clarion PU-1559A",
+    "Clarion PU-1560A",
+    "Clarion PU-1561A",
+    "Clarion PU-1570A",
+    "Clarion PU-9527A",
+    "Clarion PU-9833A",
+    "Clarion PU-9880A",
+    "Clarion PU-9924A"
+   ]
+  },
+  {
+   "name": "Alpine",
+   "items": [
+    "Alpine 3DE-7886",
+    "Alpine 7288",
+    "Alpine CDM-7983R",
+    "Alpine CM6902A",
+    "Alpine MF2297",
+    "Alpine MF2910 CD10"
+   ]
+  },
+  {
+   "name": "Ford",
+   "items": [
+    "Ford 2000",
+    "Ford 2001",
+    "Ford 2002",
+    "Ford 2004",
+    "Ford 2006",
+    "Ford 2007",
+    "Ford 2014",
+    "Ford 2014 91FB",
+    "Ford 2015",
+    "Ford EP12DS",
+    "Ford Escort DPS 770 (Interconti)"
+   ]
+  },
+  {
+   "name": "Opel",
+   "items": [
+    "Opel Astra 300",
+    "Opel CDR 2005",
+    "Opel CDR 500"
+   ]
+  },
+  {
+   "name": "Volvo",
+   "items": [
+    "Volvo CR-802",
+    "Volvo CR-902",
+    "Volvo SC-810"
+   ]
+  },
+  {
+   "name": "Diğer",
+   "items": [
+    "6200 CE-2771",
+    "7200 RDS",
+    "Aiwa CT-R2YZ RDS",
+    "AJ 9600R",
+    "AKF-0816EY",
+    "AKF-4306EG",
+    "AKF-9445R",
+    "AutoSound CTR 560",
+    "AutoSound CTR 620",
+    "AX-1845",
+    "AX-835",
+    "AX-845",
+    "AX-855",
+    "CDC 6000",
+    "CDC 6300",
+    "Challenge 400",
+    "Challenge 500",
+    "Challenge 600 CD",
+    "EC 4000 RDS",
+    "EC 4200 RDS",
+    "EC 4290 CD",
+    "EC 4600 RDS",
+    "EC 4790 CD",
+    "Pioneer KEH-5080 SDK"
+   ]
   }
  ],
  "models": [

@@ -397,6 +397,9 @@ def build():
         "shardLen": SHARD_LEN,
         "totalCodes": total,
         "brands": [b for b in BRANDS if b["id"] in used],
+        # EEPROM ile kod çözümü yapılabilen teyp modelleri (yalnızca model adları,
+        # dosya dağıtımı yok). Kaynak: tools/supported_radios.json
+        "radios": json.load(open(os.path.join(ROOT, "tools", "supported_radios.json"), encoding="utf-8")),
         "models": models_out,
     }
     for path in (os.path.join(DATA_DIR, "catalog.json"), os.path.join(APP_DIR, "catalog.json")):
