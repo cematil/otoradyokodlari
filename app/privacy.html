@@ -74,5 +74,17 @@
             <p>For questions, contact us through the WhatsApp support line in the app.</p>
         </article>
     </main>
+    <script>
+        // Android geri tuşu: gizlilik sayfasından uygulamanın ana sayfasına dön
+        (function () {
+            var C = window.Capacitor;
+            var App = C && C.Plugins && C.Plugins.App;
+            if (C && C.isNativePlatform && C.isNativePlatform() && App) {
+                App.addListener("backButton", function () {
+                    location.replace("index.html#/");
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
