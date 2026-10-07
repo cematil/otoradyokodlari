@@ -777,6 +777,19 @@
         };
 
         window.addEventListener("hashchange", onRoute);
+
+        // Android geri tuşu: ana sayfa dışındaysa ana sayfaya dön, ana sayfadaysa uygulamadan çık
+        var AppPlugin = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+        if (isNative && AppPlugin) {
+            AppPlugin.addListener("backButton", function () {
+                var page = location.hash.replace(/^#\/?/, "");
+                if (!page) {
+                    AppPlugin.exitApp();
+                } else {
+                    location.replace("#/");
+                }
+            });
+        }
         window.addEventListener("offline", function () { toast(t("offline")); });
 
         loadCatalog().then(function () {
