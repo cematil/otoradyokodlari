@@ -83,8 +83,12 @@ Sürüm numarası (versionCode) her çalışmada otomatik artar.
    - Gizlilik politikası URL'si: GitHub Pages'i açtıktan sonra
      `https://cematil.github.io/otoradyokodlari/app/privacy.html`
      (Settings → Pages → Branch: `main` / root → Save)
-   - Reklam: **Hayır**
-   - Veri güvenliği: **Veri toplanmıyor / paylaşılmıyor** (uygulama yalnızca cihazda veri saklar)
+   - Reklam: **Evet** (Google AdMob)
+   - Reklam kimliği (Advertising ID): **Evet**, reklam amacıyla kullanılıyor
+   - Veri güvenliği: AdMob nedeniyle şu veriler **toplanıyor ve reklam amacıyla paylaşılıyor**:
+     Cihaz veya diğer kimlikler (reklam kimliği), Yaklaşık konum, Uygulama etkinliği (reklam etkileşimleri),
+     Uygulama bilgileri ve performans (çökme / tanılama). Veriler aktarım sırasında şifrelenir.
+     Güncel liste için Google'ın "AdMob Play Data safety" rehberine bakın.
    - Hedef kitle: 18+ (veya 13+)
    - İçerik derecelendirmesi anketini doldurun (Araçlar / Yardımcı programlar).
 6. Kategori: **Otomobiller ve Araçlar**.
@@ -105,7 +109,26 @@ Oto Radyo Kodları ile markanızı seçin, teyp etiketindeki seri numarasını g
 
 Bu uygulama bağımsızdır; adı geçen otomobil ve teyp üreticileriyle bağlantılı değildir.
 
-## 6. Telif ve marka hakkı – dikkat edilenler
+## 6. Reklamlar (Google AdMob)
+
+Android uygulaması alt kısımda banner ve kod bulunduğunda geçiş reklamı gösterir (web sitesinde reklam yoktur).
+Geçiş reklamı en fazla 60 saniyede bir çıkar ve kod, reklam kapandıktan sonra gösterilir.
+
+| Ayar | Dosya |
+| :--- | :--- |
+| Uygulama kimliği (`ca-app-pub-…~…`) | `android/app/src/main/res/values/strings.xml` → `admob_app_id` |
+| Banner ve geçiş reklam birimi kimlikleri (`ca-app-pub-…/…`) | `app/js/ads.js` |
+| Geçiş reklamı sıklığı | `app/js/ads.js` → `interstitialMinIntervalSec` |
+
+- Avrupa / Birleşik Krallık kullanıcıları için Google'ın onay (GDPR) formu otomatik gösterilir.
+  AdMob → Gizlilik ve mesajlaşma bölümünde bir **GDPR mesajı** oluşturup yayınlayın; yoksa bu bölgelerde reklam çıkmaz.
+- AdMob → **app-ads.txt**: Google Play mağaza girişinizdeki "Web sitesi" alanına yazdığınız alan adının
+  köküne bu dosyayı koyun. Yoksa reklam geliri düşebilir.
+- **Kendi reklamlarınıza tıklamayın.** Kendi telefonunuzda denerken AdMob → Ayarlar → Test cihazları
+  bölümüne telefonunuzu ekleyin; aksi halde AdMob hesabınız kapatılabilir.
+- Yeni oluşturulan reklam birimlerinde reklamların gelmeye başlaması birkaç saat sürebilir.
+
+## 7. Telif ve marka hakkı – dikkat edilenler
 
 Uygulama bu konuda güvenli olacak şekilde tasarlandı:
 
@@ -118,7 +141,7 @@ Uygulama bu konuda güvenli olacak şekilde tasarlandı:
 - Resimdeki gibi başka bir uygulamanın tasarımı, renkleri veya metinleri kopyalanmadı; arayüz sıfırdan tasarlandı.
 - Kod veritabanlarının kaynağı size aittir; başkasının ücretli veritabanından kopyalanmış veri yayınlamayın.
 
-## 7. İleride eklenebilecekler (öneriler)
+## 8. İleride eklenebilecekler (öneriler)
 
 - Seri numarasını **kamerayla okuma** (etiket fotoğrafından metin tanıma).
 - Bildirimle "yeni marka / model eklendi" duyurusu.
