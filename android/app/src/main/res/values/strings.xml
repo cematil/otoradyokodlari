@@ -4,6 +4,6 @@
     <string name="title_activity_main">Car Radio Codes</string>
     <string name="package_name">com.otoradyokodlari.app</string>
     <string name="custom_url_scheme">com.otoradyokodlari.app</string>
-    <!-- AdMob UYGULAMA kimliği (ca-app-pub-XXXX~YYYY). Şu an Google'ın TEST kimliği: kendi kimliğinizle değiştirin. -->
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <!-- AdMob UYGULAMA kimliği (ca-app-pub-XXXX~YYYY), reklam birimi kimliği değil -->
+    <string name="admob_app_id">ca-app-pub-2830351264097967~8949754793</string>
 </resources>
