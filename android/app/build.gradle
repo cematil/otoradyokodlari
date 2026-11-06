@@ -7,8 +7,10 @@ android {
         applicationId "com.otoradyokodlari.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode Integer.parseInt(System.getenv("VERSION_CODE") ?: "1")
-        versionName "1.0"
+        // Google Play'deki son sürüm: 5 (1.1.2). Bilgisayarda derlerken her yeni sürümde bu sayıyı artırın.
+        // GitHub Actions kendi numarasını verir (100 + çalışma numarası), bu yüzden hep daha büyüktür.
+        versionCode Integer.parseInt(System.getenv("VERSION_CODE") ?: "6")
+        versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

@@ -63,8 +63,7 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          VERSION_CODE: ${{ github.run_number }}
-        run: ./gradlew bundleRelease --no-daemon
+        run: VERSION_CODE=$((100 + GITHUB_RUN_NUMBER)) ./gradlew bundleRelease --no-daemon
 
       - name: AAB'yi yükle
         if: steps.keystore.outputs.file != ''
