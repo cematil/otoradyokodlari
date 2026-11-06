@@ -558,6 +558,9 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner"></span><span>' + esc(t("searching")) + "</span>";
             lookup(m, input.value).then(function (r) {
+                // Kod bulunduysa sonuçtan önce geçiş reklamı (yalnızca Android uygulamasında)
+                return r.code && window.Ads ? window.Ads.beforeResult().then(function () { return r; }) : r;
+            }).then(function (r) {
                 btn.disabled = false;
                 btn.innerHTML = ICONS.key + "<span>" + esc(t("find")) + "</span>";
                 if (r.code) {
@@ -697,7 +700,13 @@
             '<div class="card prose"><p>' + esc(t("aboutText")) + "</p>" +
             "<h2>" + esc(t("legalTitle")) + "</h2><p>" + esc(t("legalText")) + "</p><p>" + esc(t("legalUse")) + "</p>" +
             "<h2>" + esc(t("version")) + "</h2><p>" + esc(state.catalog.version) + "</p>" +
-            '<a class="btn secondary" href="privacy.html' + (state.lang === "en" ? "#en" : "") + '">' + esc(t("privacy")) + "</a></div>";
+            '<a class="btn secondary" href="privacy.html' + (state.lang === "en" ? "#en" : "") + '">' + esc(t("privacy")) + "</a>" +
+            (window.Ads && window.Ads.privacyOptionsRequired()
+                ? '<button class="btn secondary" id="adPrivacyBtn" type="button">' + esc(t("adPrivacy")) + "</button>"
+                : "") +
+            "</div>";
+        var adBtn = document.getElementById("adPrivacyBtn");
+        if (adBtn) adBtn.onclick = function () { window.Ads.showPrivacyOptions(); };
     }
 
     // ---------------------------------------------------------------
