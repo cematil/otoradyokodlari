@@ -8,6 +8,18 @@
         repo: "cematil/otoradyokodlari",
         branch: "main",
         whatsapp: "905074377818",
+        // AdMob reklam ayarları. Yayınlamadan önce kendi AdMob kimliklerinizi yazın ve testing: false yapın.
+        // (Uygulama kimliği ayrıca android/app/src/main/AndroidManifest.xml içine yazılır.)
+        admob: {
+            enabled: true,
+            testing: false, // true iken Google test reklamları gösterilir
+            bannerId: "ca-app-pub-2830351264097967/2520077819",       // GERÇEK — Banner Alt
+            interstitialId: "ca-app-pub-2830351264097967/6267751134", // GERÇEK — Gecis Kod Bulma
+            interstitialEvery: 1,        // her kod sorgusunda geçiş reklamı (1 = her sorgu)
+            interstitialMinGapSec: 30,   // art arda sorgularda iki reklam arasında en az 30 sn (AdMob politikası)
+            whatsappMinGapSec: 10,       // WhatsApp'a her dokunuşta reklam; iki reklam arası en az 10 sn (üst üste binmesin)
+            whatsappWaitMs: 3000,        // reklam henüz yüklenmediyse WhatsApp'ı açmadan önce en fazla 3 sn bekle
+        },
     };
 
     var GUIDE_IMAGES = { renault: "img/renault-precode.jpg", dacia: "img/dacia-precode.jpg" };
@@ -55,9 +67,21 @@
         }
     }
 
+    var LANGS = window.I18N_LANGS || [{ code: "tr", name: "Türkçe", locale: "tr-TR", dir: "ltr" }, { code: "en", name: "English", locale: "en-GB", dir: "ltr" }];
+
+    function langInfo(code) {
+        for (var i = 0; i < LANGS.length; i++) if (LANGS[i].code === code) return LANGS[i];
+        return null;
+    }
+
+    function locale() {
+        var li = langInfo(state.lang);
+        return li ? li.locale : "en-GB";
+    }
+
     function t(key, vars) {
         var dict = window.I18N[state.lang] || window.I18N.tr;
-        var s = dict[key] != null ? dict[key] : window.I18N.tr[key] || key;
+        var s = dict[key] != null ? dict[key] : (window.I18N.en[key] != null ? window.I18N.en[key] : window.I18N.tr[key] || key);
         if (vars) {
             Object.keys(vars).forEach(function (k) {
                 s = s.split("{" + k + "}").join(vars[k]);
@@ -73,12 +97,13 @@
     }
 
     function loc(v) {
-        if (v && typeof v === "object") return v[state.lang] || v.tr || v.en || "";
+        // Katalogda yalnızca tr/en metni varsa, Türkçe dışındaki dillerde İngilizcesi gösterilir
+        if (v && typeof v === "object") return v[state.lang] || (state.lang === "tr" ? v.tr || v.en : v.en || v.tr) || "";
         return v || "";
     }
 
     function num(n) {
-        return Number(n).toLocaleString(state.lang === "tr" ? "tr-TR" : "en-US");
+        return Number(n).toLocaleString(locale());
     }
 
     function waLink(text) {
@@ -558,8 +583,9 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner"></span><span>' + esc(t("searching")) + "</span>";
             lookup(m, input.value).then(function (r) {
-                // Kod bulunduysa sonuçtan önce geçiş reklamı (yalnızca Android uygulamasında)
-                return r.code && window.Ads ? window.Ads.beforeResult().then(function () { return r; }) : r;
+                // Kod bulunduğunda ya da veritabanında arandığında (bulunamadı) reklam gösterilir;
+                // yalnızca hatalı biçimde girilen seri numaralarında gösterilmez.
+                return (r.code || r.notFound) ? Ads.beforeResult().then(function () { return r; }) : r;
             }).then(function (r) {
                 btn.disabled = false;
                 btn.innerHTML = ICONS.key + "<span>" + esc(t("find")) + "</span>";
@@ -596,7 +622,7 @@
                 var brand = m ? state.brandById[m.brands[0]] : { mono: "?", hue: 220 };
                 return '<div class="list-item saved-item">' + mono(brand) +
                     '<div class="body"><div class="title">' + esc(m ? loc(m.name) : s.modelId) + '</div><div class="meta">' + esc(s.serial) +
-                    " · " + esc(new Date(s.ts).toLocaleDateString(state.lang === "tr" ? "tr-TR" : "en-GB")) + "</div></div>" +
+                    " · " + esc(new Date(s.ts).toLocaleDateString(locale())) + "</div></div>" +
                     '<button class="icon-btn" data-copy="' + esc(s.code) + '" aria-label="' + esc(t("copy")) + '"><span class="code" style="font-size:15px;padding:0 4px">' +
                     esc(s.code) + "</span></button>" +
                     '<button class="icon-btn del" data-del="' + i + '" aria-label="' + esc(t("remove")) + '">' + ICONS.trash + "</button></div>";
@@ -699,14 +725,23 @@
         view.innerHTML = '<div class="page-head"><div><h1>' + esc(t("aboutTitle")) + "</h1></div></div>" +
             '<div class="card prose"><p>' + esc(t("aboutText")) + "</p>" +
             "<h2>" + esc(t("legalTitle")) + "</h2><p>" + esc(t("legalText")) + "</p><p>" + esc(t("legalUse")) + "</p>" +
-            "<h2>" + esc(t("version")) + "</h2><p>" + esc(state.catalog.version) + "</p>" +
-            '<a class="btn secondary" href="privacy.html' + (state.lang === "en" ? "#en" : "") + '">' + esc(t("privacy")) + "</a>" +
-            (window.Ads && window.Ads.privacyOptionsRequired()
-                ? '<button class="btn secondary" id="adPrivacyBtn" type="button">' + esc(t("adPrivacy")) + "</button>"
-                : "") +
-            "</div>";
-        var adBtn = document.getElementById("adPrivacyBtn");
-        if (adBtn) adBtn.onclick = function () { window.Ads.showPrivacyOptions(); };
+            "<h2>" + esc(t("version")) + '</h2><p id="versionTap">' + esc(state.catalog.version) + "</p>" +
+            '<pre id="adDiag" style="display:none;white-space:pre-wrap;font-size:11px;max-height:50vh;overflow:auto"></pre>' +
+            '<div class="btn-row"><a class="btn secondary" href="privacy.html' + (state.lang === "tr" ? "" : "#en") + '">' + esc(t("privacy")) + "</a>" +
+            (Ads.privacyRequired ? '<button class="btn secondary" id="adPrivacyBtn" type="button">' + esc(t("adPrivacy")) + "</button>" : "") +
+            "</div></div>";
+        var ap = document.getElementById("adPrivacyBtn");
+        if (ap) ap.onclick = function () { Ads.showPrivacyOptions(); };
+        // Gizli reklam teşhis paneli: sürüm numarasına 7 kez dokun
+        var vt = document.getElementById("versionTap"), taps = 0;
+        if (vt) vt.onclick = function () {
+            if (++taps < 7) return;
+            taps = 0;
+            var d = document.getElementById("adDiag");
+            d.textContent = "AdMob teşhis\nready=" + Ads.ready + " interstitialReady=" + Ads.interstitialReady + "\n\n" +
+                (Ads.logs.join("\n") || "(kayıt yok)");
+            d.style.display = "block";
+        };
     }
 
     // ---------------------------------------------------------------
@@ -744,17 +779,249 @@
     // Dil ve tema
     // ---------------------------------------------------------------
     function applyLang(lang) {
-        state.lang = lang === "en" ? "en" : "tr";
+        state.lang = langInfo(lang) && window.I18N[lang] ? lang : "en";
         store("rc.lang", state.lang);
         document.documentElement.lang = state.lang;
+        document.documentElement.dir = langInfo(state.lang).dir || "ltr";
         document.title = t("appName");
-        document.getElementById("langBtn").textContent = state.lang === "tr" ? "EN" : "TR";
+        document.getElementById("langBtn").textContent = state.lang.toUpperCase();
+        document.getElementById("langBtn").setAttribute("aria-label", t("language"));
         document.querySelectorAll("[data-i18n]").forEach(function (el) {
             el.textContent = t(el.getAttribute("data-i18n"));
         });
         document.getElementById("backBtn").setAttribute("aria-label", t("back"));
         document.getElementById("themeBtn").setAttribute("aria-label", t("theme"));
     }
+
+    // Dil seçim menüsü
+    function closeLangMenu() {
+        var menu = document.getElementById("langMenu");
+        if (menu) menu.parentNode.removeChild(menu);
+        document.getElementById("langBtn").setAttribute("aria-expanded", "false");
+    }
+
+    function openLangMenu() {
+        if (document.getElementById("langMenu")) return closeLangMenu();
+        var menu = document.createElement("div");
+        menu.id = "langMenu";
+        menu.className = "lang-menu";
+        menu.setAttribute("role", "menu");
+        menu.setAttribute("aria-label", t("selectLanguage"));
+        menu.innerHTML = '<div class="lang-menu-title">' + esc(t("selectLanguage")) + "</div>" + LANGS.map(function (l) {
+            return '<button type="button" role="menuitemradio" aria-checked="' + (l.code === state.lang) + '" data-lang="' + l.code + '" dir="' + l.dir + '" class="' +
+                (l.code === state.lang ? "active" : "") + '"><span>' + esc(l.name) + '</span><small>' + l.code.toUpperCase() + "</small></button>";
+        }).join("");
+        document.body.appendChild(menu);
+        document.getElementById("langBtn").setAttribute("aria-expanded", "true");
+        menu.querySelectorAll("[data-lang]").forEach(function (b) {
+            b.onclick = function (e) {
+                e.stopPropagation();
+                closeLangMenu();
+                if (b.getAttribute("data-lang") !== state.lang) {
+                    applyLang(b.getAttribute("data-lang"));
+                    render();
+                }
+            };
+        });
+    }
+
+    function detectLang() {
+        var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+        for (var i = 0; i < list.length; i++) {
+            var code = String(list[i] || "").toLowerCase().split("-")[0];
+            if (langInfo(code) && window.I18N[code]) return code;
+        }
+        return "en";
+    }
+
+    // ---------------------------------------------------------------
+    // AdMob reklamları (yalnızca Android uygulamasında çalışır; web'de hiçbir şey yapmaz)
+    // ---------------------------------------------------------------
+    var Ads = {
+        ready: false,
+        privacyRequired: false,
+        interstitialReady: false,
+        interstitialLoading: false,
+        queryCount: 0,
+        lastInterstitial: 0,
+        afterAd: [], // reklam kapanınca çalışacak işler (ör. WhatsApp'ı açmak)
+        plugin: function () {
+            return isNative && CONFIG.admob.enabled && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AdMob;
+        },
+        // Teşhis kaydı: Hakkında sayfasında sürüm numarasına 7 kez dokununca görünür.
+        logs: [],
+        log: function (msg, data) {
+            var line = new Date().toTimeString().slice(0, 8) + " " + msg;
+            if (data !== undefined) {
+                try { line += " " + (typeof data === "string" ? data : JSON.stringify(data)); } catch (e) {}
+            }
+            Ads.logs.push(line);
+            if (Ads.logs.length > 100) Ads.logs.shift();
+        },
+        errText: function (e) {
+            if (!e) return "";
+            if (e.code !== undefined || e.message) return "code=" + e.code + " " + (e.message || "");
+            return String(e);
+        },
+        init: function () {
+            Ads.log("native=" + isNative + " enabled=" + CONFIG.admob.enabled + " testing=" + !!CONFIG.admob.testing +
+                " plugin=" + !!(window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AdMob));
+            var A = Ads.plugin();
+            if (!A) return;
+            A.initialize({ initializeForTesting: !!CONFIG.admob.testing })
+                .then(function () {
+                    Ads.log("initialize OK");
+                    // Onay (UMP) adımındaki bir hata reklamları tamamen durdurmasın
+                    return A.requestConsentInfo().catch(function (e) {
+                        Ads.log("requestConsentInfo HATA", Ads.errText(e));
+                        return null;
+                    });
+                })
+                .then(function (info) {
+                    Ads.log("consent", info);
+                    if (info && info.isConsentFormAvailable && info.status === "REQUIRED") {
+                        return A.showConsentForm().catch(function (e) {
+                            Ads.log("showConsentForm HATA", Ads.errText(e));
+                            return info;
+                        });
+                    }
+                    return info;
+                })
+                .then(function (info) {
+                    Ads.privacyRequired = !!(info && info.privacyOptionsRequirementStatus === "REQUIRED");
+                    if (info && info.canRequestAds === false) {
+                        Ads.log("canRequestAds=false, reklam istenmiyor");
+                        return;
+                    }
+                    Ads.ready = true;
+                    Ads.showBanner();
+                    Ads.prepareInterstitial();
+                })
+                .catch(function (e) { Ads.log("initialize HATA", Ads.errText(e)); });
+
+            A.addListener("bannerAdLoaded", function () {
+                Ads.log("banner yüklendi");
+                Ads.bannerRetries = 0;
+            });
+            A.addListener("bannerAdSizeChanged", function (size) {
+                var h = size && size.height ? Number(size.height) : 0;
+                document.documentElement.style.setProperty("--ad-h", h + "px");
+            });
+            A.addListener("bannerAdFailedToLoad", function (e) {
+                Ads.log("banner HATA", Ads.errText(e));
+                document.documentElement.style.setProperty("--ad-h", "0px");
+                Ads.retryBanner();
+            });
+            A.addListener("interstitialAdLoaded", function () { Ads.log("geçiş reklamı yüklendi"); });
+            A.addListener("interstitialAdFailedToLoad", function (e) { Ads.log("geçiş reklamı HATA", Ads.errText(e)); });
+            // Geçiş reklamı kapandığında ya da gösterilemediğinde bir sonraki sorgu için yenisini hazırla
+            A.addListener("interstitialAdDismissed", function () { Ads.flushAfterAd(); Ads.prepareInterstitial(); });
+            A.addListener("interstitialAdFailedToShow", function () { Ads.flushAfterAd(); Ads.prepareInterstitial(); });
+        },
+        showBanner: function () {
+            var A = Ads.plugin();
+            if (!A || !Ads.ready) return;
+            A.showBanner({
+                adId: CONFIG.admob.bannerId,
+                adSize: "ADAPTIVE_BANNER",
+                position: "BOTTOM_CENTER",
+                margin: 0,
+                isTesting: !!CONFIG.admob.testing,
+            }).catch(function (e) { Ads.log("showBanner HATA", Ads.errText(e)); });
+        },
+        // Banner yüklenemezse (ör. "No fill") artan aralıklarla yeniden dene: 1, 2, 4 dk ... en fazla 5 dk
+        bannerRetries: 0,
+        bannerRetryTimer: null,
+        retryBanner: function () {
+            if (Ads.bannerRetryTimer) return;
+            var delay = Math.min(60000 * Math.pow(2, Ads.bannerRetries), 300000);
+            Ads.bannerRetries++;
+            Ads.log("banner " + Math.round(delay / 1000) + " sn sonra yeniden denenecek");
+            Ads.bannerRetryTimer = setTimeout(function () {
+                Ads.bannerRetryTimer = null;
+                var A = Ads.plugin();
+                if (!A) return;
+                A.removeBanner().catch(function () {}).then(function () { Ads.showBanner(); });
+            }, delay);
+        },
+        prepareInterstitial: function () {
+            var A = Ads.plugin();
+            if (!A || !Ads.ready) return;
+            if (Ads.interstitialLoading) return;
+            Ads.interstitialReady = false;
+            Ads.interstitialLoading = true;
+            A.prepareInterstitial({ adId: CONFIG.admob.interstitialId, isTesting: !!CONFIG.admob.testing })
+                .then(function () { Ads.interstitialReady = true; })
+                .catch(function (e) { Ads.log("prepareInterstitial HATA", Ads.errText(e)); })
+                .then(function () { Ads.interstitialLoading = false; });
+        },
+        flushAfterAd: function () {
+            var list = Ads.afterAd;
+            Ads.afterAd = [];
+            list.forEach(function (fn) { try { fn(); } catch (e) {} });
+        },
+        // Geçiş reklamı şu an gösterilebilir mi (yüklü + iki reklam arası en az interstitialMinGapSec)
+        canShowInterstitial: function () {
+            var A = Ads.plugin();
+            if (A && Ads.ready && !Ads.interstitialReady) Ads.prepareInterstitial(); // önceki yükleme başarısızsa tekrar dene
+            return !!(A && Ads.ready && Ads.interstitialReady &&
+                Date.now() - Ads.lastInterstitial >= CONFIG.admob.interstitialMinGapSec * 1000);
+        },
+        // Tam ekran geçiş reklamını açar; done() reklam kapandıktan sonra çağrılır.
+        // Sonraki reklam bu reklam kapandıktan sonra hazırlanır (interstitialAdDismissed);
+        // gösterim sırasında hazırlanırsa eklenti kapanışta yeni hazırlanan reklamı da siler.
+        showInterstitial: function (done) {
+            var A = Ads.plugin();
+            Ads.lastInterstitial = Date.now();
+            Ads.interstitialReady = false;
+            if (done) Ads.afterAd.push(done);
+            return A.showInterstitial().catch(function () {
+                Ads.flushAfterAd();
+                Ads.prepareInterstitial();
+            });
+        },
+        // Her kod sorgusunda, sonuç gösterilmeden önce çağrılır; sıklık sınırına göre tam ekran geçiş
+        // reklamı açar, sonuç reklamın arkasında hazırlanır ve reklam kapanınca görünür.
+        // Reklam henüz yüklenmediyse sonuç beklemeden gösterilir.
+        beforeResult: function () {
+            Ads.queryCount++;
+            if (Ads.queryCount % CONFIG.admob.interstitialEvery !== 0 || !Ads.canShowInterstitial()) {
+                return Promise.resolve();
+            }
+            return Ads.showInterstitial();
+        },
+        // WhatsApp'a yönlendirmeden önce reklam gösterir; reklam kapanınca WhatsApp açılır.
+        // Reklam yoksa (yüklenmedi / az önce reklam gösterildi) WhatsApp hemen açılır.
+        // WhatsApp'a her dokunuşta reklam: kod sorgusundaki 30 sn sınırı yerine yalnızca
+        // whatsappMinGapSec (art arda dokunmada iki reklam üst üste binmesin). Reklam henüz
+        // yüklenmediyse en fazla whatsappWaitMs bekler, yine yoksa WhatsApp'ı reklamsız açar.
+        waBusy: false,
+        beforeWhatsApp: function (open) {
+            if (Ads.waBusy) return; // reklam açılırken ikinci dokunuşu yok say
+            var A = Ads.plugin();
+            var gapOk = function () {
+                return Date.now() - Ads.lastInterstitial >= CONFIG.admob.whatsappMinGapSec * 1000;
+            };
+            if (!A || !Ads.ready || !gapOk()) return open();
+            if (!Ads.interstitialReady) Ads.prepareInterstitial();
+            Ads.waBusy = true;
+            var started = Date.now();
+            var finish = function () { Ads.waBusy = false; open(); };
+            (function tryShow() {
+                if (Ads.interstitialReady) {
+                    Ads.showInterstitial(finish);
+                } else if (Date.now() - started < CONFIG.admob.whatsappWaitMs && Ads.interstitialLoading) {
+                    setTimeout(tryShow, 200);
+                } else {
+                    finish();
+                }
+            })();
+        },
+        showPrivacyOptions: function () {
+            var A = Ads.plugin();
+            if (A && A.showPrivacyOptionsForm) A.showPrivacyOptionsForm().catch(function () {});
+        },
+    };
 
     function applyTheme(theme) {
         document.documentElement.setAttribute("data-theme", theme);
@@ -766,17 +1033,21 @@
     }
 
     function init() {
-        var lang = store("rc.lang") || ((navigator.language || "").toLowerCase().indexOf("tr") === 0 ? "tr" : "en");
+        var lang = store("rc.lang") || detectLang();
         applyLang(lang);
 
         var theme = store("rc.theme") ||
             (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
         applyTheme(theme);
 
-        document.getElementById("langBtn").onclick = function () {
-            applyLang(state.lang === "tr" ? "en" : "tr");
-            render();
+        document.getElementById("langBtn").onclick = function (e) {
+            e.stopPropagation();
+            openLangMenu();
         };
+        document.addEventListener("click", function (e) {
+            var menu = document.getElementById("langMenu");
+            if (menu && !menu.contains(e.target)) closeLangMenu();
+        });
         document.getElementById("themeBtn").onclick = function () {
             applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
         };
@@ -791,6 +1062,7 @@
         var AppPlugin = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
         if (isNative && AppPlugin) {
             AppPlugin.addListener("backButton", function () {
+                if (document.getElementById("langMenu")) return closeLangMenu();
                 var page = location.hash.replace(/^#\/?/, "");
                 if (!page) {
                     AppPlugin.exitApp();
@@ -800,6 +1072,22 @@
             });
         }
         window.addEventListener("offline", function () { toast(t("offline")); });
+
+        Ads.init();
+
+        // Uygulamadaki tüm WhatsApp bağlantıları: önce reklam, reklam kapanınca WhatsApp.
+        // (Yalnızca Android uygulamasında; web sitesinde bağlantı normal açılır.)
+        document.addEventListener("click", function (e) {
+            if (!Ads.plugin() || e.defaultPrevented) return;
+            var a = e.target && e.target.closest ? e.target.closest('a[href^="https://wa.me/"]') : null;
+            if (!a) return;
+            e.preventDefault();
+            var href = a.href;
+            Ads.beforeWhatsApp(function () {
+                // Capacitor, uygulama dışı adresleri WhatsApp / tarayıcıda açar
+                location.href = href;
+            });
+        });
 
         loadCatalog().then(function () {
             if (state.catalog) {

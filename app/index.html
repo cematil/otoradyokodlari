@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Oto Radyo Kodları</title>
-    <meta name="description" content="Araç radyo / teyp açılış kodunu seri numarasından bulun. Türkçe ve İngilizce.">
+    <meta name="description" content="Araç radyo / teyp açılış kodunu seri numarasından bulun. 8 dil: Türkçe, English, Français, Italiano, Español, 中文, हिन्दी, العربية.">
     <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
     <link rel="manifest" href="manifest.webmanifest">
@@ -22,7 +22,7 @@
             <span data-i18n="appName">Oto Radyo Kodları</span>
         </a>
         <div class="topbar-actions">
-            <button class="pill-btn" id="langBtn" aria-label="Dil / Language">EN</button>
+            <button class="pill-btn" id="langBtn" aria-label="Dil / Language" aria-haspopup="menu" aria-expanded="false">TR</button>
             <button class="icon-btn" id="themeBtn" aria-label="Tema">
                 <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
             </button>
@@ -53,7 +53,6 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="js/i18n.js"></script>
-    <script src="js/ads.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,12 +1,11 @@
 /* Uygulama kabuğunu çevrimdışı kullanım için önbelleğe alır.
    Kod verileri app.js içinde ayrı bir önbellekte tutulur. */
-var SHELL_CACHE = "rc-shell-v2";
+var SHELL_CACHE = "rc-shell-v4";
 var SHELL = [
     "./",
     "./index.html",
     "./css/app.css",
     "./js/i18n.js",
-    "./js/ads.js",
     "./js/app.js",
     "./catalog.json",
     "./privacy.html",
